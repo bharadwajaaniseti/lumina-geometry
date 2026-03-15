@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://ctoiwmdgloyi7"]
+
+[ext_resource type="Script" uid="uid://c8tmlaqgl736i" path="res://scripts/vfx/ShapeBurst.gd" id="1_axccr"]
+
+[sub_resource type="Gradient" id="Gradient_axccr"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1wnho"]
+gradient = SubResource("Gradient_axccr")
+
+[sub_resource type="Curve" id="Curve_dbtc8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0.5), 0.0, 0.0, 0, 0, Vector2(2e-05, 0.5), 0.0, 0.0, 0, 0, Vector2(3e-05, 1), -0.965385, -0.965385, 0, 0, Vector2(0.5, 0.5217391), -0.60392785, -0.60392785, 0, 0, Vector2(1, 0), -1.0370094, 0.0, 0, 0]
+point_count = 6
+metadata/_snap_enabled = true
+metadata/_snap_count = 46
+
+[sub_resource type="CurveTexture" id="CurveTexture_weae5"]
+curve = SubResource("Curve_dbtc8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mnibl"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 140.0
+initial_velocity_min = 60.0
+initial_velocity_max = 140.0
+angular_velocity_min = -120.000015
+angular_velocity_max = 119.999985
+gravity = Vector3(0, 200, 0)
+scale_min = 0.06
+scale_max = 0.14
+scale_curve = SubResource("CurveTexture_weae5")
+color_ramp = SubResource("GradientTexture1D_1wnho")
+
+[node name="ShapeBurst" type="Node2D" unique_id=1009511797]
+script = ExtResource("1_axccr")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1534012386]
+emitting = false
+amount = 3
+lifetime = 0.55
+one_shot = true
+explosiveness = 0.85
+randomness = 0.4
+process_material = SubResource("ParticleProcessMaterial_mnibl")

@@ -1,0 +1,600 @@
+[gd_scene format=3 uid="uid://dptmi2nr7vix1"]
+
+[ext_resource type="Script" uid="uid://dg4lma7gh2oru" path="res://scripts/ui/upgrades_modal.gd" id="1_wviou"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k71ng"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 24
+shadow_offset = Vector2(0, 10)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_k71ng"]
+color = Color(0, 0, 0, 0.14)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wviou"]
+bg_color = Color(0.87759787, 0.89301616, 0.9523372, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_wviou"]
+color = Color(0, 0, 0, 0.14117648)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scjb3"]
+bg_color = Color(0.90359825, 0.90359825, 0.9035982, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.1882353)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yxx2u"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 0.34509805, 0.34509805, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjl65"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.34509805, 1, 0.3882353, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njw8e"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 0.9019608, 0.34509805, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qyljw"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.54509807, 0.5647059, 0.6, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0c3l"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.50980395, 0.34509805, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_je74m"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 0.34509805, 0.6313726, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btvdq"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+bg_color = Color(0.34509805, 1, 0.9254902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="UpgradesModal" type="Control" unique_id=755297452]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wviou")
+base_round_duration_sec = 1450.0
+spawn_item1_path = NodePath("Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1")
+spawn_item2_path = NodePath("Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2")
+time_item1_path = NodePath("Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1")
+time_item2_path = NodePath("Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2")
+auto_item1_path = NodePath("Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1")
+auto_item2_path = NodePath("Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2")
+
+[node name="Dimmer" type="ColorRect" parent="." unique_id=447927907]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.2)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=31316647]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="Center" unique_id=1299419466]
+custom_minimum_size = Vector2(920, 560)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k71ng")
+
+[node name="Margin" type="MarginContainer" parent="Center/Card" unique_id=159512066]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 22
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin" unique_id=662438731]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="HeaderRow" type="HBoxContainer" parent="Center/Card/Margin/VBox" unique_id=1225804740]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/Card/Margin/VBox/HeaderRow" unique_id=2068402440]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.41960785, 0.41960785, 1)
+theme_override_font_sizes/font_size = 32
+text = "System Adjustments"
+
+[node name="Reserve" type="Label" parent="Center/Card/Margin/VBox/HeaderRow" unique_id=1273542328]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.54509807, 0.5647059, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "Reserve: 1"
+horizontal_alignment = 2
+
+[node name="Divider1" type="HSeparator" parent="Center/Card/Margin/VBox" unique_id=109534381]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_k71ng")
+
+[node name="Columns" type="HBoxContainer" parent="Center/Card/Margin/VBox" unique_id=170499131]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="SpawnCol" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns" unique_id=1444184293]
+custom_minimum_size = Vector2(0, 360)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_wviou")
+
+[node name="Pad" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol" unique_id=218439685]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="ColVbox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad" unique_id=1755123905]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ColTitle" type="Label" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox" unique_id=779243848]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 22
+text = "Spawner"
+horizontal_alignment = 1
+
+[node name="ColDesc" type="Label" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox" unique_id=335343859]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.5647059, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "ColDesc"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Divider" type="HSeparator" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox" unique_id=2104452443]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_wviou")
+
+[node name="Upgrade1" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox" unique_id=1067476204]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_scjb3")
+
+[node name="Glow" type="ColorRect" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1" unique_id=604027265]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0.6437342, 0.7642523, 0)
+
+[node name="Content" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1" unique_id=135787859]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1/Content" unique_id=806369841]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=125489173]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Spawn Rate Lv 0/15"
+
+[node name="Value" type="Label" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=533275228]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "X → Y"
+
+[node name="Apply" type="Button" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=70449895]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxx2u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kjl65")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njw8e")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qyljw")
+text = "APPLY : 25"
+
+[node name="Spacer" type="Control" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox" unique_id=255419001]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Upgrade2" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox" unique_id=1581818932]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_scjb3")
+
+[node name="Glow" type="ColorRect" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2" unique_id=1575695553]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0.6437342, 0.7642523, 0)
+
+[node name="Content" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2" unique_id=1081735762]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2/Content" unique_id=1842910174]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=1335378533]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Spawn Rate Lv 0/15"
+
+[node name="Value" type="Label" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=655043839]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "X → Y"
+
+[node name="Apply" type="Button" parent="Center/Card/Margin/VBox/Columns/SpawnCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=2133958999]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxx2u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kjl65")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njw8e")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qyljw")
+text = "APPLY : 25"
+
+[node name="TimeCol" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns" unique_id=75496272]
+custom_minimum_size = Vector2(0, 360)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_wviou")
+
+[node name="Pad" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol" unique_id=1612209360]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="ColVbox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad" unique_id=311512823]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ColTitle" type="Label" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox" unique_id=1318543916]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 22
+text = "Cycle"
+horizontal_alignment = 1
+
+[node name="ColDesc" type="Label" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox" unique_id=1094036338]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.5647059, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "Cycle"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Divider" type="HSeparator" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox" unique_id=1107954337]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_wviou")
+
+[node name="Upgrade1" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox" unique_id=261477081]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_scjb3")
+
+[node name="Glow" type="ColorRect" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1" unique_id=593985715]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0.6437342, 0.7642523, 0)
+
+[node name="Content" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1" unique_id=518611704]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1/Content" unique_id=1976084224]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=588346045]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Spawn Rate Lv 0/15"
+
+[node name="Value" type="Label" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=1998378589]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "X → Y"
+
+[node name="Apply" type="Button" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=334956882]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxx2u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kjl65")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njw8e")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qyljw")
+text = "APPLY : 25"
+
+[node name="Spacer" type="Control" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox" unique_id=290250217]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Upgrade2" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox" unique_id=110630474]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_scjb3")
+
+[node name="Glow" type="ColorRect" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2" unique_id=895872311]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0.6437342, 0.7642523, 0)
+
+[node name="Content" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2" unique_id=150294651]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2/Content" unique_id=765997575]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=804752873]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Spawn Rate Lv 0/15"
+
+[node name="Value" type="Label" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=1106433139]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "X → Y"
+
+[node name="Apply" type="Button" parent="Center/Card/Margin/VBox/Columns/TimeCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=1079464824]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxx2u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kjl65")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njw8e")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qyljw")
+text = "APPLY : 25"
+
+[node name="AutoCol" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns" unique_id=1592208024]
+custom_minimum_size = Vector2(0, 360)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_wviou")
+
+[node name="Pad" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol" unique_id=903931682]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 18
+
+[node name="ColVbox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad" unique_id=1893500982]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ColTitle" type="Label" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox" unique_id=1193600920]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 22
+text = "Automation"
+horizontal_alignment = 1
+
+[node name="ColDesc" type="Label" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox" unique_id=824368521]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54509807, 0.5647059, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "ColDesc"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Divider" type="HSeparator" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox" unique_id=323793337]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_wviou")
+
+[node name="Upgrade1" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox" unique_id=1218705403]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_scjb3")
+
+[node name="Glow" type="ColorRect" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1" unique_id=1475781655]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0.6437342, 0.7642523, 0)
+
+[node name="Content" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1" unique_id=639233251]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1/Content" unique_id=66532445]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=1088390695]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Spawn Rate Lv 0/15"
+
+[node name="Value" type="Label" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=1149707055]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "X → Y"
+
+[node name="Apply" type="Button" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade1/Content/VBox" unique_id=510428690]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxx2u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kjl65")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njw8e")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qyljw")
+text = "APPLY : 25"
+
+[node name="Spacer" type="Control" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox" unique_id=476667210]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Upgrade2" type="PanelContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox" unique_id=131278765]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_scjb3")
+
+[node name="Glow" type="ColorRect" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2" unique_id=666186834]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0.6437342, 0.7642523, 0)
+
+[node name="Content" type="MarginContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2" unique_id=1571570936]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2/Content" unique_id=701059410]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Name" type="Label" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=1627774153]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 14
+text = "Spawn Rate Lv 0/15"
+
+[node name="Value" type="Label" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=177736790]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "X → Y"
+
+[node name="Apply" type="Button" parent="Center/Card/Margin/VBox/Columns/AutoCol/Pad/ColVbox/Upgrade2/Content/VBox" unique_id=781190462]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_yxx2u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kjl65")
+theme_override_styles/hover = SubResource("StyleBoxFlat_njw8e")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qyljw")
+text = "APPLY : 25"
+
+[node name="Divider2" type="HSeparator" parent="Center/Card/Margin/VBox" unique_id=1450162012]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_wviou")
+
+[node name="CloseBtn" type="Button" parent="Center/Card/Margin/VBox" unique_id=438405004]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.9764706, 1, 0.34509805, 1)
+theme_override_colors/font_hover_color = Color(0.50980395, 0.34509805, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_i0c3l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_je74m")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btvdq")
+text = "Close"

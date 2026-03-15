@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="InventoryShapeDB" format=3 uid="uid://276kkt7w7nr7"]
+
+[ext_resource type="Script" uid="uid://22eg66ru00we" path="res://scripts/resources/inventory_shape_db.gd" id="1_mv2vf"]
+[ext_resource type="Script" uid="uid://bxtgrr432crym" path="res://scripts/resources/inventory_shape_def.gd" id="2_6miks"]
+[ext_resource type="Texture2D" uid="uid://qeyrbeivacqb" path="res://assets/sprites/ui/Inventory Shapes/Circle.png" id="3_6miks"]
+[ext_resource type="Texture2D" uid="uid://bj48k1nh7gy2u" path="res://assets/sprites/ui/Inventory Shapes/Pyramid.png" id="4_rkdxt"]
+[ext_resource type="Texture2D" uid="uid://boc8tdawcjia0" path="res://assets/sprites/ui/Inventory Shapes/Triangle.png" id="5_u3wxl"]
+
+[sub_resource type="Resource" id="Resource_rkdxt"]
+script = ExtResource("2_6miks")
+id = "circle"
+display_name = "Circle"
+icon_texture = ExtResource("3_6miks")
+default_unlocked = true
+damage = 25.0
+attack_speed = 1.25
+projectile_count = 1
+projectile_size = 10.0
+crit_chance = 20.0
+crit_damage = 250.0
+passive_description = "This is the Runble text info of this ability"
+passive_name = "Rumble"
+passive_damage_text = "250"
+passive_cooldown_text = "1.25"
+active_description = "This is the Round up Ability that was given by shapeniverse"
+active_name = "Round up"
+active_damage_text = "10"
+active_cooldown_text = "0.5"
+metadata/_custom_type_script = "uid://bxtgrr432crym"
+
+[sub_resource type="Resource" id="Resource_u3wxl"]
+script = ExtResource("2_6miks")
+id = "pyramid"
+display_name = "Pyramid"
+icon_texture = ExtResource("4_rkdxt")
+damage = 250.0
+attack_speed = 125.0
+projectile_count = 3
+projectile_size = 1.2
+crit_chance = 10.0
+crit_damage = 1125.0
+passive_description = "Boombastic blast	"
+passive_name = "Boombastic blast"
+passive_damage_text = "250"
+passive_cooldown_text = "1.25"
+active_description = "Sun burn"
+active_name = "Sun burn"
+active_damage_text = "12586"
+active_cooldown_text = "2.5"
+metadata/_custom_type_script = "uid://bxtgrr432crym"
+
+[sub_resource type="Resource" id="Resource_f17l0"]
+script = ExtResource("2_6miks")
+id = "Triangle"
+display_name = "Triangle"
+icon_texture = ExtResource("5_u3wxl")
+damage = 650.0
+attack_speed = 2.5
+projectile_count = 10
+projectile_size = 2.0
+crit_chance = 50.0
+crit_damage = 10000.0
+metadata/_custom_type_script = "uid://bxtgrr432crym"
+
+[resource]
+script = ExtResource("1_mv2vf")
+shapes = Array[ExtResource("2_6miks")]([SubResource("Resource_rkdxt"), SubResource("Resource_u3wxl"), SubResource("Resource_f17l0")])
+metadata/_custom_type_script = "uid://22eg66ru00we"

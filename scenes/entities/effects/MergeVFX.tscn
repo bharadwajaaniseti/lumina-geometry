@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://brp4fwpns1eja"]
+
+[ext_resource type="Script" uid="uid://ctgbmbdvvdvp7" path="res://scripts/vfx/merge_vfx.gd" id="1_iu7xm"]
+
+[node name="MergeVfx" type="Node2D" unique_id=30374923]
+script = ExtResource("1_iu7xm")
+
+[node name="Ring" type="Line2D" parent="." unique_id=1936942063]
+width = 4.0
+antialiased = true

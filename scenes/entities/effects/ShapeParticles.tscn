@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://3608gk8hk4us"]
+
+[node name="ShapeParticles" type="Node2D" unique_id=1689568112]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=571853347]

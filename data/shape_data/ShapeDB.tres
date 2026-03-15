@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ShapeDB" format=3 uid="uid://bqdx8rwpfjtni"]
+
+[ext_resource type="Script" uid="uid://dgx8m83dllydr" path="res://data/shape_db.gd" id="1_u7y5s"]
+[ext_resource type="Texture2D" uid="uid://dqijdb2v65cue" path="res://assets/sprites/shapes/Circle.png" id="2_u7y5s"]
+[ext_resource type="Texture2D" uid="uid://j6mdbrkjpofv" path="res://assets/sprites/shapes/Pyramid.png" id="3_tse8p"]
+[ext_resource type="Script" uid="uid://il0om0t8hi5e" path="res://scripts/resources/shape_type_def.gd" id="12_shape_type"]
+
+[sub_resource type="Resource" id="Resource_wj8ko"]
+script = ExtResource("12_shape_type")
+merge_value = 20.0
+textures_by_color_rank = Array[Texture2D]([ExtResource("2_u7y5s"), ExtResource("2_u7y5s")])
+vfx_colors_by_rank = Array[Color]([Color(1, 0.55, 0.15, 1), Color(0.2, 0.9, 0.35, 1)])
+
+[sub_resource type="Resource" id="Resource_o302b"]
+script = ExtResource("12_shape_type")
+id = &"pyramid"
+display_name = "Pyramid"
+merge_value = 10.0
+textures_by_color_rank = Array[Texture2D]([ExtResource("3_tse8p"), ExtResource("3_tse8p")])
+vfx_colors_by_rank = Array[Color]([Color(1, 0.55, 0.15, 1), Color(0.2, 0.9, 0.35, 1)])
+
+[resource]
+script = ExtResource("1_u7y5s")
+colors_per_shape = 2
+shape_types = [SubResource("Resource_wj8ko"), SubResource("Resource_o302b")]
+tier_textures = Array[Texture2D]([ExtResource("2_u7y5s"), ExtResource("2_u7y5s"), ExtResource("3_tse8p"), ExtResource("3_tse8p")])
+tier_vfx_colors = Array[Color]([Color(1, 0.55, 0.15, 1), Color(0.2, 0.9, 0.35, 1), Color(1, 0.55, 0.15, 1), Color(0.2, 0.9, 0.35, 1)])
+metadata/_custom_type_script = "uid://dgx8m83dllydr"

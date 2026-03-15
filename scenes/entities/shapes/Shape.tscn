@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bg21gpwfah67a"]
+
+[ext_resource type="Script" uid="uid://c7p6u2ae36ea4" path="res://scripts/gameplay/phase_1/shape.gd" id="1_ln8ot"]
+[ext_resource type="Resource" uid="uid://bqdx8rwpfjtni" path="res://data/shape_data/ShapeDB.tres" id="2_5mrw1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5mrw1"]
+radius = 48.65
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jfw36"]
+radius = 55.15
+
+[node name="Shape" type="RigidBody2D" unique_id=726559391]
+script = ExtResource("1_ln8ot")
+db = ExtResource("2_5mrw1")
+motion_type = 1
+velocity_steer = 5.0
+drag_follow_strength = 24.0
+drag_release_boost = 0.9
+noise_turn_speed = 4.5
+return_strength = 22.0
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=203853206]
+scale = Vector2(0.2, 0.2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2017320909]
+shape = SubResource("CircleShape2D_5mrw1")
+
+[node name="SnapArea" type="Area2D" parent="." unique_id=1630948700]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SnapArea" unique_id=1881102661]
+shape = SubResource("CircleShape2D_jfw36")
+
+[node name="Label" type="Label" parent="." unique_id=994099110]
+offset_right = 40.0
+offset_bottom = 23.0

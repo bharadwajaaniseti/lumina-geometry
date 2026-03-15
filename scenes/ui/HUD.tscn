@@ -1,0 +1,250 @@
+[gd_scene format=3 uid="uid://b4cxuc3smdp1h"]
+
+[ext_resource type="Script" uid="uid://7ddy6k0t2gr1" path="res://scripts/ui/ui.gd" id="1_jo1ms"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kw0id"]
+bg_color = Color(0.34509805, 1, 0.84705883, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rnyu1"]
+bg_color = Color(0.95281494, 0.95702064, 0.96489865, 0.126)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ed8p"]
+bg_color = Color(0.6507289, 0.71387357, 0.72538966, 0.45200002)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atyv1"]
+bg_color = Color(1, 0.34509805, 0.34509805, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ll6g"]
+bg_color = Color(0.7428575, 0, 0.12835625, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig75s"]
+bg_color = Color(0.99797744, 0.61468846, 0.5623529, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Hud" type="CanvasLayer" unique_id=1622674647]
+script = ExtResource("1_jo1ms")
+
+[node name="TopBar" type="Control" parent="." unique_id=353559732]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="TopBar" unique_id=705299832]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="HBox" type="HBoxContainer" parent="TopBar" unique_id=1199070268]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="Left" type="HBoxContainer" parent="TopBar/HBox" unique_id=769692047]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RoundBar" type="ProgressBar" parent="TopBar/HBox/Left" unique_id=1173666742]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_kw0id")
+value = 50.0
+show_percentage = false
+
+[node name="MilestoneCard" type="PanelContainer" parent="TopBar/HBox/Left" unique_id=1684109467]
+custom_minimum_size = Vector2(420, 78)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rnyu1")
+
+[node name="Margin" type="MarginContainer" parent="TopBar/HBox/Left/MilestoneCard" unique_id=1609534281]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="TopBar/HBox/Left/MilestoneCard/Margin" unique_id=1121699490]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="TopBar/HBox/Left/MilestoneCard/Margin/VBox" unique_id=258675749]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_font_sizes/font_size = 10
+text = "NEXT GOAL"
+
+[node name="Goal" type="Label" parent="TopBar/HBox/Left/MilestoneCard/Margin/VBox" unique_id=1669275263]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9019608, 0.34509805, 1)
+theme_override_font_sizes/font_size = 14
+text = "Merge 2 Green Circles"
+
+[node name="Sub" type="Label" parent="TopBar/HBox/Left/MilestoneCard/Margin/VBox" unique_id=1276599336]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.34509805, 1, 0.3882353, 1)
+theme_override_font_sizes/font_size = 14
+text = "Next: Blue Circle"
+
+[node name="Spacer" type="Control" parent="TopBar/HBox" unique_id=370527343]
+z_index = -42
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Right" type="HBoxContainer" parent="TopBar/HBox" unique_id=1434983381]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="StatsPanel" type="PanelContainer" parent="TopBar/HBox/Right" unique_id=263058844]
+custom_minimum_size = Vector2(80, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ed8p")
+
+[node name="StatsRow" type="HBoxContainer" parent="TopBar/HBox/Right/StatsPanel" unique_id=1869320613]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="Stat_Multiplier" type="VBoxContainer" parent="TopBar/HBox/Right/StatsPanel/StatsRow" unique_id=1995384614]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Value" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow/Stat_Multiplier" unique_id=15652363]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_font_sizes/font_size = 12
+text = "0"
+
+[node name="Caption" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow/Stat_Multiplier" unique_id=1377271570]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 10
+text = "Multiplier"
+
+[node name="Symbol" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow" unique_id=1146205485]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_font_sizes/font_size = 12
+text = "X"
+
+[node name="Stat_Energy" type="VBoxContainer" parent="TopBar/HBox/Right/StatsPanel/StatsRow" unique_id=417182607]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Value" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow/Stat_Energy" unique_id=612419738]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_font_sizes/font_size = 12
+text = "0"
+
+[node name="Caption" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow/Stat_Energy" unique_id=1851558499]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 10
+text = "Energy"
+
+[node name="Stat_Stored" type="VBoxContainer" parent="TopBar/HBox/Right/StatsPanel/StatsRow" unique_id=1475856741]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Caption" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow/Stat_Stored" unique_id=95446765]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_font_sizes/font_size = 10
+text = "Energy"
+
+[node name="Value" type="Label" parent="TopBar/HBox/Right/StatsPanel/StatsRow/Stat_Stored" unique_id=1927896912]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_font_sizes/font_size = 12
+text = "Stored"
+
+[node name="EndRound" type="Button" parent="TopBar/HBox/Right" unique_id=145177478]
+custom_minimum_size = Vector2(130, 40)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.60308266, 0.068537176, 0.4893229, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_atyv1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6ll6g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ig75s")
+text = "End Cycle"
+
+[node name="SystemLog" type="Label" parent="." unique_id=66645700]
+modulate = Color(1, 1, 1, 0.55)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -44.0
+offset_right = -24.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_font_sizes/font_size = 11
+text = "asfdga sfdgsdag asd"
+horizontal_alignment = 1
+autowrap_mode = 2

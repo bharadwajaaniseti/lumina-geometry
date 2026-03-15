@@ -1,0 +1,334 @@
+[gd_scene format=3 uid="uid://cyoqvrvky32t"]
+
+[ext_resource type="Script" uid="uid://03ejmgn0uthv" path="res://scripts/main/menu.gd" id="1_bi4n3"]
+[ext_resource type="FontFile" uid="uid://nugkt67ugfgw" path="res://assets/fonts/scruf/Scruf-Regular.ttf" id="1_m7hko"]
+[ext_resource type="Texture2D" uid="uid://dmt83ydjregec" path="res://assets/sprites/ui/panels/234x62 normal panel.png" id="3_ixnor"]
+[ext_resource type="Texture2D" uid="uid://tjcnawoupssl" path="res://assets/sprites/ui/settings/Settings.png" id="3_tmwqu"]
+[ext_resource type="Script" uid="uid://c4xlqs5ahs7ps" path="res://scripts/ui/settings_button.gd" id="4_by0dm"]
+[ext_resource type="Texture2D" uid="uid://mxucunid4760" path="res://assets/sprites/ui/panels/234x62 pressed.png" id="4_wt574"]
+[ext_resource type="Texture2D" uid="uid://wic32p2dobi1" path="res://assets/sprites/ui/stats/70x21 stat normal.png" id="5_1ouj3"]
+[ext_resource type="Script" uid="uid://chn4oob3pqmgp" path="res://scripts/ui/stats_button.gd" id="5_3psbo"]
+[ext_resource type="Texture2D" uid="uid://dorvh7vwjw2cd" path="res://assets/sprites/ui/panels/234x62 hover.png" id="5_7hi2l"]
+[ext_resource type="Texture2D" uid="uid://c5h4n8js5od68" path="res://assets/sprites/ui/panels/234x62 disabled.png" id="6_tk7dy"]
+[ext_resource type="Texture2D" uid="uid://dwtrx7t3n44g8" path="res://assets/sprites/ui/panels/587x104 converter panel.png" id="7_7hi2l"]
+[ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="8_bi4n3"]
+[ext_resource type="PackedScene" uid="uid://ceshfkigh2nsw" path="res://scenes/ui/GearGroup.tscn" id="8_tk7dy"]
+
+[node name="Menu" type="Control" unique_id=1500478102]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bi4n3")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1442203279]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="HBoxContainer" parent="." unique_id=793360829]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_constants/separation = 12
+
+[node name="LeftSpacer" type="Control" parent="TopBar" unique_id=551603213]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="TopBar" unique_id=2131626856]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_fonts/font = ExtResource("1_m7hko")
+theme_override_font_sizes/font_size = 65
+text = "Lumina Geometry"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightSpacer" type="Control" parent="TopBar" unique_id=1348715928]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusWrap" type="Control" parent="TopBar" unique_id=2086869443]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("5_3psbo")
+
+[node name="StatusButton" type="TextureButton" parent="TopBar/StatusWrap" unique_id=1277829586]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 80.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "Stats"
+
+[node name="Bar1" type="TextureRect" parent="TopBar/StatusWrap/StatusButton" unique_id=772273688]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -59.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_1ouj3")
+expand_mode = 1
+
+[node name="Bar2" type="TextureRect" parent="TopBar/StatusWrap/StatusButton" unique_id=1393310610]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_1ouj3")
+expand_mode = 1
+
+[node name="Bar3" type="TextureRect" parent="TopBar/StatusWrap/StatusButton" unique_id=1420925675]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_1ouj3")
+expand_mode = 1
+
+[node name="SettingsWrap" type="Control" parent="TopBar" unique_id=873277794]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("4_by0dm")
+
+[node name="SettingsButton" type="TextureButton" parent="TopBar/SettingsWrap" unique_id=1262685571]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 80.0
+scale = Vector2(0.5, 0.5)
+tooltip_text = "Settings"
+
+[node name="GearIcon" type="TextureRect" parent="TopBar/SettingsWrap/SettingsButton" unique_id=1190712533]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_tmwqu")
+stretch_mode = 2
+
+[node name="SideMargin" type="MarginContainer" parent="." unique_id=54738127]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -31.5
+offset_right = 234.0
+offset_bottom = 31.5
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SideMargin" unique_id=333395643]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="InventoryBtnWrap" type="TextureButton" parent="SideMargin/VBoxContainer" unique_id=2047532449]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+texture_normal = ExtResource("3_ixnor")
+texture_pressed = ExtResource("4_wt574")
+texture_hover = ExtResource("5_7hi2l")
+texture_disabled = ExtResource("6_tk7dy")
+texture_focused = ExtResource("4_wt574")
+
+[node name="Label" type="Label" parent="SideMargin/VBoxContainer/InventoryBtnWrap" unique_id=1086988727]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_fonts/font = ExtResource("1_m7hko")
+theme_override_font_sizes/font_size = 24
+text = "Inventory"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Phase1BtnWrap" type="TextureButton" parent="SideMargin/VBoxContainer" unique_id=1985176899]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+texture_normal = ExtResource("3_ixnor")
+texture_pressed = ExtResource("4_wt574")
+texture_hover = ExtResource("5_7hi2l")
+texture_disabled = ExtResource("6_tk7dy")
+texture_focused = ExtResource("4_wt574")
+
+[node name="Label" type="Label" parent="SideMargin/VBoxContainer/Phase1BtnWrap" unique_id=593827921]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_fonts/font = ExtResource("1_m7hko")
+theme_override_font_sizes/font_size = 24
+text = "Phase I"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DummyBtnWrap" type="TextureButton" parent="SideMargin/VBoxContainer" unique_id=1770234521]
+custom_minimum_size = Vector2(220, 70)
+layout_mode = 2
+texture_normal = ExtResource("3_ixnor")
+texture_pressed = ExtResource("4_wt574")
+texture_hover = ExtResource("5_7hi2l")
+texture_disabled = ExtResource("6_tk7dy")
+texture_focused = ExtResource("4_wt574")
+
+[node name="Label" type="Label" parent="SideMargin/VBoxContainer/DummyBtnWrap" unique_id=717767359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_fonts/font = ExtResource("1_m7hko")
+theme_override_font_sizes/font_size = 24
+text = "Dummy"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomMargin" type="MarginContainer" parent="." unique_id=1760560946]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -293.5
+offset_top = -104.0
+offset_right = 293.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="BottomMargin" unique_id=1936996594]
+layout_mode = 2
+texture = ExtResource("7_7hi2l")
+stretch_mode = 2
+
+[node name="Label2" type="Label" parent="BottomMargin/TextureRect" unique_id=474102375]
+layout_mode = 0
+offset_left = 102.5
+offset_top = 26.0
+offset_right = 218.5
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_fonts/font = ExtResource("8_bi4n3")
+theme_override_font_sizes/font_size = 24
+text = "Reserved"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lblreserved" type="Label" parent="BottomMargin/TextureRect" unique_id=1771826811]
+layout_mode = 0
+offset_left = 81.5
+offset_top = 57.0
+offset_right = 231.5
+offset_bottom = 82.0
+theme_override_colors/font_color = Color(0.17254902, 0.54901963, 0, 1)
+theme_override_fonts/font = ExtResource("8_bi4n3")
+theme_override_font_sizes/font_size = 24
+text = "1000000000"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="BottomMargin/TextureRect" unique_id=1341523796]
+layout_mode = 0
+offset_left = 389.5
+offset_top = 26.0
+offset_right = 505.5
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
+theme_override_fonts/font = ExtResource("8_bi4n3")
+theme_override_font_sizes/font_size = 24
+text = "Converted"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="lblconverted" type="Label" parent="BottomMargin/TextureRect" unique_id=1437223872]
+layout_mode = 0
+offset_left = 378.5
+offset_top = 55.0
+offset_right = 528.5
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(1, 0.34509805, 0.34509805, 1)
+theme_override_fonts/font = ExtResource("8_bi4n3")
+theme_override_font_sizes/font_size = 24
+text = "1000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GearGroup" parent="BottomMargin/TextureRect" unique_id=443672880 instance=ExtResource("8_tk7dy")]
+position = Vector2(283.5, 68)
+
+[node name="GlowPulse" type="ColorRect" parent="BottomMargin/TextureRect" unique_id=1584653300]
+custom_minimum_size = Vector2(100, 70)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = -36.0
+offset_right = 66.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.9529412, 0.6509804, 1)
+
+[node name="ConvertorButton" type="TextureButton" parent="BottomMargin/TextureRect" unique_id=1799939023]
+custom_minimum_size = Vector2(100, 70)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.5
+offset_top = -36.0
+offset_right = 66.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dialogs" type="Node" parent="." unique_id=1901640860]
+
+[node name="Info" type="AcceptDialog" parent="Dialogs" unique_id=561018469]
+oversampling_override = 1.0
+title = "Lumina Geometry"
+
+[connection signal="pressed" from="TopBar/StatusWrap/StatusButton" to="TopBar/StatusWrap" method="_on_status_button_pressed"]
+[connection signal="pressed" from="TopBar/SettingsWrap/SettingsButton" to="TopBar/SettingsWrap" method="_on_settings_button_pressed"]
