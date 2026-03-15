@@ -1,8 +1,6 @@
 extends PanelContainer
 class_name MetaUpgradeBlock
 
-signal hovered(node_id: StringName)
-signal unhovered
 signal pressed_node(node_id: StringName)
 
 @onready var block_button: Button = $BlockButton
@@ -11,21 +9,22 @@ signal pressed_node(node_id: StringName)
 @export var locked_color: Color = Color("AEBBEE")
 @export var available_color: Color = Color("8799EA")
 @export var maxed_color: Color = Color("5C75E6")
+
 @export var highlight_border_color: Color = Color("F2C300")
 @export var normal_border_color: Color = Color(0, 0, 0, 0)
 
-@export var hover_brightness: float = 0.08
+@export var selected_outline_color: Color = Color("6B2FA3")
+@export var selected_outline_width: int = 4
+
 @export var border_width: int = 0
 @export var highlight_border_width: int = 4
 
 var node_def: MetaUpgradeNodeDef
 var current_rank: int = 0
 var is_available: bool = false
-var is_hovered: bool = false
+var is_selected: bool = false
 
 func _ready() -> void:
-	block_button.mouse_entered.connect(_on_mouse_entered)
-	block_button.mouse_exited.connect(_on_mouse_exited)
 	block_button.pressed.connect(_on_pressed)
 
 func setup(def: MetaUpgradeNodeDef, rank: int, available: bool) -> void:
@@ -35,27 +34,38 @@ func setup(def: MetaUpgradeNodeDef, rank: int, available: bool) -> void:
 	_update_rank_label()
 	_update_visual()
 
+func set_selected(selected: bool) -> void:
+	is_selected = selected
+	_update_visual()
+
 func _update_rank_label() -> void:
 	if node_def == null:
 		rank_label.visible = false
 		return
 
-	# Hidden for clean look. Turn on later if you want rank visible on block.
+	# Hidden for clean look. Turn on later if you want rank shown on the block itself.
 	rank_label.visible = false
 	rank_label.text = "%d/%d" % [current_rank, node_def.max_rank]
 
 func _update_visual() -> void:
 	var style := StyleBoxFlat.new()
-	style.bg_color = _get_final_fill_color()
+	style.bg_color = _get_base_fill_color()
 
 	var use_highlight := node_def != null and node_def.highlight_border
-	var bw := highlight_border_width if use_highlight else border_width
+	var base_bw := highlight_border_width if use_highlight else border_width
 
-	style.border_width_left = bw
-	style.border_width_top = bw
-	style.border_width_right = bw
-	style.border_width_bottom = bw
+	style.border_width_left = base_bw
+	style.border_width_top = base_bw
+	style.border_width_right = base_bw
+	style.border_width_bottom = base_bw
 	style.border_color = highlight_border_color if use_highlight else normal_border_color
+
+	if is_selected:
+		style.border_width_left = max(style.border_width_left, selected_outline_width)
+		style.border_width_top = max(style.border_width_top, selected_outline_width)
+		style.border_width_right = max(style.border_width_right, selected_outline_width)
+		style.border_width_bottom = max(style.border_width_bottom, selected_outline_width)
+		style.border_color = selected_outline_color
 
 	style.corner_radius_top_left = 0
 	style.corner_radius_top_right = 0
@@ -75,28 +85,6 @@ func _get_base_fill_color() -> Color:
 		return available_color
 
 	return locked_color
-
-func _get_final_fill_color() -> Color:
-	var c := _get_base_fill_color()
-
-	if is_hovered:
-		c.r = min(c.r + hover_brightness, 1.0)
-		c.g = min(c.g + hover_brightness, 1.0)
-		c.b = min(c.b + hover_brightness, 1.0)
-
-	return c
-
-func _on_mouse_entered() -> void:
-	is_hovered = true
-	_update_visual()
-
-	if node_def != null:
-		hovered.emit(node_def.id)
-
-func _on_mouse_exited() -> void:
-	is_hovered = false
-	_update_visual()
-	unhovered.emit()
 
 func _on_pressed() -> void:
 	if node_def != null:

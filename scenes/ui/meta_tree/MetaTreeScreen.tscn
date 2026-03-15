@@ -99,7 +99,7 @@ text = "Level 1"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Close" type="Button" parent="MainPanel/Margin/VBoxRoot/TopBar" unique_id=371434512]
+[node name="CloseButton" type="Button" parent="MainPanel/Margin/VBoxRoot/TopBar" unique_id=371434512]
 custom_minimum_size = Vector2(96, 38)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_hjhfj")
@@ -113,7 +113,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 20
 
 [node name="LeftInfoPanel" type="PanelContainer" parent="MainPanel/Margin/VBoxRoot/ContentRow" unique_id=1988064500]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v5kre")
 

@@ -20,7 +20,7 @@ signal shape_level_changed(shape_id: StringName, new_level: int)
 @onready var hover_node_owned: Label = $MainPanel/Margin/VBoxRoot/ContentRow/LeftInfoPanel/LeftMargin/LeftVBox/HoverNodeCard/CardMargin/CardVBox/HoverNodeOwned
 @onready var buy_button: Button = $MainPanel/Margin/VBoxRoot/ContentRow/LeftInfoPanel/LeftMargin/LeftVBox/HoverNodeCard/CardMargin/CardVBox/BuyButton
 
-@onready var progress_label: Label = $MainPanel/Margin/VBoxRoot/ContentRow/LeftInfoPanel/LeftMargin/LeftVBox/ProgressLabel
+@onready var progress_label: Label = $MainPanel/Margin/VBoxRoot/ContentRow/LeftInfoPanel/LeftMargin/LeftVBox/HoverNodeCard/CardMargin/CardVBox/ProgressLabel
 @onready var upgrade_grid: GridContainer = $MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin/UpgradeGrid
 
 @onready var nodes_owned_label: Label = $MainPanel/Margin/VBoxRoot/BottomBar/NodesOwnedLabel
@@ -41,6 +41,7 @@ func open_for_shape(shape_def, tree_def: ShapeMetaTreeDef) -> void:
 	_tree_def = tree_def
 	_selected_node = null
 	show()
+	move_to_front()
 	_rebuild()
 
 func _rebuild() -> void:
@@ -51,6 +52,10 @@ func _rebuild() -> void:
 
 	if _tree_def == null:
 		_clear_screen()
+		return
+
+	if block_scene == null:
+		push_error("MetaTreeScreen block_scene is not assigned.")
 		return
 
 	upgrade_grid.columns = max(_tree_def.columns, 1)
@@ -71,15 +76,14 @@ func _rebuild() -> void:
 		upgrade_grid.add_child(block)
 		block.custom_minimum_size = Vector2(100, 100)
 		block.setup(node_def, rank, available)
-		block.hovered.connect(_on_block_hovered)
 		block.pressed_node.connect(_on_block_pressed)
-		block.unhovered.connect(_on_block_unhovered)
 
 		_blocks[node_def.id] = block
 
 	if _selected_node == null and _tree_def.nodes.size() > 0:
 		_selected_node = _tree_def.nodes[0]
 
+	_update_block_selection_visuals()
 	_update_hover_card()
 	_update_progress()
 
@@ -89,7 +93,7 @@ func _clear_screen() -> void:
 	core_label.text = "Cores: 0"
 	shape_preview.texture = null
 
-	hover_node_title.text = "Hover a node"
+	hover_node_title.text = "Select a node"
 	hover_node_effect.text = "-"
 	hover_node_cost.text = "-"
 	hover_node_owned.text = "-"
@@ -144,16 +148,10 @@ func _is_node_available(node_def: MetaUpgradeNodeDef) -> bool:
 
 	return true
 
-func _on_block_hovered(node_id: StringName) -> void:
-	_selected_node = _find_node_def(node_id)
-	_update_hover_card()
-
 func _on_block_pressed(node_id: StringName) -> void:
 	_selected_node = _find_node_def(node_id)
+	_update_block_selection_visuals()
 	_update_hover_card()
-
-func _on_block_unhovered() -> void:
-	pass
 
 func _find_node_def(node_id: StringName) -> MetaUpgradeNodeDef:
 	if _tree_def == null:
@@ -213,7 +211,7 @@ func _get_node_effect_text(node_def: MetaUpgradeNodeDef) -> String:
 
 func _update_hover_card() -> void:
 	if _selected_node == null or _tree_def == null:
-		hover_node_title.text = "Hover a node"
+		hover_node_title.text = "Select a node"
 		hover_node_effect.text = "-"
 		hover_node_cost.text = "-"
 		hover_node_owned.text = "-"
@@ -243,6 +241,18 @@ func _update_hover_card() -> void:
 	else:
 		buy_button.text = "Buy"
 		buy_button.disabled = false
+
+func _update_block_selection_visuals() -> void:
+	for key in _blocks.keys():
+		var block: MetaUpgradeBlock = _blocks[key]
+		if block == null:
+			continue
+
+		var is_selected := false
+		if _selected_node != null:
+			is_selected = StringName(key) == _selected_node.id
+
+		block.set_selected(is_selected)
 
 func _on_buy_pressed() -> void:
 	if _selected_node == null or _tree_def == null:
@@ -290,7 +300,6 @@ func get_current_shape_level() -> int:
 	if _tree_def == null:
 		return 1
 
-	# Player-facing level.
 	return Game_State.get_shape_level(str(_tree_def.shape_id)) + 1
 
 func _update_progress() -> void:

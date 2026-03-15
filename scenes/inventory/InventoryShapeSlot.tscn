@@ -3,8 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://chx7j5oqt85gm" path="res://assets/sprites/ui/InventoryPanel 150x150.png" id="1_utvir"]
 [ext_resource type="Texture2D" uid="uid://bb4ya3vqtendw" path="res://assets/sprites/ui/InventoryPanel Selected 150x150.png" id="2_7738a"]
 [ext_resource type="Texture2D" uid="uid://b4f3bm1e2bb0x" path="res://assets/sprites/ui/InventoryPanel Hover 150x150.png" id="3_dhmlp"]
-[ext_resource type="Script" uid="uid://7m5o1rltxeep" path="res://Scripts/main/inventory_shape_slot.gd" id="4_utvir"]
-[ext_resource type="Texture2D" uid="uid://qeyrbeivacqb" path="res://assets/sprites/ui/Inventory Shapes/Circle.png" id="5_7738a"]
+[ext_resource type="Script" uid="uid://7m5o1rltxeep" path="res://scripts/main/inventory_shape_slot.gd" id="4_utvir"]
 
 [node name="InventoryShapeSlot" type="TextureButton" unique_id=983947053]
 custom_minimum_size = Vector2(150, 150)
@@ -24,6 +23,5 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_7738a")
 expand_mode = 1
 stretch_mode = 5

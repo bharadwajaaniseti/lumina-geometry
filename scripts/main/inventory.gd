@@ -7,6 +7,14 @@ extends Control
 @export var locked_icon: Texture2D
 @export var slot_scene: PackedScene
 
+# Map shape id -> ShapeMetaTreeDef resource
+# Example in inspector:
+# {
+#   "circle": preload("res://data/meta/circle_meta_tree.tres"),
+#   "triangle": preload("res://data/meta/triangle_meta_tree.tres")
+# }
+@export var meta_tree_defs: Dictionary = {}
+
 var _selected_slot_index: int = 0
 
 var _slot_buttons: Array[InventoryShapeSlot] = []
@@ -52,6 +60,9 @@ var _level_boxes: Array[TextureRect] = []
 @onready var locked_phase_button: TextureButton = $SafeMargin/MainVBox/ContentRow/RightPanel/Locked/Control/MarginContainer/VBoxContainer/InventoryBtnWrap
 @onready var locked_phase_button_label: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Locked/Control/MarginContainer/VBoxContainer/InventoryBtnWrap/Label
 
+# Add MetaTreeScreen as a child somewhere in this scene, then point this path to it.
+@onready var meta_tree_screen: MetaTreeScreen = $MetaTreeScreen
+
 
 func _ready() -> void:
 	if inventory_db == null:
@@ -63,7 +74,7 @@ func _ready() -> void:
 	_connect_signals()
 	_refresh_energy_label()
 	_build_slot_nodes()
-
+	Game_State.add_shape_cores("circle", 100)
 	if inventory_db.size() > 0:
 		_select_slot(0)
 	else:
@@ -93,6 +104,13 @@ func _connect_signals() -> void:
 	if not Game_State.changed.is_connected(_on_game_state_changed):
 		Game_State.changed.connect(_on_game_state_changed)
 
+	if meta_tree_screen != null:
+		if not meta_tree_screen.closed.is_connected(_on_meta_tree_closed):
+			meta_tree_screen.closed.connect(_on_meta_tree_closed)
+
+		if not meta_tree_screen.shape_level_changed.is_connected(_on_meta_tree_shape_level_changed):
+			meta_tree_screen.shape_level_changed.connect(_on_meta_tree_shape_level_changed)
+
 
 func _build_slot_nodes() -> void:
 	_slot_buttons.clear()
@@ -110,20 +128,20 @@ func _build_slot_nodes() -> void:
 			continue
 
 		var raw_slot: Node = slot_scene.instantiate()
-
 		var slot: InventoryShapeSlot = raw_slot as InventoryShapeSlot
+
 		if slot == null:
 			push_error("Failed to cast instantiated slot to InventoryShapeSlot.")
 			continue
-
-		var tex: Texture2D = def.icon_texture if _is_shape_unlocked(def) else locked_icon
-		slot.setup(i, tex, not _is_shape_unlocked(def))
 
 		if not slot.slot_pressed.is_connected(_on_slot_button_pressed):
 			slot.slot_pressed.connect(_on_slot_button_pressed)
 
 		shape_grid.add_child(slot)
+
+		var tex: Texture2D = def.icon_texture if _is_shape_unlocked(def) else locked_icon
 		slot.setup(i, tex, not _is_shape_unlocked(def))
+
 		_slot_buttons.append(slot)
 
 
@@ -144,6 +162,7 @@ func _rebuild_visible_slots() -> void:
 
 	if _slot_buttons.size() != inventory_db.size():
 		_build_slot_nodes()
+		return
 
 	for i in range(_slot_buttons.size()):
 		var slot: InventoryShapeSlot = _slot_buttons[i]
@@ -194,14 +213,18 @@ func _show_unlocked(def: InventoryShapeDef) -> void:
 	locked_panel.visible = false
 
 	var shape_id: String = def.id.strip_edges().to_lower()
-	var shape_level: int = Game_State.get_shape_level(shape_id)
+
+	# Player-facing level: internal 0 becomes UI level 1.
+	var internal_level: int = Game_State.get_shape_level(shape_id)
+	var display_level: int = internal_level + 1
+
 	var shape_cores: int = Game_State.get_shape_cores(shape_id)
 
-	level_label.text = "Level: %d" % shape_level
-	_update_level_boxes(def, shape_level)
+	level_label.text = "Level: %d" % display_level
+	_update_level_boxes(def, display_level)
 	currency_label.text = "Currency: %d" % shape_cores
 
-	damage_value.text = _fmt_number(_get_scaled_damage(def, shape_level))
+	damage_value.text = _fmt_number(_get_scaled_damage(def, internal_level))
 	attack_speed_value.text = _fmt_number(def.attack_speed)
 	projectile_count_value.text = str(def.projectile_count)
 	projectile_size_value.text = _fmt_number(def.projectile_size)
@@ -283,9 +306,34 @@ func _update_level_boxes(def: InventoryShapeDef, level: int) -> void:
 		box.modulate = Color(1, 1, 1, 1) if i < level else Color(1, 1, 1, 0.22)
 
 
-func _get_scaled_damage(def: InventoryShapeDef, shape_level: int) -> float:
+func _get_scaled_damage(def: InventoryShapeDef, internal_shape_level: int) -> float:
 	var bonus_per_level: float = 0.10
-	return def.damage * (1.0 + (bonus_per_level * float(shape_level)))
+	return def.damage * (1.0 + (bonus_per_level * float(internal_shape_level)))
+
+
+func _get_selected_shape_def() -> InventoryShapeDef:
+	if inventory_db == null:
+		return null
+
+	if _selected_slot_index < 0 or _selected_slot_index >= inventory_db.size():
+		return null
+
+	return inventory_db.get_shape(_selected_slot_index)
+
+
+func _get_meta_tree_def_for_shape(shape_id: String) -> ShapeMetaTreeDef:
+	var key: String = shape_id.strip_edges().to_lower()
+	if key == "":
+		return null
+
+	if not meta_tree_defs.has(key):
+		return null
+
+	var value = meta_tree_defs.get(key)
+	if value is ShapeMetaTreeDef:
+		return value
+
+	return null
 
 
 func _on_slot_button_pressed(index: int) -> void:
@@ -293,7 +341,7 @@ func _on_slot_button_pressed(index: int) -> void:
 
 
 func _on_train_button_pressed() -> void:
-	var def: InventoryShapeDef = inventory_db.get_shape(_selected_slot_index)
+	var def: InventoryShapeDef = _get_selected_shape_def()
 	if def == null:
 		return
 
@@ -309,19 +357,33 @@ func _on_train_button_pressed() -> void:
 
 
 func _on_upgrade_button_pressed() -> void:
-	var def: InventoryShapeDef = inventory_db.get_shape(_selected_slot_index)
+	var def: InventoryShapeDef = _get_selected_shape_def()
 	if def == null:
+		print("UPGRADE: selected shape def is null")
 		return
 
-	if def.upgrade_scene.strip_edges() == "":
-		push_warning("Upgrade scene not set yet for shape: %s" % def.id)
+	print("UPGRADE: selected shape = ", def.id)
+
+	if not _is_shape_unlocked(def):
+		print("UPGRADE: shape is locked")
 		return
 
-	if not ResourceLoader.exists(def.upgrade_scene):
-		push_warning("Upgrade scene does not exist: %s" % def.upgrade_scene)
+	if meta_tree_screen == null:
+		print("UPGRADE: MetaTreeScreen node is missing")
+		push_warning("MetaTreeScreen node is missing from Inventory scene.")
 		return
 
-	get_tree().change_scene_to_file(def.upgrade_scene)
+	print("UPGRADE: MetaTreeScreen found = ", meta_tree_screen.name)
+
+	var tree_def: ShapeMetaTreeDef = _get_meta_tree_def_for_shape(def.id)
+	if tree_def == null:
+		print("UPGRADE: no ShapeMetaTreeDef for shape = ", def.id)
+		push_warning("No ShapeMetaTreeDef assigned for shape: %s" % def.id)
+		return
+
+	print("UPGRADE: opening meta tree for = ", tree_def.shape_id)
+	meta_tree_screen.open_for_shape(def, tree_def)
+	print("UPGRADE: meta tree visible = ", meta_tree_screen.visible)
 
 
 func _on_locked_phase_button_pressed() -> void:
@@ -341,6 +403,20 @@ func _on_game_state_changed() -> void:
 		_show_locked_fallback()
 
 
+func _on_meta_tree_closed() -> void:
+	if inventory_db != null and inventory_db.size() > 0:
+		_select_slot(_selected_slot_index)
+
+
+func _on_meta_tree_shape_level_changed(shape_id: StringName, new_level: int) -> void:
+	var def: InventoryShapeDef = _get_selected_shape_def()
+	if def == null:
+		return
+
+	if def.id.strip_edges().to_lower() == str(shape_id).strip_edges().to_lower():
+		_select_slot(_selected_slot_index)
+
+
 func _fmt_number(value: float) -> String:
 	if abs(value - round(value)) < 0.001:
 		return str(int(round(value)))
@@ -352,5 +428,8 @@ func _on_back_button_pressed() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if meta_tree_screen != null and meta_tree_screen.visible:
+		return
+
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene_to_file(menu_scene)

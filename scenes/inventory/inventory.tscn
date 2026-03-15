@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bi0wtuhn546sb" path="res://assets/sprites/ui/Lock 100x100.png" id="3_fxt6q"]
 [ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="4_e5gw1"]
 [ext_resource type="FontFile" uid="uid://nugkt67ugfgw" path="res://assets/fonts/scruf/Scruf-Regular.ttf" id="5_7ho5a"]
+[ext_resource type="Resource" uid="uid://by6qduffqat7t" path="res://data/meta_trees/circle_meta_tree.tres" id="5_rbxbx"]
 [ext_resource type="Script" uid="uid://c4xlqs5ahs7ps" path="res://scripts/ui/settings_button.gd" id="6_oi3jh"]
 [ext_resource type="Texture2D" uid="uid://tjcnawoupssl" path="res://assets/sprites/ui/settings/Settings.png" id="7_bp57h"]
 [ext_resource type="Texture2D" uid="uid://dcqtscim0dk1h" path="res://assets/sprites/ui/Back.png" id="8_yqubg"]
@@ -16,8 +17,10 @@
 [ext_resource type="Texture2D" uid="uid://b1wwpk0mjsabm" path="res://assets/sprites/ui/panels/150x40 hover.png" id="18_wu2ic"]
 [ext_resource type="Texture2D" uid="uid://c0pngnr2sqmfs" path="res://assets/sprites/ui/panels/150x40 disabled.png" id="19_40h52"]
 [ext_resource type="Texture2D" uid="uid://c4yu5aed7pl7a" path="res://assets/sprites/ui/Lock.png" id="20_mu56c"]
+[ext_resource type="PackedScene" uid="uid://bmmadi7yv0ubp" path="res://scenes/ui/meta_tree/MetaTreeScreen.tscn" id="21_0tixx"]
 [ext_resource type="Texture2D" uid="uid://dmt83ydjregec" path="res://assets/sprites/ui/panels/234x62 normal panel.png" id="21_4ix84"]
 [ext_resource type="Texture2D" uid="uid://mxucunid4760" path="res://assets/sprites/ui/panels/234x62 pressed.png" id="22_846fm"]
+[ext_resource type="PackedScene" uid="uid://clus4u70l0src" path="res://scenes/ui/meta_tree/MetaUpgradeBlock.tscn" id="22_no80g"]
 [ext_resource type="Texture2D" uid="uid://dorvh7vwjw2cd" path="res://assets/sprites/ui/panels/234x62 hover.png" id="23_u4p5d"]
 [ext_resource type="Texture2D" uid="uid://c5h4n8js5od68" path="res://assets/sprites/ui/panels/234x62 disabled.png" id="24_vxai2"]
 
@@ -40,6 +43,9 @@ script = ExtResource("1_m710k")
 inventory_db = ExtResource("2_5q4ag")
 locked_icon = ExtResource("3_fxt6q")
 slot_scene = ExtResource("2_fxt6q")
+meta_tree_defs = {
+"circle": ExtResource("5_rbxbx")
+}
 
 [node name="Background" type="ColorRect" parent="." unique_id=2028733034]
 layout_mode = 1
@@ -744,6 +750,10 @@ theme_override_font_sizes/font_size = 24
 text = "Phase I"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MetaTreeScreen" parent="." unique_id=768639228 instance=ExtResource("21_0tixx")]
+layout_mode = 1
+block_scene = ExtResource("22_no80g")
 
 [connection signal="pressed" from="SafeMargin/MainVBox/TopBar2/SettingsWrap/SettingsButton" to="SafeMargin/MainVBox/TopBar2/SettingsWrap" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="SafeMargin/MainVBox/TopBar2/BackWrap/BackButton" to="." method="_on_back_button_pressed"]
