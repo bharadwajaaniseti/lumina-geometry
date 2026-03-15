@@ -742,54 +742,141 @@ func spend_shape_cores(shape_id: String, amount: int) -> bool:
 # Inventory meta tree nodes (upgrade tree)
 # -------------------------------------------------------------------
 # These are the permanent nodes from the Inventory upgrade screen.
-# By default, each purchased valid node can grant +1 progression point.
+# upgrade_nodes now stores per-node rank as int:
+# {
+#   "aoe": 2,
+#   "range": 1
+# }
+#
+# Old saves that stored:
+# {
+#   "aoe": true
+# }
+# are still supported and treated as rank 1.
+#
+# Each newly purchased rank can grant +1 progression point.
 # Every 5 progression points = +1 shape level.
 # Max shape level = 8.
 
-func has_shape_upgrade_node(shape_id: String, node_id: String) -> bool:
-	var entry: Dictionary = _get_shape_entry(shape_id)
-	var nodes: Dictionary = entry.get("upgrade_nodes", {})
-	return bool(nodes.get(node_id, false))
-
-func unlock_shape_upgrade_node(shape_id: String, node_id: String, grants_progress_point: bool = true) -> bool:
+func get_shape_upgrade_node_rank(shape_id: String, node_id: String) -> int:
 	var clean_node_id: String = node_id.strip_edges()
 	if clean_node_id == "":
-		return false
+		return 0
+
+	var entry: Dictionary = _get_shape_entry(shape_id)
+	var nodes: Dictionary = entry.get("upgrade_nodes", {})
+	var raw_value: Variant = nodes.get(clean_node_id, 0)
+
+	match typeof(raw_value):
+		TYPE_BOOL:
+			return 1 if bool(raw_value) else 0
+		TYPE_INT:
+			return max(int(raw_value), 0)
+		TYPE_FLOAT:
+			return max(int(raw_value), 0)
+		TYPE_STRING:
+			return max(str(raw_value).to_int(), 0)
+		_:
+			return 0
+
+func has_shape_upgrade_node(shape_id: String, node_id: String) -> bool:
+	return get_shape_upgrade_node_rank(shape_id, node_id) > 0
+
+func set_shape_upgrade_node_rank(
+	shape_id: String,
+	node_id: String,
+	rank: int,
+	grants_progress_points: bool = false,
+	progress_points_per_rank: int = 1
+) -> void:
+	var clean_node_id: String = node_id.strip_edges()
+	if clean_node_id == "":
+		return
 
 	var entry: Dictionary = _get_shape_entry(shape_id)
 	var nodes: Dictionary = entry.get("upgrade_nodes", {})
 
-	if bool(nodes.get(clean_node_id, false)):
-		return false
+	var old_rank: int = get_shape_upgrade_node_rank(shape_id, clean_node_id)
+	var new_rank: int = max(rank, 0)
 
-	nodes[clean_node_id] = true
+	if new_rank <= 0:
+		nodes.erase(clean_node_id)
+	else:
+		nodes[clean_node_id] = new_rank
+
 	entry["upgrade_nodes"] = nodes
 
-	if grants_progress_point:
-		var points: int = int(entry.get("progression_points", 0)) + 1
-		entry["progression_points"] = points
-		entry["level"] = _calculate_shape_level(points)
+	if grants_progress_points and new_rank > old_rank:
+		var gained_ranks: int = new_rank - old_rank
+		var points_to_add: int = gained_ranks * max(progress_points_per_rank, 0)
+		var points: int = int(entry.get("progression_points", 0)) + points_to_add
+		entry["progression_points"] = max(points, 0)
+		entry["level"] = _calculate_shape_level(int(entry["progression_points"]))
 
 	_set_shape_entry(shape_id, entry, true)
+
+func increase_shape_upgrade_node_rank(
+	shape_id: String,
+	node_id: String,
+	amount: int = 1,
+	grants_progress_points: bool = true,
+	progress_points_per_rank: int = 1
+) -> int:
+	if amount <= 0:
+		return get_shape_upgrade_node_rank(shape_id, node_id)
+
+	var current_rank: int = get_shape_upgrade_node_rank(shape_id, node_id)
+	var new_rank: int = current_rank + amount
+
+	set_shape_upgrade_node_rank(
+		shape_id,
+		node_id,
+		new_rank,
+		grants_progress_points,
+		progress_points_per_rank
+	)
+
+	return new_rank
+
+func unlock_shape_upgrade_node(shape_id: String, node_id: String, grants_progress_point: bool = true) -> bool:
+	var current_rank: int = get_shape_upgrade_node_rank(shape_id, node_id)
+	if current_rank > 0:
+		return false
+
+	increase_shape_upgrade_node_rank(shape_id, node_id, 1, grants_progress_point, 1)
 	return true
 
 func get_shape_upgrade_node_ids(shape_id: String) -> Array[String]:
 	var result: Array[String] = []
 	var entry: Dictionary = _get_shape_entry(shape_id)
 	var nodes: Dictionary = entry.get("upgrade_nodes", {})
+
 	for key in nodes.keys():
-		if bool(nodes.get(key, false)):
+		if get_shape_upgrade_node_rank(shape_id, str(key)) > 0:
 			result.append(str(key))
+
 	return result
 
 func get_shape_upgrade_node_count(shape_id: String) -> int:
 	var entry: Dictionary = _get_shape_entry(shape_id)
 	var nodes: Dictionary = entry.get("upgrade_nodes", {})
 	var count: int = 0
+
 	for key in nodes.keys():
-		if bool(nodes.get(key, false)):
+		if get_shape_upgrade_node_rank(shape_id, str(key)) > 0:
 			count += 1
+
 	return count
+
+func get_shape_upgrade_total_ranks(shape_id: String) -> int:
+	var entry: Dictionary = _get_shape_entry(shape_id)
+	var nodes: Dictionary = entry.get("upgrade_nodes", {})
+	var total: int = 0
+
+	for key in nodes.keys():
+		total += get_shape_upgrade_node_rank(shape_id, str(key))
+
+	return total
 
 # -------------------------------------------------------------------
 # Mini-game training tree nodes

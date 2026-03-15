@@ -110,7 +110,6 @@ func _build_slot_nodes() -> void:
 			continue
 
 		var raw_slot: Node = slot_scene.instantiate()
-		print("instanced slot node = ", raw_slot, " script = ", raw_slot.get_script())
 
 		var slot: InventoryShapeSlot = raw_slot as InventoryShapeSlot
 		if slot == null:
@@ -118,14 +117,12 @@ func _build_slot_nodes() -> void:
 			continue
 
 		var tex: Texture2D = def.icon_texture if _is_shape_unlocked(def) else locked_icon
-		print("slot=", i, " id=", def.id, " unlocked=", _is_shape_unlocked(def), " tex=", tex)
 		slot.setup(i, tex, not _is_shape_unlocked(def))
 
 		if not slot.slot_pressed.is_connected(_on_slot_button_pressed):
 			slot.slot_pressed.connect(_on_slot_button_pressed)
 
 		shape_grid.add_child(slot)
-		print("added slot child, has method setup = ", slot.has_method("setup"))
 		slot.setup(i, tex, not _is_shape_unlocked(def))
 		_slot_buttons.append(slot)
 
