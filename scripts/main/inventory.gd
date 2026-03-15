@@ -197,7 +197,7 @@ func _show_unlocked(def: InventoryShapeDef) -> void:
 	locked_panel.visible = false
 
 	level_label.text = "Level:"
-	_update_level_boxes(0)
+	_update_level_boxes(def, 0)
 	currency_label.text = "Currency: 0"
 
 	damage_value.text = _fmt_number(def.damage)
@@ -246,15 +246,28 @@ func _show_locked_fallback() -> void:
 	locked_title.text = "Locked"
 	locked_info.text = "This shape is still locked."
 	locked_phase_button_label.text = "Phase 1"
+	_update_level_boxes(null, 0)
 
 
-func _update_level_boxes(level: int) -> void:
+func _update_level_boxes(def: InventoryShapeDef, level: int) -> void:
+	var tex: Texture2D = null
+
+	if def != null:
+		tex = def.icon_texture
+
 	for i in range(_level_boxes.size()):
 		var box: TextureRect = _level_boxes[i]
 		if box == null:
 			continue
-		box.modulate = Color(1, 1, 1, 1) if i < level else Color(1, 1, 1, 0.22)
 
+		box.texture = tex
+
+		# Optional fallback if texture is missing
+		if box.texture == null:
+			box.texture = locked_icon
+
+		# Highlight based on current level
+		box.modulate = Color(1, 1, 1, 1) if i < level else Color(1, 1, 1, 0.22)
 
 func _on_slot_button_pressed(index: int) -> void:
 	if index < 0 or index >= inventory_db.size():
