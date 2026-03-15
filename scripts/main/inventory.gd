@@ -126,8 +126,7 @@ func _collect_level_boxes() -> void:
 
 
 func _refresh_energy_label() -> void:
-	energy_label.text = "Energy: %d" % int(floor(Game_State.stored_energy))
-
+	energy_label.text = "Converted: " + str(int(Game_State.converted_energy))
 
 func _rebuild_visible_slots() -> void:
 	var db_count: int = inventory_db.size()

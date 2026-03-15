@@ -198,6 +198,7 @@ func deposit_run_energy(amount: float) -> void:
 	stored_energy += amount
 	total_energy_generated += amount
 	changed.emit()
+	save_to_disk()
 
 func spend_stored(amount: float) -> bool:
 	if amount <= 0.0:
@@ -206,6 +207,7 @@ func spend_stored(amount: float) -> bool:
 		return false
 	stored_energy -= amount
 	changed.emit()
+	save_to_disk()
 	return true
 
 func spend_converted(amount: float) -> bool:
@@ -215,6 +217,7 @@ func spend_converted(amount: float) -> bool:
 		return false
 	converted_energy -= amount
 	changed.emit()
+	save_to_disk()
 	return true
 
 func get_conversion_result_sqrt(reserved_amount: float, sqrt_multiplier: float = 1.0) -> int:
@@ -254,6 +257,7 @@ func consume_reserved_chunk(
 
 	stored_energy = after
 	changed.emit()
+	save_to_disk()
 
 	return max(gained, 0)
 
@@ -262,6 +266,7 @@ func add_converted(amount: int) -> void:
 		return
 	converted_energy += amount
 	changed.emit()
+	save_to_disk()
 
 func increment_cycle() -> void:
 	cycle_count += 1
