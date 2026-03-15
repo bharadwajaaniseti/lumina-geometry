@@ -75,6 +75,7 @@ func _ready() -> void:
 	_refresh_energy_label()
 	_build_slot_nodes()
 	Game_State.add_shape_cores("circle", 100)
+	Game_State.add_shape_cores("pyramid", 50)
 	if inventory_db.size() > 0:
 		_select_slot(0)
 	else:

@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="ShapeMetaTreeDef" format=3 uid="uid://qsnqmgdtbsqc"]
+
+[ext_resource type="Script" uid="uid://cihf305arrf0r" path="res://scripts/ui/meta/meta_upgrade_node_def.gd" id="1_pppte"]
+[ext_resource type="Script" uid="uid://cwrgiwo25400f" path="res://scripts/ui/meta/shape_meta_tree_def.gd" id="2_5u1vw"]
+
+[sub_resource type="Resource" id="Resource_p3kmq"]
+script = ExtResource("1_pppte")
+id = &"pyramid_damage_1"
+title = "Damage Boost"
+description = "Increases Pyramid damage.	"
+cost_per_rank = 5
+stat_key = &"damage"
+base_value = 10.0
+value_per_rank = 5.0
+metadata/_custom_type_script = "uid://cihf305arrf0r"
+
+[sub_resource type="Resource" id="Resource_gpif3"]
+script = ExtResource("1_pppte")
+id = &"pyramid_attack_speed_1"
+title = "Attack Speed"
+description = "Increases Circle attack speed."
+base_cost_cores = 12
+cost_per_rank = 6
+stat_key = &"atttack_speed"
+base_value = 5.0
+value_per_rank = 2.5
+metadata/_custom_type_script = "uid://cihf305arrf0r"
+
+[sub_resource type="Resource" id="Resource_445il"]
+script = ExtResource("1_pppte")
+id = &"pyramid_crit_special"
+title = "pyramid_crit_special"
+description = "Critical Core"
+base_cost_cores = 20
+cost_per_rank = 10
+stat_key = &"crit_chance"
+base_value = 3.0
+value_per_rank = 2.0
+highlight_border = true
+metadata/_custom_type_script = "uid://cihf305arrf0r"
+
+[resource]
+script = ExtResource("2_5u1vw")
+shape_id = &"pyramid"
+nodes = Array[ExtResource("1_pppte")]([SubResource("Resource_p3kmq"), SubResource("Resource_gpif3"), SubResource("Resource_445il")])
+metadata/_custom_type_script = "uid://cwrgiwo25400f"

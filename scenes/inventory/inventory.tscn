@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="4_e5gw1"]
 [ext_resource type="FontFile" uid="uid://nugkt67ugfgw" path="res://assets/fonts/scruf/Scruf-Regular.ttf" id="5_7ho5a"]
 [ext_resource type="Resource" uid="uid://by6qduffqat7t" path="res://data/meta_trees/circle_meta_tree.tres" id="5_rbxbx"]
+[ext_resource type="Resource" uid="uid://qsnqmgdtbsqc" path="res://data/meta_trees/pyramid_meta_tree.tres" id="6_m710k"]
 [ext_resource type="Script" uid="uid://c4xlqs5ahs7ps" path="res://scripts/ui/settings_button.gd" id="6_oi3jh"]
 [ext_resource type="Texture2D" uid="uid://tjcnawoupssl" path="res://assets/sprites/ui/settings/Settings.png" id="7_bp57h"]
 [ext_resource type="Texture2D" uid="uid://dcqtscim0dk1h" path="res://assets/sprites/ui/Back.png" id="8_yqubg"]
@@ -44,7 +45,8 @@ inventory_db = ExtResource("2_5q4ag")
 locked_icon = ExtResource("3_fxt6q")
 slot_scene = ExtResource("2_fxt6q")
 meta_tree_defs = {
-"circle": ExtResource("5_rbxbx")
+"circle": ExtResource("5_rbxbx"),
+"pyramid": ExtResource("6_m710k")
 }
 
 [node name="Background" type="ColorRect" parent="." unique_id=2028733034]
