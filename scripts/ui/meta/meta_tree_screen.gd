@@ -21,7 +21,7 @@ signal shape_level_changed(shape_id: StringName, new_level: int)
 @onready var buy_button: Button = $MainPanel/Margin/VBoxRoot/ContentRow/LeftInfoPanel/LeftMargin/LeftVBox/HoverNodeCard/CardMargin/CardVBox/BuyButton
 
 @onready var progress_label: Label = $MainPanel/Margin/VBoxRoot/ContentRow/LeftInfoPanel/LeftMargin/LeftVBox/HoverNodeCard/CardMargin/CardVBox/ProgressLabel
-@onready var upgrade_grid: GridContainer = $MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin/UpgradeGrid
+@onready var upgrade_grid: GridContainer = $MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin/TreeCanvas/UpgradeGrid
 
 @onready var nodes_owned_label: Label = $MainPanel/Margin/VBoxRoot/BottomBar/NodesOwnedLabel
 @onready var next_level_label: Label = $MainPanel/Margin/VBoxRoot/BottomBar/NextLevelLabel
@@ -41,7 +41,6 @@ func open_for_shape(shape_def, tree_def: ShapeMetaTreeDef) -> void:
 	_tree_def = tree_def
 	_selected_node = null
 	show()
-	move_to_front()
 	_rebuild()
 
 func _rebuild() -> void:
@@ -52,10 +51,6 @@ func _rebuild() -> void:
 
 	if _tree_def == null:
 		_clear_screen()
-		return
-
-	if block_scene == null:
-		push_error("MetaTreeScreen block_scene is not assigned.")
 		return
 
 	upgrade_grid.columns = max(_tree_def.columns, 1)
@@ -70,20 +65,23 @@ func _rebuild() -> void:
 		if block == null:
 			continue
 
-		var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+		var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 		var available: bool = _is_node_available(node_def)
 
 		upgrade_grid.add_child(block)
 		block.custom_minimum_size = Vector2(100, 100)
 		block.setup(node_def, rank, available)
+		block.hovered.connect(_on_block_hovered)
 		block.pressed_node.connect(_on_block_pressed)
+
+		if block.has_signal("unhovered"):
+			block.unhovered.connect(_on_block_unhovered)
 
 		_blocks[node_def.id] = block
 
 	if _selected_node == null and _tree_def.nodes.size() > 0:
 		_selected_node = _tree_def.nodes[0]
 
-	_update_block_selection_visuals()
 	_update_hover_card()
 	_update_progress()
 
@@ -93,7 +91,7 @@ func _clear_screen() -> void:
 	core_label.text = "Cores: 0"
 	shape_preview.texture = null
 
-	hover_node_title.text = "Select a node"
+	hover_node_title.text = "Hover a node"
 	hover_node_effect.text = "-"
 	hover_node_cost.text = "-"
 	hover_node_owned.text = "-"
@@ -108,13 +106,10 @@ func _update_shape_header() -> void:
 	var display_name := str(_tree_def.shape_id)
 
 	if _shape_def != null:
-		var dn = _shape_def.get("display_name")
-		var sid = _shape_def.get("id")
-
-		if dn != null and str(dn).strip_edges() != "":
-			display_name = str(dn)
-		elif sid != null and str(sid).strip_edges() != "":
-			display_name = str(sid)
+		if "display_name" in _shape_def and str(_shape_def.display_name).strip_edges() != "":
+			display_name = str(_shape_def.display_name)
+		elif "id" in _shape_def and str(_shape_def.id).strip_edges() != "":
+			display_name = str(_shape_def.id)
 
 	shape_name_label.text = display_name
 	shape_level_label.text = "Level %d" % get_current_shape_level()
@@ -124,34 +119,42 @@ func _update_shape_preview() -> void:
 		shape_preview.texture = null
 		return
 
-	var tex = _shape_def.get("texture")
-	if tex == null:
-		tex = _shape_def.get("icon")
-
-	shape_preview.texture = tex
-
-func _update_core_label() -> void:
-	if _tree_def == null:
-		core_label.text = "Cores: 0"
+	if "texture" in _shape_def:
+		shape_preview.texture = _shape_def.texture
 		return
 
-	core_label.text = "Cores: %d" % Game_State.get_shape_cores(str(_tree_def.shape_id))
+	if "icon" in _shape_def:
+		shape_preview.texture = _shape_def.icon
+		return
+
+	shape_preview.texture = null
+
+func _update_core_label() -> void:
+	core_label.text = "Cores: %d" % Game_State.get_cores()
 
 func _is_node_available(node_def: MetaUpgradeNodeDef) -> bool:
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 	if rank >= node_def.max_rank:
 		return true
 
 	for req in node_def.required_node_ids:
-		if Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(req)) <= 0:
+		if Game_State.get_shape_node_rank(_tree_def.shape_id, req) <= 0:
 			return false
 
 	return true
 
+func _on_block_hovered(node_id: StringName) -> void:
+	_selected_node = _find_node_def(node_id)
+	_update_hover_card()
+
 func _on_block_pressed(node_id: StringName) -> void:
 	_selected_node = _find_node_def(node_id)
-	_update_block_selection_visuals()
 	_update_hover_card()
+
+func _on_block_unhovered() -> void:
+	# Keep current selected node info visible.
+	# This feels better than clearing the card every time the mouse leaves a block.
+	pass
 
 func _find_node_def(node_id: StringName) -> MetaUpgradeNodeDef:
 	if _tree_def == null:
@@ -164,17 +167,17 @@ func _find_node_def(node_id: StringName) -> MetaUpgradeNodeDef:
 	return null
 
 func _get_node_cost(node_def: MetaUpgradeNodeDef) -> int:
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 	return node_def.base_cost_cores + (node_def.cost_per_rank * rank)
 
 func _get_node_current_value(node_def: MetaUpgradeNodeDef) -> float:
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 	if rank <= 0:
 		return 0.0
 	return node_def.base_value + (node_def.value_per_rank * float(rank - 1))
 
 func _get_node_next_value(node_def: MetaUpgradeNodeDef) -> float:
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 	return node_def.base_value + (node_def.value_per_rank * float(rank))
 
 func _format_value(value: float) -> String:
@@ -183,7 +186,7 @@ func _format_value(value: float) -> String:
 	return str(snappedf(value, 0.01))
 
 func _get_node_effect_text(node_def: MetaUpgradeNodeDef) -> String:
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 
 	if node_def.max_rank <= 1:
 		return "%s +%s" % [str(node_def.stat_key), _format_value(node_def.base_value)]
@@ -211,7 +214,7 @@ func _get_node_effect_text(node_def: MetaUpgradeNodeDef) -> String:
 
 func _update_hover_card() -> void:
 	if _selected_node == null or _tree_def == null:
-		hover_node_title.text = "Select a node"
+		hover_node_title.text = "Hover a node"
 		hover_node_effect.text = "-"
 		hover_node_cost.text = "-"
 		hover_node_owned.text = "-"
@@ -219,7 +222,7 @@ func _update_hover_card() -> void:
 		buy_button.text = "Buy"
 		return
 
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(_selected_node.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, _selected_node.id)
 	var cost: int = _get_node_cost(_selected_node)
 	var available: bool = _is_node_available(_selected_node)
 	var maxed: bool = rank >= _selected_node.max_rank
@@ -235,30 +238,18 @@ func _update_hover_card() -> void:
 	elif not available:
 		buy_button.text = "Locked"
 		buy_button.disabled = true
-	elif Game_State.get_shape_cores(str(_tree_def.shape_id)) < cost:
+	elif Game_State.get_cores() < cost:
 		buy_button.text = "Not Enough Cores"
 		buy_button.disabled = true
 	else:
 		buy_button.text = "Buy"
 		buy_button.disabled = false
 
-func _update_block_selection_visuals() -> void:
-	for key in _blocks.keys():
-		var block: MetaUpgradeBlock = _blocks[key]
-		if block == null:
-			continue
-
-		var is_selected := false
-		if _selected_node != null:
-			is_selected = StringName(key) == _selected_node.id
-
-		block.set_selected(is_selected)
-
 func _on_buy_pressed() -> void:
 	if _selected_node == null or _tree_def == null:
 		return
 
-	var rank: int = Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(_selected_node.id))
+	var rank: int = Game_State.get_shape_node_rank(_tree_def.shape_id, _selected_node.id)
 	if rank >= _selected_node.max_rank:
 		return
 
@@ -266,18 +257,12 @@ func _on_buy_pressed() -> void:
 		return
 
 	var cost: int = _get_node_cost(_selected_node)
-	if not Game_State.spend_shape_cores(str(_tree_def.shape_id), cost):
+	if not Game_State.spend_cores(cost):
 		return
 
 	var old_level: int = get_current_shape_level()
 
-	Game_State.increase_shape_upgrade_node_rank(
-		str(_tree_def.shape_id),
-		str(_selected_node.id),
-		1,
-		true,
-		1
-	)
+	Game_State.increase_shape_node_rank(_tree_def.shape_id, _selected_node.id, 1)
 
 	var new_level: int = get_current_shape_level()
 
@@ -292,7 +277,7 @@ func get_total_owned_ranks() -> int:
 
 	var total := 0
 	for node_def in _tree_def.nodes:
-		total += Game_State.get_shape_upgrade_node_rank(str(_tree_def.shape_id), str(node_def.id))
+		total += Game_State.get_shape_node_rank(_tree_def.shape_id, node_def.id)
 
 	return total
 
@@ -300,7 +285,14 @@ func get_current_shape_level() -> int:
 	if _tree_def == null:
 		return 1
 
-	return Game_State.get_shape_level(str(_tree_def.shape_id)) + 1
+	var total: int = get_total_owned_ranks()
+	var level := 1
+
+	for threshold in _tree_def.level_thresholds:
+		if total >= threshold:
+			level += 1
+
+	return level
 
 func _update_progress() -> void:
 	if _tree_def == null:
@@ -317,17 +309,17 @@ func _update_progress() -> void:
 
 	nodes_owned_label.text = "Ranks Owned: %d / %d" % [total_ranks, max_ranks]
 
-	var internal_level: int = Game_State.get_shape_level(str(_tree_def.shape_id))
-	if internal_level >= Game_State.SHAPE_MAX_LEVEL:
+	var next_threshold := -1
+	for threshold in _tree_def.level_thresholds:
+		if total_ranks < threshold:
+			next_threshold = threshold
+			break
+
+	if next_threshold == -1:
 		next_level_label.text = "Max Level Reached"
-		progress_label.text = "Max Level Reached"
-		return
+	else:
+		next_level_label.text = "Next Level: %d / %d" % [total_ranks, next_threshold]
 
-	var progress_in_tier: int = Game_State.get_shape_level_progress_in_current_tier(str(_tree_def.shape_id))
-	var needed: int = Game_State.get_shape_points_needed_for_next_level(str(_tree_def.shape_id))
-	var gained_in_tier: int = Game_State.SHAPE_POINTS_PER_LEVEL - needed if needed > 0 else Game_State.SHAPE_POINTS_PER_LEVEL
-
-	next_level_label.text = "Next Level: %d / %d" % [gained_in_tier, Game_State.SHAPE_POINTS_PER_LEVEL]
 	progress_label.text = next_level_label.text
 
 func _on_close_pressed() -> void:

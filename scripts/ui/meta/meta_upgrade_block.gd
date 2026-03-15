@@ -6,15 +6,18 @@ signal pressed_node(node_id: StringName)
 @onready var block_button: Button = $BlockButton
 @onready var rank_label: Label = $RankLabel
 
-@export var locked_color: Color = Color("AEBBEE")
-@export var available_color: Color = Color("8799EA")
+@export var locked_color: Color = Color("D7D1E3")
+@export var available_color: Color = Color("8D9AF0")
+@export var owned_color: Color = Color("6E7FE8")
 @export var maxed_color: Color = Color("5C75E6")
 
+@export var available_outline_color: Color = Color("B58AE8")
 @export var highlight_border_color: Color = Color("F2C300")
 @export var normal_border_color: Color = Color(0, 0, 0, 0)
 
 @export var selected_outline_color: Color = Color("6B2FA3")
 @export var selected_outline_width: int = 4
+@export var available_outline_width: int = 2
 
 @export var border_width: int = 0
 @export var highlight_border_width: int = 4
@@ -43,7 +46,6 @@ func _update_rank_label() -> void:
 		rank_label.visible = false
 		return
 
-	# Hidden for clean look. Turn on later if you want rank shown on the block itself.
 	rank_label.visible = false
 	rank_label.text = "%d/%d" % [current_rank, node_def.max_rank]
 
@@ -52,20 +54,22 @@ func _update_visual() -> void:
 	style.bg_color = _get_base_fill_color()
 
 	var use_highlight := node_def != null and node_def.highlight_border
-	var base_bw := highlight_border_width if use_highlight else border_width
+	var bw := highlight_border_width if use_highlight else border_width
+	var bc := highlight_border_color if use_highlight else normal_border_color
 
-	style.border_width_left = base_bw
-	style.border_width_top = base_bw
-	style.border_width_right = base_bw
-	style.border_width_bottom = base_bw
-	style.border_color = highlight_border_color if use_highlight else normal_border_color
+	if current_rank <= 0 and is_available and not use_highlight:
+		bw = max(bw, available_outline_width)
+		bc = available_outline_color
 
 	if is_selected:
-		style.border_width_left = max(style.border_width_left, selected_outline_width)
-		style.border_width_top = max(style.border_width_top, selected_outline_width)
-		style.border_width_right = max(style.border_width_right, selected_outline_width)
-		style.border_width_bottom = max(style.border_width_bottom, selected_outline_width)
-		style.border_color = selected_outline_color
+		bw = max(bw, selected_outline_width)
+		bc = selected_outline_color
+
+	style.border_width_left = bw
+	style.border_width_top = bw
+	style.border_width_right = bw
+	style.border_width_bottom = bw
+	style.border_color = bc
 
 	style.corner_radius_top_left = 0
 	style.corner_radius_top_right = 0
@@ -80,6 +84,9 @@ func _get_base_fill_color() -> Color:
 
 	if current_rank >= node_def.max_rank:
 		return maxed_color
+
+	if current_rank > 0:
+		return owned_color
 
 	if is_available:
 		return available_color

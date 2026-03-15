@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bff0pijsg4aj4" path="res://Scripts/ui/meta/meta_tree_screen.gd" id="1_eui7o"]
 [ext_resource type="FontFile" uid="uid://nugkt67ugfgw" path="res://assets/fonts/scruf/Scruf-Regular.ttf" id="1_hjhfj"]
+[ext_resource type="Script" uid="uid://cf125af428uuh" path="res://scripts/ui/meta/meta_tree_connection_layer.gd" id="3_gie8s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eui7o"]
 bg_color = Color(0.60038817, 0.60038817, 0.60038817, 0)
@@ -209,8 +210,28 @@ theme_override_constants/margin_top = 18
 theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 18
 
-[node name="UpgradeGrid" type="GridContainer" parent="MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin" unique_id=1199708687]
+[node name="TreeCanvas" type="Control" parent="MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin" unique_id=692666965]
 layout_mode = 2
+mouse_filter = 2
+
+[node name="ConnectionLayer" type="Control" parent="MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin/TreeCanvas" unique_id=1816405145]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_gie8s")
+metadata/_custom_type_script = "uid://cf125af428uuh"
+
+[node name="UpgradeGrid" type="GridContainer" parent="MainPanel/Margin/VBoxRoot/ContentRow/RightTreePanel/TreeMargin/TreeCanvas" unique_id=1199708687]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/h_separation = 36
 theme_override_constants/v_separation = 34
 columns = 10

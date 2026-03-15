@@ -24,6 +24,7 @@ cost_per_rank = 6
 stat_key = &"atttack_speed"
 base_value = 5.0
 value_per_rank = 2.5
+required_node_ids = Array[StringName]([&"circle_damage_1"])
 metadata/_custom_type_script = "uid://cihf305arrf0r"
 
 [sub_resource type="Resource" id="Resource_445il"]
@@ -36,6 +37,7 @@ cost_per_rank = 10
 stat_key = &"crit_chance"
 base_value = 3.0
 value_per_rank = 2.0
+required_node_ids = Array[StringName]([&"circle_attack_speed_1"])
 highlight_border = true
 metadata/_custom_type_script = "uid://cihf305arrf0r"
 

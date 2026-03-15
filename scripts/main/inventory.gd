@@ -61,8 +61,7 @@ var _level_boxes: Array[TextureRect] = []
 @onready var locked_phase_button_label: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Locked/Control/MarginContainer/VBoxContainer/InventoryBtnWrap/Label
 
 # Add MetaTreeScreen as a child somewhere in this scene, then point this path to it.
-@onready var meta_tree_screen: MetaTreeScreen = $MetaTreeScreen
-
+@onready var meta_tree_screen: Control = $MetaTreeScreen
 
 func _ready() -> void:
 	if inventory_db == null:
@@ -74,8 +73,7 @@ func _ready() -> void:
 	_connect_signals()
 	_refresh_energy_label()
 	_build_slot_nodes()
-	Game_State.add_shape_cores("circle", 100)
-	Game_State.add_shape_cores("pyramid", 50)
+	
 	if inventory_db.size() > 0:
 		_select_slot(0)
 	else:
@@ -434,3 +432,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().change_scene_to_file(menu_scene)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_page_down"):
+		Game_State.debug_reset_shape_meta("circle", true)
+		Game_State.add_shape_cores("circle", 100)
+		Game_State.debug_reset_shape_meta("pyramid", true)
+		Game_State.add_shape_cores("pyramid", 100)
+		_on_game_state_changed()

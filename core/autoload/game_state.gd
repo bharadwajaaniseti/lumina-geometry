@@ -965,3 +965,15 @@ func get_shape_points_needed_for_next_level(shape_id: String) -> int:
 	if progress_in_tier == 0:
 		return SHAPE_POINTS_PER_LEVEL
 	return SHAPE_POINTS_PER_LEVEL - progress_in_tier
+
+func debug_reset_shape_meta(shape_id: String, reset_cores: bool = false) -> void:
+	var entry: Dictionary = _get_shape_entry(shape_id)
+
+	entry["upgrade_nodes"] = {}
+	entry["progression_points"] = 0
+	entry["level"] = 0
+
+	if reset_cores:
+		entry["cores"] = 0
+
+	_set_shape_entry(shape_id, entry, true)
