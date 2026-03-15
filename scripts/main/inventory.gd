@@ -5,11 +5,11 @@ extends Control
 
 @export var inventory_db: InventoryShapeDB
 @export var locked_icon: Texture2D
+@export var slot_scene: PackedScene
 
 var _selected_slot_index: int = 0
 
-var _slot_buttons: Array[TextureButton] = []
-var _slot_icons: Array[TextureRect] = []
+var _slot_buttons: Array[InventoryShapeSlot] = []
 var _level_boxes: Array[TextureRect] = []
 
 @onready var energy_label: Label = $SafeMargin/MainVBox/TopBar2/EnergyLabel
@@ -58,12 +58,11 @@ func _ready() -> void:
 		push_error("Inventory DB is not assigned on Inventory scene.")
 		return
 
-	_collect_slot_nodes()
 	_collect_level_boxes()
 	_apply_default_unlocks()
 	_connect_signals()
 	_refresh_energy_label()
-	_rebuild_visible_slots()
+	_build_slot_nodes()
 
 	if inventory_db.size() > 0:
 		_select_slot(0)
@@ -82,12 +81,6 @@ func _apply_default_unlocks() -> void:
 
 
 func _connect_signals() -> void:
-	for i in range(_slot_buttons.size()):
-		var btn: TextureButton = _slot_buttons[i]
-		btn.toggle_mode = true
-		if not btn.pressed.is_connected(_on_slot_button_pressed.bind(i)):
-			btn.pressed.connect(_on_slot_button_pressed.bind(i))
-
 	if train_button != null and not train_button.pressed.is_connected(_on_train_button_pressed):
 		train_button.pressed.connect(_on_train_button_pressed)
 
@@ -101,21 +94,40 @@ func _connect_signals() -> void:
 		Game_State.changed.connect(_on_game_state_changed)
 
 
-func _collect_slot_nodes() -> void:
+func _build_slot_nodes() -> void:
 	_slot_buttons.clear()
-	_slot_icons.clear()
 
 	for child in shape_grid.get_children():
-		if child is TextureButton:
-			var btn := child as TextureButton
-			_slot_buttons.append(btn)
+		child.queue_free()
 
-			var icon: TextureRect = null
-			for sub in btn.get_children():
-				if sub is TextureRect:
-					icon = sub
-					break
-			_slot_icons.append(icon)
+	if slot_scene == null:
+		push_error("slot_scene is not assigned in Inventory inspector.")
+		return
+
+	for i in range(inventory_db.size()):
+		var def: InventoryShapeDef = inventory_db.get_shape(i)
+		if def == null:
+			continue
+
+		var raw_slot: Node = slot_scene.instantiate()
+		print("instanced slot node = ", raw_slot, " script = ", raw_slot.get_script())
+
+		var slot: InventoryShapeSlot = raw_slot as InventoryShapeSlot
+		if slot == null:
+			push_error("Failed to cast instantiated slot to InventoryShapeSlot.")
+			continue
+
+		var tex: Texture2D = def.icon_texture if _is_shape_unlocked(def) else locked_icon
+		print("slot=", i, " id=", def.id, " unlocked=", _is_shape_unlocked(def), " tex=", tex)
+		slot.setup(i, tex, not _is_shape_unlocked(def))
+
+		if not slot.slot_pressed.is_connected(_on_slot_button_pressed):
+			slot.slot_pressed.connect(_on_slot_button_pressed)
+
+		shape_grid.add_child(slot)
+		print("added slot child, has method setup = ", slot.has_method("setup"))
+		slot.setup(i, tex, not _is_shape_unlocked(def))
+		_slot_buttons.append(slot)
 
 
 func _collect_level_boxes() -> void:
@@ -128,32 +140,23 @@ func _collect_level_boxes() -> void:
 func _refresh_energy_label() -> void:
 	energy_label.text = "Converted: " + str(int(Game_State.converted_energy))
 
+
 func _rebuild_visible_slots() -> void:
-	var db_count: int = inventory_db.size()
-	var slot_count: int = _slot_buttons.size()
+	if inventory_db == null:
+		return
 
-	if db_count > slot_count:
-		push_warning("Inventory DB has %d shapes but only %d slot buttons exist in scene." % [db_count, slot_count])
+	if _slot_buttons.size() != inventory_db.size():
+		_build_slot_nodes()
 
-	for i in range(slot_count):
-		var btn: TextureButton = _slot_buttons[i]
-		var icon: TextureRect = _slot_icons[i]
+	for i in range(_slot_buttons.size()):
+		var slot: InventoryShapeSlot = _slot_buttons[i]
+		var def: InventoryShapeDef = inventory_db.get_shape(i)
 
-		if i < db_count:
-			btn.visible = true
-			btn.disabled = false
+		if slot == null or def == null:
+			continue
 
-			var def: InventoryShapeDef = inventory_db.get_shape(i)
-			if def != null and icon != null:
-				if _is_shape_unlocked(def):
-					icon.texture = def.icon_texture
-				else:
-					icon.texture = locked_icon
-				icon.modulate = Color(1, 1, 1, 1)
-		else:
-			btn.visible = false
-			btn.disabled = true
-			btn.button_pressed = false
+		var tex: Texture2D = def.icon_texture if _is_shape_unlocked(def) else locked_icon
+		slot.setup(i, tex, not _is_shape_unlocked(def))
 
 
 func _select_slot(index: int) -> void:
@@ -168,11 +171,9 @@ func _select_slot(index: int) -> void:
 	_selected_slot_index = index
 
 	for i in range(_slot_buttons.size()):
-		var btn: TextureButton = _slot_buttons[i]
-		if not btn.visible:
-			btn.button_pressed = false
-		else:
-			btn.button_pressed = (i == index)
+		var slot: InventoryShapeSlot = _slot_buttons[i]
+		if slot != null:
+			slot.set_selected(i == index)
 
 	var def: InventoryShapeDef = inventory_db.get_shape(index)
 	if def == null:
@@ -195,34 +196,52 @@ func _show_unlocked(def: InventoryShapeDef) -> void:
 	unlocked_panel.visible = true
 	locked_panel.visible = false
 
-	level_label.text = "Level:"
-	_update_level_boxes(def, 0)
-	currency_label.text = "Currency: 0"
+	var shape_id: String = def.id.strip_edges().to_lower()
+	var shape_level: int = Game_State.get_shape_level(shape_id)
+	var shape_cores: int = Game_State.get_shape_cores(shape_id)
 
-	damage_value.text = _fmt_number(def.damage)
+	level_label.text = "Level: %d" % shape_level
+	_update_level_boxes(def, shape_level)
+	currency_label.text = "Currency: %d" % shape_cores
+
+	damage_value.text = _fmt_number(_get_scaled_damage(def, shape_level))
 	attack_speed_value.text = _fmt_number(def.attack_speed)
 	projectile_count_value.text = str(def.projectile_count)
 	projectile_size_value.text = _fmt_number(def.projectile_size)
 	crit_chance_value.text = _fmt_number(def.crit_chance)
 	crit_damage_value.text = _fmt_number(def.crit_damage)
 
-	ability1_name.text = def.passive_name
-	ability1_description.text = def.passive_description
-	ability1_damage.text = def.passive_damage_text
-	ability1_cooldown.text = def.passive_cooldown_text
-	ability1_type.text = "Passive"
+	if Game_State.is_shape_ability_1_unlocked(shape_id):
+		ability1_name.text = def.passive_name
+		ability1_description.text = def.passive_description
+		ability1_damage.text = def.passive_damage_text
+		ability1_cooldown.text = def.passive_cooldown_text
+		ability1_type.text = "Ability 1"
+	else:
+		ability1_name.text = "Locked"
+		ability1_description.text = "Unlocks at Level 4."
+		ability1_damage.text = "--"
+		ability1_cooldown.text = "--"
+		ability1_type.text = "Locked"
 
-	ability2_name.text = def.active_name
-	ability2_description.text = def.active_description
-	ability2_damage.text = def.active_damage_text
-	ability2_cooldown.text = def.active_cooldown_text
-	ability2_type.text = "Active"
+	if Game_State.is_shape_ultimate_unlocked(shape_id):
+		ability2_name.text = def.active_name
+		ability2_description.text = def.active_description
+		ability2_damage.text = def.active_damage_text
+		ability2_cooldown.text = def.active_cooldown_text
+		ability2_type.text = "Ultimate"
+	else:
+		ability2_name.text = "Locked"
+		ability2_description.text = "Unlocks at Level 8."
+		ability2_damage.text = "--"
+		ability2_cooldown.text = "--"
+		ability2_type.text = "Locked"
 
 	train_button_label.text = "Train"
 	upgrade_button_label.text = "Upgrade"
 
-	train_button.disabled = true
-	upgrade_button.disabled = true
+	train_button.disabled = false
+	upgrade_button.disabled = false
 
 
 func _show_locked(def: InventoryShapeDef) -> void:
@@ -261,25 +280,51 @@ func _update_level_boxes(def: InventoryShapeDef, level: int) -> void:
 
 		box.texture = tex
 
-		# Optional fallback if texture is missing
 		if box.texture == null:
 			box.texture = locked_icon
 
-		# Highlight based on current level
 		box.modulate = Color(1, 1, 1, 1) if i < level else Color(1, 1, 1, 0.22)
 
+
+func _get_scaled_damage(def: InventoryShapeDef, shape_level: int) -> float:
+	var bonus_per_level: float = 0.10
+	return def.damage * (1.0 + (bonus_per_level * float(shape_level)))
+
+
 func _on_slot_button_pressed(index: int) -> void:
-	if index < 0 or index >= inventory_db.size():
-		return
 	_select_slot(index)
 
 
 func _on_train_button_pressed() -> void:
-	pass
+	var def: InventoryShapeDef = inventory_db.get_shape(_selected_slot_index)
+	if def == null:
+		return
+
+	if def.training_scene.strip_edges() == "":
+		push_warning("Training scene not set yet for shape: %s" % def.id)
+		return
+
+	if not ResourceLoader.exists(def.training_scene):
+		push_warning("Training scene does not exist: %s" % def.training_scene)
+		return
+
+	get_tree().change_scene_to_file(def.training_scene)
 
 
 func _on_upgrade_button_pressed() -> void:
-	pass
+	var def: InventoryShapeDef = inventory_db.get_shape(_selected_slot_index)
+	if def == null:
+		return
+
+	if def.upgrade_scene.strip_edges() == "":
+		push_warning("Upgrade scene not set yet for shape: %s" % def.id)
+		return
+
+	if not ResourceLoader.exists(def.upgrade_scene):
+		push_warning("Upgrade scene does not exist: %s" % def.upgrade_scene)
+		return
+
+	get_tree().change_scene_to_file(def.upgrade_scene)
 
 
 func _on_locked_phase_button_pressed() -> void:

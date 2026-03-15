@@ -8,6 +8,10 @@ class_name InventoryShapeDef
 @export var default_unlocked: bool = false
 @export var unlock_phase_label: String = "Phase 1"
 
+@export_group("Scene Routing")
+@export_file("*.tscn") var training_scene: String = ""
+@export_file("*.tscn") var upgrade_scene: String = ""
+
 @export_group("Training")
 @export var base_train_cost: int = 50
 @export var train_cost_step: int = 25
@@ -42,6 +46,12 @@ func get_train_cost(level: int) -> int:
 
 func get_upgrade_cost(upgrade_tier: int) -> int:
 	return base_upgrade_cost + max(upgrade_tier, 0) * upgrade_cost_step
+
+func has_training_scene() -> bool:
+	return training_scene.strip_edges() != ""
+
+func has_upgrade_scene() -> bool:
+	return upgrade_scene.strip_edges() != ""
 
 func get_stats_dict() -> Dictionary:
 	return {

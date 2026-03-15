@@ -9,7 +9,7 @@ enum ConversionMode {
 ## Scene loaded when the player presses Phase I.
 ## Example: "res://scenes/gamephase/Phase1.tscn"
 @export var phase1_scene: String = "res://scenes/gameplay/phase_1/Phase1.tscn"
-@export var inventory_scene: String = "res://scenes/main/Inventory.tscn"
+@export var inventory_scene: String = "res://scenes/inventory/inventory.tscn"
 
 
 # =========================================================
