@@ -1,6 +1,88 @@
 [gd_scene format=3 uid="uid://behj7xrfjae3e"]
 
-[ext_resource type="Script" uid="uid://cnygt2vfy220e" path="res://core/autoload/hover_card_global.gd" id="1_mpsvy"]
+[ext_resource type="Script" uid="uid://cam0li2f5p7b8" path="res://scripts/ui/shared/HoverCardGlobal.gd" id="1_mpsvy"]
+[ext_resource type="Texture2D" uid="uid://c5h4n8js5od68" path="res://assets/sprites/ui/panels/234x62 disabled.png" id="2_h8pq1"]
 
 [node name="HoverCardGlobal" type="CanvasLayer" unique_id=540467073]
+layer = 100
 script = ExtResource("1_mpsvy")
+screen_padding = 5.0
+upgrade_title_color = Color(0, 0, 0, 1)
+upgrade_text_color = Color(0, 0, 0, 1)
+
+[node name="Root" type="Control" parent="." unique_id=742846524]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Bubble" type="NinePatchRect" parent="Root" unique_id=1267352611]
+layout_mode = 1
+offset_right = 48.0
+offset_bottom = 48.0
+texture = ExtResource("2_h8pq1")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="ContentMargin" type="MarginContainer" parent="Root/Bubble" unique_id=2144640148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="Root/Bubble/ContentMargin" unique_id=1054784854]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Root/Bubble/ContentMargin/VBox" unique_id=357041731]
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="MessageLabel" type="Label" parent="Root/Bubble/ContentMargin/VBox" unique_id=148619089]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ArrowTop" type="TextureRect" parent="Root" unique_id=1810907988]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ArrowBottom" type="TextureRect" parent="Root" unique_id=2008826413]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ArrowLeft" type="TextureRect" parent="Root" unique_id=199323402]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ArrowRight" type="TextureRect" parent="Root" unique_id=1867679682]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3

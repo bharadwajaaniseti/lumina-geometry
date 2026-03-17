@@ -207,7 +207,9 @@ texture_hover = ExtResource("5_7hi2l")
 texture_disabled = ExtResource("6_tk7dy")
 texture_focused = ExtResource("4_wt574")
 script = ExtResource("11_cjuhj")
-hover_text = "Placeholder button for future content."
+hover_text = "placeholder"
+hover_title = "Dummy"
+hover_style = 2
 
 [node name="Label" type="Label" parent="SideMargin/VBoxContainer/DummyBtnWrap" unique_id=717767359]
 layout_mode = 1
