@@ -125,7 +125,11 @@ layout_mode = 1
 offset_right = 80.0
 offset_bottom = 80.0
 scale = Vector2(0.5, 0.5)
-tooltip_text = "Settings"
+script = ExtResource("11_cjuhj")
+hover_text = "Adjust system parameters and interface behavior.
+
+Changes persist across calibration cycles."
+hover_offset = Vector2(0, 30)
 
 [node name="GearIcon" type="TextureRect" parent="TopBar/SettingsWrap/SettingsButton" unique_id=1190712533]
 layout_mode = 1
@@ -160,6 +164,10 @@ texture_pressed = ExtResource("4_wt574")
 texture_hover = ExtResource("5_7hi2l")
 texture_disabled = ExtResource("6_tk7dy")
 texture_focused = ExtResource("4_wt574")
+script = ExtResource("11_cjuhj")
+hover_text = "Access stored shapes and their current states.
+
+Some shapes behave differently outside the field."
 
 [node name="Label" type="Label" parent="SideMargin/VBoxContainer/InventoryBtnWrap" unique_id=1086988727]
 layout_mode = 1
@@ -183,6 +191,10 @@ texture_pressed = ExtResource("4_wt574")
 texture_hover = ExtResource("5_7hi2l")
 texture_disabled = ExtResource("6_tk7dy")
 texture_focused = ExtResource("4_wt574")
+script = ExtResource("11_cjuhj")
+hover_text = "Initialize the system.
+
+Generate energy. Establish flow. Begin calibration."
 
 [node name="Label" type="Label" parent="SideMargin/VBoxContainer/Phase1BtnWrap" unique_id=593827921]
 layout_mode = 1
@@ -207,9 +219,8 @@ texture_hover = ExtResource("5_7hi2l")
 texture_disabled = ExtResource("6_tk7dy")
 texture_focused = ExtResource("4_wt574")
 script = ExtResource("11_cjuhj")
-hover_text = "placeholder"
-hover_title = "Dummy"
-hover_style = 2
+hover_text = "This is place holder test for dummy hover.asdf asdf asdf asdf asdf sadf asdf"
+hover_offset = Vector2(0, 28)
 
 [node name="Label" type="Label" parent="SideMargin/VBoxContainer/DummyBtnWrap" unique_id=717767359]
 layout_mode = 1

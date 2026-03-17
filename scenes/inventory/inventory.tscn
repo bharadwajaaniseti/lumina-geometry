@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dkk87fe557l" path="res://assets/sprites/ui/LevelBox 64x64.png" id="15_6d105"]
 [ext_resource type="Texture2D" uid="uid://dif25lf8wuc1b" path="res://assets/sprites/ui/panels/150x40 normal panel.png" id="16_pk70i"]
 [ext_resource type="Texture2D" uid="uid://3l1x2dkgb84o" path="res://assets/sprites/ui/panels/150x40 pressed.png" id="17_crrsp"]
+[ext_resource type="Script" uid="uid://cvxmb6ob2l5fm" path="res://scripts/ui/shared/hover_hint.gd" id="18_5q4ag"]
 [ext_resource type="Texture2D" uid="uid://b1wwpk0mjsabm" path="res://assets/sprites/ui/panels/150x40 hover.png" id="18_wu2ic"]
 [ext_resource type="Texture2D" uid="uid://c0pngnr2sqmfs" path="res://assets/sprites/ui/panels/150x40 disabled.png" id="19_40h52"]
 [ext_resource type="Texture2D" uid="uid://c4yu5aed7pl7a" path="res://assets/sprites/ui/Lock.png" id="20_mu56c"]
@@ -593,15 +594,7 @@ theme_override_constants/separation = 5
 [node name="TrainSection" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow" unique_id=966652172]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="TrainInfo" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/TrainSection" unique_id=1245831432]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
-theme_override_font_sizes/font_size = 12
-text = "Training requires Energy, the higher the level the higher the energy required"
-autowrap_mode = 2
+alignment = 1
 
 [node name="TrainButton" type="TextureButton" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/TrainSection" unique_id=943920525]
 layout_mode = 2
@@ -611,6 +604,8 @@ texture_normal = ExtResource("16_pk70i")
 texture_pressed = ExtResource("17_crrsp")
 texture_hover = ExtResource("18_wu2ic")
 texture_disabled = ExtResource("19_40h52")
+script = ExtResource("18_5q4ag")
+hover_text = "Training requires Energy, the higher the level the higher the energy required"
 
 [node name="Label" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/TrainSection/TrainButton" unique_id=685440946]
 layout_mode = 1
@@ -628,16 +623,7 @@ vertical_alignment = 1
 [node name="UpgradeSection" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow" unique_id=1710806628]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="UpgradeInfo" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/UpgradeSection" unique_id=960934911]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
-theme_override_font_sizes/font_size = 12
-text = "Upgrades require Currency different from the energy, earn currency by training."
-vertical_alignment = 1
-autowrap_mode = 2
+alignment = 1
 
 [node name="UpgradeButton" type="TextureButton" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/UpgradeSection" unique_id=1714484238]
 layout_mode = 2
@@ -647,6 +633,8 @@ texture_normal = ExtResource("16_pk70i")
 texture_pressed = ExtResource("17_crrsp")
 texture_hover = ExtResource("18_wu2ic")
 texture_disabled = ExtResource("19_40h52")
+script = ExtResource("18_5q4ag")
+hover_text = "Upgrades require Currency different from the energy, earn currency by training."
 
 [node name="Label" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/UpgradeSection/UpgradeButton" unique_id=1046310595]
 layout_mode = 1

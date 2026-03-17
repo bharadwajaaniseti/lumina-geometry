@@ -368,12 +368,15 @@ func _play_converted_pop() -> void:
 
 func _on_phase1_pressed() -> void:
 	Game_State.save_to_disk()
+	HoverCardGlobal.hide_card_immediate()
 	get_tree().change_scene_to_file(phase1_scene)
 
 func _on_inventory_pressed() -> void:
+	HoverCardGlobal.hide_card_immediate()
 	get_tree().change_scene_to_file(inventory_scene)
 
 func _on_converter_button_pressed() -> void:
+	HoverCardGlobal.hide_card_immediate()
 	_converter_enabled = not _converter_enabled
 	_apply_converter_visual_state()
 	_update_converter_visuals()

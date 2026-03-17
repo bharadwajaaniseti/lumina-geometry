@@ -15,6 +15,27 @@ enum TooltipStyle {
 @export var target_gap: float = 10.0
 @export var arrow_overlap: float = 2.0
 
+# -------- STYLE TEXTURES --------
+@export var info_bubble_texture: Texture2D
+@export var danger_bubble_texture: Texture2D
+@export var upgrade_bubble_texture: Texture2D
+
+@export var info_arrow_top_texture: Texture2D
+@export var info_arrow_bottom_texture: Texture2D
+@export var info_arrow_left_texture: Texture2D
+@export var info_arrow_right_texture: Texture2D
+
+@export var danger_arrow_top_texture: Texture2D
+@export var danger_arrow_bottom_texture: Texture2D
+@export var danger_arrow_left_texture: Texture2D
+@export var danger_arrow_right_texture: Texture2D
+
+@export var upgrade_arrow_top_texture: Texture2D
+@export var upgrade_arrow_bottom_texture: Texture2D
+@export var upgrade_arrow_left_texture: Texture2D
+@export var upgrade_arrow_right_texture: Texture2D
+
+# -------- STYLE COLORS --------
 @export var info_title_color: Color = Color("6d356f")
 @export var info_text_color: Color = Color("6d356f")
 
@@ -41,6 +62,7 @@ var _target_control: Control = null
 var _showing: bool = false
 var _current_style: int = TooltipStyle.INFO
 var _current_side: String = "bottom"
+var _current_custom_offset: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	layer = 100
@@ -63,6 +85,7 @@ func show_card(
 
 	_target_control = anchor_control
 	_current_style = style
+	_current_custom_offset = custom_offset
 
 	title_label.visible = not title.strip_edges().is_empty()
 	title_label.text = title
@@ -71,7 +94,7 @@ func show_card(
 	_apply_style(style)
 	await _refresh_size()
 
-	var tooltip_pos: Vector2 = _get_best_position(anchor_control, custom_offset)
+	var tooltip_pos: Vector2 = _get_best_position(anchor_control, _current_custom_offset)
 	_place_arrows(anchor_control)
 
 	root_box.position = tooltip_pos + Vector2(0, appear_distance)
@@ -117,23 +140,44 @@ func hide_card() -> void:
 func _process(_delta: float) -> void:
 	if not _showing:
 		return
+
 	if not is_instance_valid(_target_control):
-		hide_card()
+		hide_card_immediate()
 		return
 
-	var tooltip_pos: Vector2 = _get_best_position(_target_control, Vector2.ZERO)
+	var tooltip_pos: Vector2 = _get_best_position(_target_control, _current_custom_offset)
 	root_box.position = tooltip_pos
 	_place_arrows(_target_control)
 
 func _apply_style(style: int) -> void:
 	match style:
 		TooltipStyle.DANGER:
+			bubble.texture = danger_bubble_texture
+			arrow_top.texture = danger_arrow_top_texture
+			arrow_bottom.texture = danger_arrow_bottom_texture
+			arrow_left.texture = danger_arrow_left_texture
+			arrow_right.texture = danger_arrow_right_texture
+
 			title_label.add_theme_color_override("font_color", danger_title_color)
 			message_label.add_theme_color_override("font_color", danger_text_color)
+
 		TooltipStyle.UPGRADE:
+			bubble.texture = upgrade_bubble_texture
+			arrow_top.texture = upgrade_arrow_top_texture
+			arrow_bottom.texture = upgrade_arrow_bottom_texture
+			arrow_left.texture = upgrade_arrow_left_texture
+			arrow_right.texture = upgrade_arrow_right_texture
+
 			title_label.add_theme_color_override("font_color", upgrade_title_color)
 			message_label.add_theme_color_override("font_color", upgrade_text_color)
+
 		_:
+			bubble.texture = info_bubble_texture
+			arrow_top.texture = info_arrow_top_texture
+			arrow_bottom.texture = info_arrow_bottom_texture
+			arrow_left.texture = info_arrow_left_texture
+			arrow_right.texture = info_arrow_right_texture
+
 			title_label.add_theme_color_override("font_color", info_title_color)
 			message_label.add_theme_color_override("font_color", info_text_color)
 
@@ -175,13 +219,14 @@ func _refresh_size() -> void:
 	var final_w: float = min(max_width, content_w) + margin_left + margin_right
 	var final_h: float = content_h + margin_top + margin_bottom
 
-	# 🔥 THIS IS THE FIX
+	final_w = max(final_w, 220.0)
+	final_h = max(final_h, 90.0)
+
 	bubble.size = Vector2(final_w, final_h)
 	root_box.size = bubble.size
 
-	# Force labels to respect width
-	title_label.custom_minimum_size = Vector2(min(max_width, title_size.x), 0)
-	message_label.custom_minimum_size = Vector2(min(max_width, msg_size.x), 0)
+	title_label.custom_minimum_size = Vector2(min(max_width, title_size.x), 0.0)
+	message_label.custom_minimum_size = Vector2(min(max_width, msg_size.x), 0.0)
 
 	await get_tree().process_frame
 
@@ -225,16 +270,24 @@ func _place_arrows(control: Control) -> void:
 
 	var rect: Rect2 = control.get_global_rect()
 	var center_x: float = rect.position.x + rect.size.x * 0.5
-	var center_y: float = rect.position.y + rect.size.y * 0.5
 
 	match _current_side:
 		"top":
 			arrow_top.visible = true
-			arrow_top.position.x = clamp(center_x - arrow_top.size.x * 0.5 - root_box.position.x, 8.0, bubble.size.x - arrow_top.size.x - 8.0)
+			arrow_top.position.x = clamp(
+				center_x - arrow_top.size.x * 0.5 - root_box.position.x,
+				8.0,
+				bubble.size.x - arrow_top.size.x - 8.0
+			)
 			arrow_top.position.y = -arrow_top.size.y + arrow_overlap
+
 		"bottom":
 			arrow_bottom.visible = true
-			arrow_bottom.position.x = clamp(center_x - arrow_bottom.size.x * 0.5 - root_box.position.x, 8.0, bubble.size.x - arrow_bottom.size.x - 8.0)
+			arrow_bottom.position.x = clamp(
+				center_x - arrow_bottom.size.x * 0.5 - root_box.position.x,
+				8.0,
+				bubble.size.x - arrow_bottom.size.x - 8.0
+			)
 			arrow_bottom.position.y = bubble.size.y - arrow_overlap
 
 func _hide_all_arrows() -> void:
@@ -242,3 +295,15 @@ func _hide_all_arrows() -> void:
 	arrow_bottom.visible = false
 	arrow_left.visible = false
 	arrow_right.visible = false
+
+
+func hide_card_immediate() -> void:
+	if _tween != null and _tween.is_valid():
+		_tween.kill()
+
+	_showing = false
+	_target_control = null
+	_current_custom_offset = Vector2.ZERO
+	root_box.visible = false
+	root_box.modulate = Color(1, 1, 1, 0)
+	_hide_all_arrows()

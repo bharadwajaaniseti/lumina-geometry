@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt4w3oicidkr6"
-path="res://.godot/imported/background-removed-background-removed (14).png-06ee3319bb91f37f896d036ac6941b9a.ctex"
+uid="uid://5bwsbygj5s5i"
+path="res://.godot/imported/Bottom 1.png-7fa7a5b3c107a3cbb4f6f8f90c397565.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/panels/background-removed-background-removed (14).png"
-dest_files=["res://.godot/imported/background-removed-background-removed (14).png-06ee3319bb91f37f896d036ac6941b9a.ctex"]
+source_file="res://assets/sprites/ui/arrows/Bottom 1.png"
+dest_files=["res://.godot/imported/Bottom 1.png-7fa7a5b3c107a3cbb4f6f8f90c397565.ctex"]
 
 [params]
 
