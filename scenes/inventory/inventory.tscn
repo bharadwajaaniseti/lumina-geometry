@@ -192,14 +192,16 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="LevelLabel" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow" unique_id=1658188023]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42352942, 0.2, 0.65882355, 1)
 theme_override_fonts/font = ExtResource("4_e5gw1")
 theme_override_font_sizes/font_size = 30
-text = "Level:"
+text = "Level: 15"
 vertical_alignment = 1
 
 [node name="LevelBoxes" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow" unique_id=1607693609]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
 
@@ -294,6 +296,7 @@ theme_override_fonts/font = ExtResource("4_e5gw1")
 theme_override_font_sizes/font_size = 18
 text = "Currency: 250"
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="StatsColumns" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox" unique_id=339173488]
 layout_mode = 2
@@ -754,6 +757,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MetaTreeScreen" parent="." unique_id=768639228 instance=ExtResource("21_0tixx")]
+visible = false
 layout_mode = 1
 block_scene = ExtResource("22_no80g")
 

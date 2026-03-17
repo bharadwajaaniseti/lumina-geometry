@@ -367,22 +367,22 @@ func _on_upgrade_button_pressed() -> void:
 		print("UPGRADE: shape is locked")
 		return
 
-	if meta_tree_screen == null:
-		print("UPGRADE: MetaTreeScreen node is missing")
-		push_warning("MetaTreeScreen node is missing from Inventory scene.")
-		return
-
-	print("UPGRADE: MetaTreeScreen found = ", meta_tree_screen.name)
-
-	var tree_def: ShapeMetaTreeDef = _get_meta_tree_def_for_shape(def.id)
-	if tree_def == null:
-		print("UPGRADE: no ShapeMetaTreeDef for shape = ", def.id)
-		push_warning("No ShapeMetaTreeDef assigned for shape: %s" % def.id)
-		return
-
-	print("UPGRADE: opening meta tree for = ", tree_def.shape_id)
-	meta_tree_screen.open_for_shape(def, tree_def)
-	print("UPGRADE: meta tree visible = ", meta_tree_screen.visible)
+	#if meta_tree_screen == null:
+		#print("UPGRADE: MetaTreeScreen node is missing")
+		#push_warning("MetaTreeScreen node is missing from Inventory scene.")
+		#return
+#
+	#print("UPGRADE: MetaTreeScreen found = ", meta_tree_screen.name)
+#
+	#var tree_def: ShapeMetaTreeDef = _get_meta_tree_def_for_shape(def.id)
+	#if tree_def == null:
+		#print("UPGRADE: no ShapeMetaTreeDef for shape = ", def.id)
+		#push_warning("No ShapeMetaTreeDef assigned for shape: %s" % def.id)
+		#return
+#
+	#print("UPGRADE: opening meta tree for = ", tree_def.shape_id)
+	#meta_tree_screen.open_for_shape(def, tree_def)
+	#print("UPGRADE: meta tree visible = ", meta_tree_screen.visible)
 
 
 func _on_locked_phase_button_pressed() -> void:

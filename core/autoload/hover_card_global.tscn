@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://behj7xrfjae3e"]
+
+[ext_resource type="Script" uid="uid://cnygt2vfy220e" path="res://core/autoload/hover_card_global.gd" id="1_mpsvy"]
+
+[node name="HoverCardGlobal" type="CanvasLayer" unique_id=540467073]
+script = ExtResource("1_mpsvy")

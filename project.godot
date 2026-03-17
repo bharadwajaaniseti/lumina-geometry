@@ -24,6 +24,7 @@ buses/default_bus_layout=""
 Save_Manager="*uid://dv4brm0oktm40"
 Game_State="*uid://doo0tf0amai5y"
 Runtime="*uid://hrjjtmurhlta"
+HoverCardGlobal="*uid://behj7xrfjae3e"
 
 [display]
 

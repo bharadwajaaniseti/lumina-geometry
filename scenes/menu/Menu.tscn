@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dwtrx7t3n44g8" path="res://assets/sprites/ui/panels/587x104 converter panel.png" id="7_7hi2l"]
 [ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="8_bi4n3"]
 [ext_resource type="PackedScene" uid="uid://ceshfkigh2nsw" path="res://scenes/ui/GearGroup.tscn" id="8_tk7dy"]
+[ext_resource type="Script" uid="uid://cvxmb6ob2l5fm" path="res://scripts/ui/shared/hover_hint.gd" id="11_cjuhj"]
 
 [node name="Menu" type="Control" unique_id=1500478102]
 layout_mode = 3
@@ -205,6 +206,8 @@ texture_pressed = ExtResource("4_wt574")
 texture_hover = ExtResource("5_7hi2l")
 texture_disabled = ExtResource("6_tk7dy")
 texture_focused = ExtResource("4_wt574")
+script = ExtResource("11_cjuhj")
+hover_text = "Placeholder button for future content."
 
 [node name="Label" type="Label" parent="SideMargin/VBoxContainer/DummyBtnWrap" unique_id=717767359]
 layout_mode = 1
