@@ -34,20 +34,20 @@ var _level_boxes: Array[TextureRect] = []
 @onready var attack_speed_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/AttackSpeedRow/AttackSpeedValue
 @onready var projectile_count_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/ProjectileCountRow/ProjectileCountValue
 @onready var projectile_size_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/ProjectileSizeRow/ProjectileSizeValue
-@onready var crit_chance_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/CritChaceRow/CritChanceValue
-@onready var crit_damage_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/CritDamageRow/CritDamageValue
+@onready var crit_chance_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/CritChaceRow/CritChanceValue
+@onready var crit_damage_value: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/CritDamageRow/CritDamageValue
 
-@onready var ability1_description: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Top/Ability1Description
-@onready var ability1_name: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock/Ability1Name
-@onready var ability1_damage: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock/Ability1Damage
-@onready var ability1_cooldown: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock/Ability1Cooldown
-@onready var ability1_type: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1ToggleWrap/Ability1ToggleLabel
+@onready var ability1_description: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Top/Ability1Description
+@onready var ability1_name: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock/Ability1Name
+@onready var ability1_damage: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock/Ability1Damage
+@onready var ability1_cooldown: Label =$SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock/Ability1Cooldown
+@onready var ability1_type: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1ToggleWrap/Ability1ToggleLabel
 
-@onready var ability2_description: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Top/Ability2Description
-@onready var ability2_name: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock/Ability2Name
-@onready var ability2_damage: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock/Ability2Damage
-@onready var ability2_cooldown: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock/Ability2Cooldown
-@onready var ability2_type: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2ToggleWrap/Ability2ToggleLabel
+@onready var ability2_description: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Top/Ability2Description
+@onready var ability2_name: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock/Ability2Name
+@onready var ability2_damage: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock/Ability2Damage
+@onready var ability2_cooldown: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock/Ability2Cooldown
+@onready var ability2_type: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2ToggleWrap/Ability2ToggleLabel
 
 @onready var train_button: TextureButton = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/TrainSection/TrainButton
 @onready var train_button_label: Label = $SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/TrainSection/TrainButton/Label
@@ -436,7 +436,20 @@ func _unhandled_input(event: InputEvent) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_page_down"):
 		Game_State.debug_reset_shape_meta("circle", true)
+		var max_points: int = Game_State.SHAPE_MAX_LEVEL * Game_State.SHAPE_POINTS_PER_LEVEL
+		Game_State.set_shape_progression_points("circle", max_points)
 		Game_State.add_shape_cores("circle", 100)
 		Game_State.debug_reset_shape_meta("pyramid", true)
 		Game_State.add_shape_cores("pyramid", 100)
+		_on_game_state_changed()
+		
+	if event.is_action_pressed("ui_page_up"):
+		Game_State.debug_reset_shape_meta("circle", true)
+		Game_State.set_shape_progression_points("circle", 0)
+		Game_State.set_shape_cores("circle", 0)
+
+		Game_State.debug_reset_shape_meta("pyramid", true)
+		Game_State.set_shape_progression_points("pyramid", 0)
+		Game_State.set_shape_cores("pyramid", 0)
+
 		_on_game_state_changed()

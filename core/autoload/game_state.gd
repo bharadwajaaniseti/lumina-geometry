@@ -738,6 +738,12 @@ func spend_shape_cores(shape_id: String, amount: int) -> bool:
 	_set_shape_entry(shape_id, entry, true)
 	return true
 
+func set_shape_cores(shape_id: String, value: int) -> void:
+	var entry: Dictionary = _get_shape_entry(shape_id)
+
+	entry["cores"] = max(0, int(value))
+
+	_set_shape_entry(shape_id, entry, true)
 # -------------------------------------------------------------------
 # Inventory meta tree nodes (upgrade tree)
 # -------------------------------------------------------------------

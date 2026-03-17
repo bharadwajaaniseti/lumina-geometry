@@ -1,30 +1,30 @@
-[gd_scene format=3 uid="uid://dwc2wkk81qlfi"]
+[gd_scene format=3 uid="uid://dye2ukj44jmgh"]
 
-[ext_resource type="Script" uid="uid://dg31qmnx6uhal" path="res://scripts/main/inventory.gd" id="1_m710k"]
-[ext_resource type="Resource" uid="uid://276kkt7w7nr7" path="res://data/shape_data/InventoryShapeDB.tres" id="2_5q4ag"]
-[ext_resource type="PackedScene" uid="uid://fsn01soqwaw7" path="res://scenes/inventory/InventoryShapeSlot.tscn" id="2_fxt6q"]
-[ext_resource type="Texture2D" uid="uid://bi0wtuhn546sb" path="res://assets/sprites/ui/Lock 100x100.png" id="3_fxt6q"]
-[ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="4_e5gw1"]
-[ext_resource type="FontFile" uid="uid://nugkt67ugfgw" path="res://assets/fonts/scruf/Scruf-Regular.ttf" id="5_7ho5a"]
-[ext_resource type="Resource" uid="uid://by6qduffqat7t" path="res://data/meta_trees/circle_meta_tree.tres" id="5_rbxbx"]
-[ext_resource type="Resource" uid="uid://qsnqmgdtbsqc" path="res://data/meta_trees/pyramid_meta_tree.tres" id="6_m710k"]
-[ext_resource type="Script" uid="uid://c4xlqs5ahs7ps" path="res://scripts/ui/settings_button.gd" id="6_oi3jh"]
-[ext_resource type="Texture2D" uid="uid://tjcnawoupssl" path="res://assets/sprites/ui/settings/Settings.png" id="7_bp57h"]
-[ext_resource type="Texture2D" uid="uid://dcqtscim0dk1h" path="res://assets/sprites/ui/Back.png" id="8_yqubg"]
-[ext_resource type="Texture2D" uid="uid://qeyrbeivacqb" path="res://assets/sprites/ui/Inventory Shapes/Circle.png" id="12_1qa21"]
-[ext_resource type="Texture2D" uid="uid://dkk87fe557l" path="res://assets/sprites/ui/LevelBox 64x64.png" id="15_6d105"]
-[ext_resource type="Texture2D" uid="uid://dif25lf8wuc1b" path="res://assets/sprites/ui/panels/150x40 normal panel.png" id="16_pk70i"]
-[ext_resource type="Texture2D" uid="uid://3l1x2dkgb84o" path="res://assets/sprites/ui/panels/150x40 pressed.png" id="17_crrsp"]
-[ext_resource type="Script" uid="uid://cvxmb6ob2l5fm" path="res://scripts/ui/shared/hover_hint.gd" id="18_5q4ag"]
-[ext_resource type="Texture2D" uid="uid://b1wwpk0mjsabm" path="res://assets/sprites/ui/panels/150x40 hover.png" id="18_wu2ic"]
-[ext_resource type="Texture2D" uid="uid://c0pngnr2sqmfs" path="res://assets/sprites/ui/panels/150x40 disabled.png" id="19_40h52"]
-[ext_resource type="Texture2D" uid="uid://c4yu5aed7pl7a" path="res://assets/sprites/ui/Lock.png" id="20_mu56c"]
-[ext_resource type="PackedScene" uid="uid://bmmadi7yv0ubp" path="res://scenes/ui/meta_tree/MetaTreeScreen.tscn" id="21_0tixx"]
-[ext_resource type="Texture2D" uid="uid://dmt83ydjregec" path="res://assets/sprites/ui/panels/234x62 normal panel.png" id="21_4ix84"]
-[ext_resource type="Texture2D" uid="uid://mxucunid4760" path="res://assets/sprites/ui/panels/234x62 pressed.png" id="22_846fm"]
-[ext_resource type="PackedScene" uid="uid://clus4u70l0src" path="res://scenes/ui/meta_tree/MetaUpgradeBlock.tscn" id="22_no80g"]
-[ext_resource type="Texture2D" uid="uid://dorvh7vwjw2cd" path="res://assets/sprites/ui/panels/234x62 hover.png" id="23_u4p5d"]
-[ext_resource type="Texture2D" uid="uid://c5h4n8js5od68" path="res://assets/sprites/ui/panels/234x62 disabled.png" id="24_vxai2"]
+[ext_resource type="Script" uid="uid://dg31qmnx6uhal" path="res://scripts/main/inventory.gd" id="1_lsg15"]
+[ext_resource type="Resource" uid="uid://276kkt7w7nr7" path="res://data/shape_data/InventoryShapeDB.tres" id="2_qugds"]
+[ext_resource type="Texture2D" uid="uid://bi0wtuhn546sb" path="res://assets/sprites/ui/Lock 100x100.png" id="3_ymofh"]
+[ext_resource type="PackedScene" uid="uid://fsn01soqwaw7" path="res://scenes/inventory/InventoryShapeSlot.tscn" id="4_gcihi"]
+[ext_resource type="Resource" uid="uid://by6qduffqat7t" path="res://data/meta_trees/circle_meta_tree.tres" id="5_lkl61"]
+[ext_resource type="Resource" uid="uid://qsnqmgdtbsqc" path="res://data/meta_trees/pyramid_meta_tree.tres" id="6_h20p4"]
+[ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="7_m28vn"]
+[ext_resource type="FontFile" uid="uid://nugkt67ugfgw" path="res://assets/fonts/scruf/Scruf-Regular.ttf" id="8_cbpvf"]
+[ext_resource type="Script" uid="uid://c4xlqs5ahs7ps" path="res://scripts/ui/settings_button.gd" id="9_xnsre"]
+[ext_resource type="Texture2D" uid="uid://tjcnawoupssl" path="res://assets/sprites/ui/settings/Settings.png" id="10_wwm45"]
+[ext_resource type="Texture2D" uid="uid://dcqtscim0dk1h" path="res://assets/sprites/ui/Back.png" id="11_j40wd"]
+[ext_resource type="Texture2D" uid="uid://qeyrbeivacqb" path="res://assets/sprites/ui/Inventory Shapes/Circle.png" id="12_bjoyp"]
+[ext_resource type="Texture2D" uid="uid://dkk87fe557l" path="res://assets/sprites/ui/LevelBox 64x64.png" id="13_4fq8b"]
+[ext_resource type="Texture2D" uid="uid://dif25lf8wuc1b" path="res://assets/sprites/ui/panels/150x40 normal panel.png" id="14_f1id6"]
+[ext_resource type="Texture2D" uid="uid://3l1x2dkgb84o" path="res://assets/sprites/ui/panels/150x40 pressed.png" id="15_8e3r0"]
+[ext_resource type="Texture2D" uid="uid://b1wwpk0mjsabm" path="res://assets/sprites/ui/panels/150x40 hover.png" id="16_mnv7g"]
+[ext_resource type="Texture2D" uid="uid://c0pngnr2sqmfs" path="res://assets/sprites/ui/panels/150x40 disabled.png" id="17_0ldwp"]
+[ext_resource type="Script" uid="uid://cvxmb6ob2l5fm" path="res://scripts/ui/shared/hover_hint.gd" id="18_vivtu"]
+[ext_resource type="Texture2D" uid="uid://c4yu5aed7pl7a" path="res://assets/sprites/ui/Lock.png" id="19_tolfd"]
+[ext_resource type="Texture2D" uid="uid://dmt83ydjregec" path="res://assets/sprites/ui/panels/234x62 normal panel.png" id="20_4a7lr"]
+[ext_resource type="Texture2D" uid="uid://mxucunid4760" path="res://assets/sprites/ui/panels/234x62 pressed.png" id="21_q62pu"]
+[ext_resource type="Texture2D" uid="uid://dorvh7vwjw2cd" path="res://assets/sprites/ui/panels/234x62 hover.png" id="22_jtfu5"]
+[ext_resource type="Texture2D" uid="uid://c5h4n8js5od68" path="res://assets/sprites/ui/panels/234x62 disabled.png" id="23_ycy81"]
+[ext_resource type="PackedScene" uid="uid://bmmadi7yv0ubp" path="res://scenes/ui/meta_tree/MetaTreeScreen.tscn" id="24_vgveo"]
+[ext_resource type="PackedScene" uid="uid://clus4u70l0src" path="res://scenes/ui/meta_tree/MetaUpgradeBlock.tscn" id="25_dsb6r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tjt2g"]
 bg_color = Color(0.60038817, 0.60038817, 0.60038817, 0)
@@ -41,13 +41,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_m710k")
-inventory_db = ExtResource("2_5q4ag")
-locked_icon = ExtResource("3_fxt6q")
-slot_scene = ExtResource("2_fxt6q")
+script = ExtResource("1_lsg15")
+inventory_db = ExtResource("2_qugds")
+locked_icon = ExtResource("3_ymofh")
+slot_scene = ExtResource("4_gcihi")
 meta_tree_defs = {
-"circle": ExtResource("5_rbxbx"),
-"pyramid": ExtResource("6_m710k")
+"circle": ExtResource("5_lkl61"),
+"pyramid": ExtResource("6_h20p4")
 }
 
 [node name="Background" type="ColorRect" parent="." unique_id=2028733034]
@@ -85,7 +85,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 0
 theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 35
 text = "Energy: 9855"
 vertical_alignment = 1
@@ -99,7 +99,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 0
 theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
-theme_override_fonts/font = ExtResource("5_7ho5a")
+theme_override_fonts/font = ExtResource("8_cbpvf")
 theme_override_font_sizes/font_size = 40
 text = "Inventory"
 horizontal_alignment = 1
@@ -114,7 +114,7 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("6_oi3jh")
+script = ExtResource("9_xnsre")
 
 [node name="SettingsButton" type="TextureButton" parent="SafeMargin/MainVBox/TopBar2/SettingsWrap" unique_id=1305785171]
 custom_minimum_size = Vector2(80, 80)
@@ -129,7 +129,7 @@ layout_mode = 1
 offset_right = 100.0
 offset_bottom = 100.0
 mouse_filter = 2
-texture = ExtResource("7_bp57h")
+texture = ExtResource("10_wwm45")
 stretch_mode = 2
 
 [node name="BackWrap" type="Control" parent="SafeMargin/MainVBox/TopBar2" unique_id=751870019]
@@ -151,7 +151,7 @@ layout_mode = 1
 offset_right = 100.0
 offset_bottom = 100.0
 mouse_filter = 2
-texture = ExtResource("8_yqubg")
+texture = ExtResource("11_j40wd")
 stretch_mode = 2
 
 [node name="ContentRow" type="HBoxContainer" parent="SafeMargin/MainVBox" unique_id=1824908387]
@@ -196,7 +196,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.42352942, 0.2, 0.65882355, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 30
 text = "Level: 15"
 vertical_alignment = 1
@@ -209,56 +209,56 @@ theme_override_constants/separation = 0
 [node name="LevelBox1" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=1473192164]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox2" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=1619017821]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox3" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=474108389]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox4" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=1949061545]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox5" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=1468717245]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox6" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=344478876]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox7" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=779556103]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="LevelBox8" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/LevelRow/LevelBoxes" unique_id=1903877711]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = ExtResource("12_1qa21")
+texture = ExtResource("12_bjoyp")
 expand_mode = 1
 stretch_mode = 5
 
@@ -285,7 +285,7 @@ theme_override_constants/separation = 20
 [node name="StatsTitle" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsHeaderRow" unique_id=1571013031]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41568628, 0.19607843, 0.654902, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 20
 text = "Stats"
 
@@ -293,7 +293,7 @@ text = "Stats"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 18
 text = "Currency: 250"
 horizontal_alignment = 2
@@ -302,6 +302,7 @@ vertical_alignment = 1
 [node name="StatsColumns" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox" unique_id=339173488]
 layout_mode = 2
 theme_override_constants/separation = 90
+alignment = 1
 
 [node name="LeftStatsColumn" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns" unique_id=842239408]
 layout_mode = 2
@@ -314,7 +315,7 @@ theme_override_constants/separation = 16
 [node name="Damage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/DamageRow" unique_id=978788377]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "Damage : "
 
@@ -322,7 +323,7 @@ text = "Damage : "
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "2000"
 horizontal_alignment = 2
@@ -334,7 +335,7 @@ theme_override_constants/separation = 16
 [node name="AttackSpeed" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/AttackSpeedRow" unique_id=145193777]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "Attack Speed : "
 
@@ -342,7 +343,7 @@ text = "Attack Speed : "
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "2000"
 horizontal_alignment = 2
@@ -354,7 +355,7 @@ theme_override_constants/separation = 16
 [node name="ProjectileCount" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/ProjectileCountRow" unique_id=1598500155]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "Projectile Count : "
 
@@ -362,7 +363,7 @@ text = "Projectile Count : "
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "2000"
 horizontal_alignment = 2
@@ -374,7 +375,7 @@ theme_override_constants/separation = 16
 [node name="ProjectileSize" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/ProjectileSizeRow" unique_id=319375485]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "projectile Size : "
 
@@ -382,47 +383,7 @@ text = "projectile Size : "
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
-theme_override_font_sizes/font_size = 16
-text = "2000"
-horizontal_alignment = 2
-
-[node name="CritChaceRow" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn" unique_id=2061821393]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="CritChance" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/CritChaceRow" unique_id=637428349]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
-theme_override_font_sizes/font_size = 16
-text = "Crit Chance: "
-
-[node name="CritChanceValue" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/CritChaceRow" unique_id=74564529]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
-theme_override_font_sizes/font_size = 16
-text = "2000"
-horizontal_alignment = 2
-
-[node name="CritDamageRow" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn" unique_id=456255240]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="CritDamage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/CritDamageRow" unique_id=141428549]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
-theme_override_font_sizes/font_size = 16
-text = "Crit Damage : "
-
-[node name="CritDamageValue" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/LeftStatsColumn/CritDamageRow" unique_id=1736085011]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 16
 text = "2000"
 horizontal_alignment = 2
@@ -431,159 +392,198 @@ horizontal_alignment = 2
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="AbilityCardsRow" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn" unique_id=2011638224]
+[node name="CritChaceRow" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn" unique_id=2061821393]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="CritChance" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/CritChaceRow" unique_id=637428349]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
+theme_override_fonts/font = ExtResource("7_m28vn")
+theme_override_font_sizes/font_size = 16
+text = "Crit Chance: "
+
+[node name="CritChanceValue" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/CritChaceRow" unique_id=74564529]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
+theme_override_fonts/font = ExtResource("7_m28vn")
+theme_override_font_sizes/font_size = 16
+text = "2000"
+horizontal_alignment = 2
+
+[node name="CritDamageRow" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn" unique_id=456255240]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="CritDamage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/CritDamageRow" unique_id=141428549]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
+theme_override_fonts/font = ExtResource("7_m28vn")
+theme_override_font_sizes/font_size = 16
+text = "Crit Damage : "
+
+[node name="CritDamageValue" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/CritDamageRow" unique_id=1736085011]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.34509805, 0.47843137, 1, 1)
+theme_override_fonts/font = ExtResource("7_m28vn")
+theme_override_font_sizes/font_size = 16
+text = "2000"
+horizontal_alignment = 2
+
+[node name="AbilityCardsRow" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked" unique_id=337656696]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="AbilityCard1" type="PanelContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow" unique_id=1205429402]
-custom_minimum_size = Vector2(296, 0)
+[node name="AbilityCard1" type="PanelContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow" unique_id=1205429402]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_l8xv3")
 
-[node name="MarginContainer" type="MarginContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1" unique_id=1410269130]
+[node name="MarginContainer" type="MarginContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1" unique_id=1410269130]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 12
 
-[node name="Ability1Root" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer" unique_id=2036534460]
+[node name="Ability1Root" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer" unique_id=2036534460]
 layout_mode = 2
 
-[node name="Ability1Top" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root" unique_id=477963635]
+[node name="Ability1Top" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root" unique_id=477963635]
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="Ability1Icon" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Top" unique_id=278652283]
+[node name="Ability1Icon" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Top" unique_id=278652283]
 custom_minimum_size = Vector2(54, 54)
 layout_mode = 2
-texture = ExtResource("15_6d105")
+texture = ExtResource("13_4fq8b")
 expand_mode = 1
 
-[node name="Ability1Description" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Top" unique_id=306208786]
+[node name="Ability1Description" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Top" unique_id=306208786]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.12156863, 0.101960786, 0.12156863, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 12
 text = "This is the ability description area where we describe what the ability does"
 autowrap_mode = 2
 
-[node name="Ability1Bottom" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root" unique_id=369881804]
+[node name="Ability1Bottom" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root" unique_id=369881804]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="Ability1NameBlock" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom" unique_id=1117706091]
+[node name="Ability1NameBlock" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom" unique_id=1117706091]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Ability1Name" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock" unique_id=447941166]
+[node name="Ability1Name" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock" unique_id=447941166]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41568628, 0.19607843, 0.654902, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 18
 text = "Ability Name 1"
 
-[node name="Ability1Damage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock" unique_id=161511839]
+[node name="Ability1Damage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock" unique_id=161511839]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 12
 text = "Damage: 120"
 
-[node name="Ability1Cooldown" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock" unique_id=832897066]
+[node name="Ability1Cooldown" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1NameBlock" unique_id=832897066]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 12
 text = "Cooldown: 2.5 sec"
 
-[node name="Ability1ToggleWrap" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom" unique_id=2040029170]
+[node name="Ability1ToggleWrap" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom" unique_id=2040029170]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="Ability1ToggleLabel" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1ToggleWrap" unique_id=1748929223]
+[node name="Ability1ToggleLabel" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard1/MarginContainer/Ability1Root/Ability1Bottom/Ability1ToggleWrap" unique_id=1748929223]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41568628, 0.19607843, 0.654902, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 text = "Passive"
 
-[node name="AbilityCard2" type="PanelContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow" unique_id=1745078923]
+[node name="AbilityCard2" type="PanelContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow" unique_id=1745078923]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_l8xv3")
 
-[node name="MarginContainer" type="MarginContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2" unique_id=1168368436]
+[node name="MarginContainer" type="MarginContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2" unique_id=1168368436]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 12
 
-[node name="Ability2Root" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer" unique_id=1329852697]
+[node name="Ability2Root" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer" unique_id=1329852697]
 layout_mode = 2
 
-[node name="Ability2Top" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root" unique_id=979886927]
+[node name="Ability2Top" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root" unique_id=979886927]
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="Ability2Icon" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Top" unique_id=1770272618]
+[node name="Ability2Icon" type="TextureRect" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Top" unique_id=1770272618]
 custom_minimum_size = Vector2(54, 54)
 layout_mode = 2
-texture = ExtResource("15_6d105")
+texture = ExtResource("13_4fq8b")
 expand_mode = 1
 
-[node name="Ability2Description" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Top" unique_id=1225512010]
+[node name="Ability2Description" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Top" unique_id=1225512010]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.12156863, 0.101960786, 0.12156863, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 12
 text = "This is the ability description area where we describe what the ability does"
 autowrap_mode = 2
 
-[node name="Ability2Bottom" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root" unique_id=1585756155]
+[node name="Ability2Bottom" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root" unique_id=1585756155]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="Ability2NameBlock" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom" unique_id=1021785710]
+[node name="Ability2NameBlock" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom" unique_id=1021785710]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Ability2Name" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock" unique_id=1823154270]
+[node name="Ability2Name" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock" unique_id=1823154270]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41568628, 0.19607843, 0.654902, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 20
 text = "Ability Name 1"
 
-[node name="Ability2Damage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock" unique_id=378196308]
+[node name="Ability2Damage" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock" unique_id=378196308]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 12
 text = "Damage: 120"
 
-[node name="Ability2Cooldown" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock" unique_id=1404608527]
+[node name="Ability2Cooldown" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2NameBlock" unique_id=1404608527]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.50980395, 0.34509805, 1, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 12
 text = "Cooldown: 2.5 sec"
 
-[node name="Ability2ToggleWrap" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom" unique_id=439763315]
+[node name="Ability2ToggleWrap" type="VBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom" unique_id=439763315]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="Ability2ToggleLabel" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/StatsPanel/StatsMargin/StatsVBox/StatsColumns/RightStatsColumn/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2ToggleWrap" unique_id=911318806]
+[node name="Ability2ToggleLabel" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/AbilityCardsRow/AbilityCard2/MarginContainer/Ability2Root/Ability2Bottom/Ability2ToggleWrap" unique_id=911318806]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.41568628, 0.19607843, 0.654902, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 text = "Active"
 
 [node name="BottomButtonsRow" type="HBoxContainer" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked" unique_id=1805217499]
@@ -600,11 +600,11 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("16_pk70i")
-texture_pressed = ExtResource("17_crrsp")
-texture_hover = ExtResource("18_wu2ic")
-texture_disabled = ExtResource("19_40h52")
-script = ExtResource("18_5q4ag")
+texture_normal = ExtResource("14_f1id6")
+texture_pressed = ExtResource("15_8e3r0")
+texture_hover = ExtResource("16_mnv7g")
+texture_disabled = ExtResource("17_0ldwp")
+script = ExtResource("18_vivtu")
 hover_text = "Training requires Energy, the higher the level the higher the energy required"
 
 [node name="Label" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/TrainSection/TrainButton" unique_id=685440946]
@@ -615,7 +615,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 text = "Train (50)"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -629,11 +629,11 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("16_pk70i")
-texture_pressed = ExtResource("17_crrsp")
-texture_hover = ExtResource("18_wu2ic")
-texture_disabled = ExtResource("19_40h52")
-script = ExtResource("18_5q4ag")
+texture_normal = ExtResource("14_f1id6")
+texture_pressed = ExtResource("15_8e3r0")
+texture_hover = ExtResource("16_mnv7g")
+texture_disabled = ExtResource("17_0ldwp")
+script = ExtResource("18_vivtu")
 hover_text = "Upgrades require Currency different from the energy, earn currency by training."
 
 [node name="Label" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Unlocked/BottomButtonsRow/UpgradeSection/UpgradeButton" unique_id=1046310595]
@@ -644,7 +644,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 text = "Upgrade"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -692,7 +692,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_filter = 0
 theme_override_colors/font_color = Color(1, 0.34509805, 0.34509805, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 65
 text = "Locked"
 horizontal_alignment = 1
@@ -703,7 +703,7 @@ custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("20_mu56c")
+texture = ExtResource("19_tolfd")
 expand_mode = 1
 
 [node name="TrainInfo" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Locked/Control/MarginContainer/VBoxContainer" unique_id=887275154]
@@ -711,7 +711,7 @@ custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.3529412, 0.17254902, 0.5568628, 1)
-theme_override_fonts/font = ExtResource("4_e5gw1")
+theme_override_fonts/font = ExtResource("7_m28vn")
 theme_override_font_sizes/font_size = 20
 text = "This shape is still locked. Unlock it from phase 1 to train and use it for defence."
 horizontal_alignment = 1
@@ -723,11 +723,11 @@ custom_minimum_size = Vector2(110, 35)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture_normal = ExtResource("21_4ix84")
-texture_pressed = ExtResource("22_846fm")
-texture_hover = ExtResource("23_u4p5d")
-texture_disabled = ExtResource("24_vxai2")
-texture_focused = ExtResource("22_846fm")
+texture_normal = ExtResource("20_4a7lr")
+texture_pressed = ExtResource("21_q62pu")
+texture_hover = ExtResource("22_jtfu5")
+texture_disabled = ExtResource("23_ycy81")
+texture_focused = ExtResource("21_q62pu")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="SafeMargin/MainVBox/ContentRow/RightPanel/Locked/Control/MarginContainer/VBoxContainer/InventoryBtnWrap" unique_id=928171721]
@@ -738,16 +738,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.3372549, 0.16470589, 0.5176471, 1)
-theme_override_fonts/font = ExtResource("5_7ho5a")
+theme_override_fonts/font = ExtResource("8_cbpvf")
 theme_override_font_sizes/font_size = 24
 text = "Phase I"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MetaTreeScreen" parent="." unique_id=768639228 instance=ExtResource("21_0tixx")]
+[node name="MetaTreeScreen" parent="." unique_id=768639228 instance=ExtResource("24_vgveo")]
 visible = false
 layout_mode = 1
-block_scene = ExtResource("22_no80g")
+block_scene = ExtResource("25_dsb6r")
 
 [connection signal="pressed" from="SafeMargin/MainVBox/TopBar2/SettingsWrap/SettingsButton" to="SafeMargin/MainVBox/TopBar2/SettingsWrap" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="SafeMargin/MainVBox/TopBar2/BackWrap/BackButton" to="." method="_on_back_button_pressed"]
