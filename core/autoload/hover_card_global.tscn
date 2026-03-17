@@ -6,10 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://c5h4n8js5od68" path="res://assets/sprites/ui/panels/234x62 disabled.png" id="3_qeogr"]
 [ext_resource type="Texture2D" uid="uid://vjuvux27g651" path="res://assets/sprites/ui/panels/Stat Hover.png" id="4_nwc3f"]
 [ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="4_tl5l5"]
-[ext_resource type="Texture2D" uid="uid://bkubaflj6vj1m" path="res://assets/sprites/ui/arrows/Top 1.png" id="5_dgl4i"]
-[ext_resource type="Texture2D" uid="uid://5bwsbygj5s5i" path="res://assets/sprites/ui/arrows/Bottom 1.png" id="6_28imk"]
-[ext_resource type="Texture2D" uid="uid://dcjmdlpdbkowb" path="res://assets/sprites/ui/arrows/Left 1.png" id="7_l5p5t"]
-[ext_resource type="Texture2D" uid="uid://bod58a4y47nj4" path="res://assets/sprites/ui/arrows/Right 1.png" id="8_1wy1o"]
+[ext_resource type="Texture2D" uid="uid://d3klolyff4u2h" path="res://assets/sprites/ui/arrows/info arrows/Info Up.png" id="5_uk2ys"]
+[ext_resource type="Texture2D" uid="uid://b26nubmaxgk3f" path="res://assets/sprites/ui/arrows/info arrows/Info Bottom.png" id="6_ool7o"]
+[ext_resource type="Texture2D" uid="uid://nqg6j8janohs" path="res://assets/sprites/ui/arrows/info arrows/Info Left.png" id="7_t65of"]
+[ext_resource type="Texture2D" uid="uid://bcscq884c0nf5" path="res://assets/sprites/ui/arrows/info arrows/Info Right.png" id="8_ibx8c"]
+[ext_resource type="Texture2D" uid="uid://x5egvvafy1h5" path="res://assets/sprites/ui/arrows/danger arrows/Danger Up.png" id="8_vovt3"]
+[ext_resource type="Texture2D" uid="uid://b3gm7wvok7saw" path="res://assets/sprites/ui/arrows/danger arrows/Danger Bottom.png" id="9_tx6nv"]
+[ext_resource type="Texture2D" uid="uid://b3kauv2cpjnsi" path="res://assets/sprites/ui/arrows/danger arrows/Danger Left.png" id="10_ggldq"]
+[ext_resource type="Texture2D" uid="uid://e1jd1ag63wsj" path="res://assets/sprites/ui/arrows/danger arrows/Danger Right.png" id="11_y8ji7"]
+[ext_resource type="Texture2D" uid="uid://dyuptjxv03bmw" path="res://assets/sprites/ui/arrows/upgrade arrows/Upgrade Up.png" id="12_d1csb"]
+[ext_resource type="Texture2D" uid="uid://bk8jrmni1r823" path="res://assets/sprites/ui/arrows/upgrade arrows/Upgrade Bottom.png" id="13_68v57"]
+[ext_resource type="Texture2D" uid="uid://dv2qp0480vo2w" path="res://assets/sprites/ui/arrows/upgrade arrows/Upgrade Left.png" id="14_ucicr"]
+[ext_resource type="Texture2D" uid="uid://dsgjihqymvvqc" path="res://assets/sprites/ui/arrows/upgrade arrows/Upgrade Right.png" id="15_b7kt8"]
 
 [node name="HoverCardGlobal" type="CanvasLayer" unique_id=540467073]
 layer = 100
@@ -17,12 +25,24 @@ script = ExtResource("1_mpsvy")
 info_bubble_texture = ExtResource("2_qeogr")
 danger_bubble_texture = ExtResource("3_ibx8c")
 upgrade_bubble_texture = ExtResource("4_nwc3f")
-info_arrow_top_texture = ExtResource("5_dgl4i")
-info_arrow_bottom_texture = ExtResource("6_28imk")
-info_arrow_left_texture = ExtResource("7_l5p5t")
-info_arrow_right_texture = ExtResource("8_1wy1o")
-upgrade_title_color = Color(0, 0, 0, 1)
-upgrade_text_color = Color(0, 0, 0, 1)
+info_arrow_top_texture = ExtResource("5_uk2ys")
+info_arrow_bottom_texture = ExtResource("6_ool7o")
+info_arrow_left_texture = ExtResource("7_t65of")
+info_arrow_right_texture = ExtResource("8_ibx8c")
+danger_arrow_top_texture = ExtResource("8_vovt3")
+danger_arrow_bottom_texture = ExtResource("9_tx6nv")
+danger_arrow_left_texture = ExtResource("10_ggldq")
+danger_arrow_right_texture = ExtResource("11_y8ji7")
+upgrade_arrow_top_texture = ExtResource("12_d1csb")
+upgrade_arrow_bottom_texture = ExtResource("13_68v57")
+upgrade_arrow_left_texture = ExtResource("14_ucicr")
+upgrade_arrow_right_texture = ExtResource("15_b7kt8")
+info_title_color = Color(0.18039216, 0.18039216, 0.18039216, 1)
+info_text_color = Color(0.41960785, 0.41960785, 0.41960785, 1)
+danger_title_color = Color(1, 1, 1, 1)
+danger_text_color = Color(1, 0.91764706, 0.91764706, 1)
+upgrade_title_color = Color(1, 1, 1, 1)
+upgrade_text_color = Color(0.8392157, 0.85882354, 1, 1)
 
 [node name="Root" type="Control" parent="." unique_id=742846524]
 layout_mode = 3
@@ -30,6 +50,34 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
+
+[node name="ArrowTop" type="TextureRect" parent="Root" unique_id=1810907988]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ArrowBottom" type="TextureRect" parent="Root" unique_id=2008826413]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ArrowLeft" type="TextureRect" parent="Root" unique_id=199323402]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ArrowRight" type="TextureRect" parent="Root" unique_id=1867679682]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+expand_mode = 1
+stretch_mode = 3
 
 [node name="Bubble" type="NinePatchRect" parent="Root" unique_id=1267352611]
 layout_mode = 1
@@ -73,31 +121,3 @@ theme_override_fonts/font = ExtResource("4_tl5l5")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
-
-[node name="ArrowTop" type="TextureRect" parent="Root" unique_id=1810907988]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-expand_mode = 1
-stretch_mode = 3
-
-[node name="ArrowBottom" type="TextureRect" parent="Root" unique_id=2008826413]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-expand_mode = 1
-stretch_mode = 3
-
-[node name="ArrowLeft" type="TextureRect" parent="Root" unique_id=199323402]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-expand_mode = 1
-stretch_mode = 3
-
-[node name="ArrowRight" type="TextureRect" parent="Root" unique_id=1867679682]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-expand_mode = 1
-stretch_mode = 3

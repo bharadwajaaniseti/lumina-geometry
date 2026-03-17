@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxm87hjf3b8bg"
-path="res://.godot/imported/Top.png-200ba0c518ccd061f39337920fb31f37.ctex"
+uid="uid://e1jd1ag63wsj"
+path="res://.godot/imported/Danger Right.png-63b19255573c761668ebcb610f657af2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/arrows/Top.png"
-dest_files=["res://.godot/imported/Top.png-200ba0c518ccd061f39337920fb31f37.ctex"]
+source_file="res://assets/sprites/ui/arrows/danger arrows/Danger Right.png"
+dest_files=["res://.godot/imported/Danger Right.png-63b19255573c761668ebcb610f657af2.ctex"]
 
 [params]
 

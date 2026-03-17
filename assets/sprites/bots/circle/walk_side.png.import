@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bod58a4y47nj4"
-path="res://.godot/imported/Right 1.png-e7dd31e0e6c4b4d28b32e45b6aa53917.ctex"
+uid="uid://b1p1d1u1cbxyw"
+path="res://.godot/imported/walk_side.png-ee2353ccd3460b0a8924cb7b3d0bd87f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/arrows/Right 1.png"
-dest_files=["res://.godot/imported/Right 1.png-e7dd31e0e6c4b4d28b32e45b6aa53917.ctex"]
+source_file="res://assets/sprites/bots/circle/walk_side.png"
+dest_files=["res://.godot/imported/walk_side.png-ee2353ccd3460b0a8924cb7b3d0bd87f.ctex"]
 
 [params]
 
