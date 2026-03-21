@@ -13,7 +13,8 @@ height = 0.2
 
 [node name="DrifterCircle" type="Node3D" unique_id=1041334771]
 script = ExtResource("1_yi173")
-hop_cooldown = 0.12
+hop_base_distance = 8.37
+max_hop_distance = 9.45
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=1962901265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

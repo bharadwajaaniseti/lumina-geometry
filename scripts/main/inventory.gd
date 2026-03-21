@@ -2,7 +2,11 @@ extends Control
 
 @export var menu_scene: String = "res://scenes/menu/Menu.tscn"
 @export var phase1_scene: String = "res://scenes/gameplay/phase_1/Phase1.tscn"
-
+@export var shape_training_scenes: Dictionary = {
+	"circle": "res://scenes/minigames/circle/CircleMiniGameRoot.tscn",
+	"pyramid": "res://scenes/minigames/pyramid/PyramidTraining.tscn",
+	"triangle": "res://scenes/minigames/triangle/TriangleTraining.tscn"
+}
 @export var inventory_db: InventoryShapeDB
 @export var locked_icon: Texture2D
 @export var slot_scene: PackedScene
@@ -344,15 +348,26 @@ func _on_train_button_pressed() -> void:
 	if def == null:
 		return
 
-	if def.training_scene.strip_edges() == "":
-		push_warning("Training scene not set yet for shape: %s" % def.id)
+	var shape_id: String = def.id.strip_edges().to_lower()
+	var target_scene: String = ""
+
+	# First priority: use per-shape dictionary from this script
+	if shape_training_scenes.has(shape_id):
+		target_scene = str(shape_training_scenes[shape_id]).strip_edges()
+
+	# Fallback: use training_scene from the shape resource
+	elif def.training_scene.strip_edges() != "":
+		target_scene = def.training_scene.strip_edges()
+
+	if target_scene == "":
+		push_warning("Training scene not set for shape: %s" % def.id)
 		return
 
-	if not ResourceLoader.exists(def.training_scene):
-		push_warning("Training scene does not exist: %s" % def.training_scene)
+	if not ResourceLoader.exists(target_scene):
+		push_warning("Training scene does not exist: %s" % target_scene)
 		return
 
-	get_tree().change_scene_to_file(def.training_scene)
+	get_tree().change_scene_to_file(target_scene)
 
 
 func _on_upgrade_button_pressed() -> void:

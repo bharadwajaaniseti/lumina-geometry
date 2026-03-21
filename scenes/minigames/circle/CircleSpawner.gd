@@ -1,19 +1,30 @@
 extends Node3D
 class_name CircleSpawner
 
+## Scene used when spawning a new drifter.
 @export var drifter_scene: PackedScene
 
-@export var spawn_count: int = 8
+## Total drifters to spawn when the field is created or refreshed.
+@export_range(1, 999, 1) var spawn_count: int = 8
+## Ground height used when placing fresh spawns.
 @export var y_height: float = 0.1
 
 @export_group("Spawn Rules")
-@export var drifter_radius: float = 0.55
-@export var extra_spacing: float = 0.15
-@export var max_spawn_attempts_per_drifter: int = 60
-@export var edge_padding: float = 0.4
+## Approximate drifter radius used during spawn validation.
+## This should match the drifter's collision_radius closely.
+@export_range(0.01, 10.0, 0.01) var drifter_radius: float = 0.55
+## Extra gap added between spawned drifters so they do not start touching.
+@export_range(0.0, 5.0, 0.01) var extra_spacing: float = 0.15
+## How many random positions are tested before giving up on one spawn.
+@export_range(1, 500, 1) var max_spawn_attempts_per_drifter: int = 60
+## Additional padding from screen edges when choosing spawn positions.
+@export_range(0.0, 5.0, 0.01) var edge_padding: float = 0.4
+## If true, keeps fresh spawns away from the center core area.
 @export var avoid_center: bool = true
-@export var center_avoid_radius: float = 2.0
+## Radius around the center where spawns are not allowed when avoid_center is enabled.
+@export_range(0.0, 20.0, 0.01) var center_avoid_radius: float = 2.0
 
+## If true, removes existing drifters before the initial spawn.
 @export var clear_existing_on_ready: bool = true
 
 var screen_min_x: float = -10.0
@@ -26,12 +37,8 @@ func _ready() -> void:
 	if drifter_scene == null:
 		push_error("Drifter scene not assigned.")
 		return
-	call_deferred("_deferred_initial_spawn")
-	if clear_existing_on_ready:
-		_clear_children()
 
-	_refresh_bounds_from_root()
-	_spawn_all()
+	call_deferred("_deferred_initial_spawn")
 
 
 func _process(_delta: float) -> void:
@@ -70,7 +77,6 @@ func _spawn_all() -> void:
 			continue
 
 		var pos: Vector3 = pos_variant as Vector3
-
 		var drifter: Node3D = drifter_scene.instantiate() as Node3D
 		add_child(drifter)
 		drifter.position = pos
@@ -113,12 +119,14 @@ func _get_random_spawn_position() -> Vector3:
 
 	return Vector3(x, y_height, z)
 
+
 func _deferred_initial_spawn() -> void:
 	if clear_existing_on_ready:
 		_clear_children()
 
 	_refresh_bounds_from_root()
 	_spawn_all()
+
 
 func _clear_children() -> void:
 	for child in get_children():

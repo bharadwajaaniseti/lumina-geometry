@@ -2,41 +2,69 @@ extends Node3D
 class_name CircleMiniGameRoot
 
 @export_group("Scene References")
+## Main camera used to convert mouse position into a world position on the ground.
 @export var camera_path: NodePath = ^"Camera3D"
+## Container that holds all spawned drifters. This should point to Arena/Drifters.
 @export var drifters_path: NodePath = ^"Arena/Drifters"
+## The central core object that absorbs drifters when they reach it.
 @export var center_core_path: NodePath = ^"Arena/CenterCore"
+## Normal cursor preview shown on empty ground.
 @export var cursor_preview_path: NodePath = ^"Effects/CursorFieldPreview"
+## Target preview shown when a drifter is currently targetable.
 @export var drifter_target_preview_path: NodePath = ^"Effects/DrifterTargetPreview"
+## Optional debug label shown in the HUD.
 @export var debug_label_path: NodePath = ^"UI/HUDRoot/DebugLabel"
+## HUD label that displays the current shard count.
 @export var shards_label_path: NodePath = ^"UI/HUDRoot/ShardsLabel"
 
+@export var trajectory_preview_path: NodePath = ^"Effects/TrajectoryPreview"
+
+var _trajectory_preview: Node3D
 
 @export_group("Ground Plane")
+## Height of the gameplay plane in world space. Keep this matched with drifter ground_y.
 @export var ground_y: float = 0.1
 
 @export_group("Click Hop")
+## Enables mouse-to-ground cursor tracking.
 @export var cursor_enabled: bool = true
+## Enables preview visuals for cursor and target selection.
 @export var preview_enabled: bool = true
+## Enables left-click to trigger drifter hops.
 @export var click_hop_enabled: bool = true
-@export var click_hop_radius: float = 2.0
+## Radius around the click point that can affect drifters.
+## Larger values let one click affect more nearby drifters.
+@export_range(0.1, 10.0, 0.05) var click_hop_radius: float = 2.0
+## Global click strength passed into each drifter.
+## Higher values make drifters jump farther, depending on their weight.
+@export_range(0.0, 10.0, 0.05) var click_hop_power: float = 1.0
 
 @export_group("Target Preview")
+## Enables the selected-target marker when the cursor is close enough to a drifter.
 @export var target_preview_enabled: bool = true
+## If true, only the single closest drifter is marked as the active target.
+## If false, the first valid drifter found will be used.
 @export var target_pick_closest_only: bool = true
-@export var target_preview_y_offset: float = 0.03
-
-@export var preview_follow_speed: float = 12.0
+## Small vertical lift applied to the target preview so it does not clip into the drifter.
+@export_range(0.0, 0.5, 0.005) var target_preview_y_offset: float = 0.03
 
 @export_group("Screen Bounds")
-@export var bounds_margin: float = 0.2
+## Padding taken away from the visible screen edges when computing playable bounds.
+## Increase this if drifters feel too close to the edge of the screen.
+@export_range(0.0, 2.0, 0.01) var bounds_margin: float = 0.2
 
 @export_group("Core Absorption")
-@export var core_radius: float = 1.0
+## Radius of the center core absorb zone, before adding the drifter radius.
+@export_range(0.0, 10.0, 0.01) var core_radius: float = 1.0
+## Enables checking for drifters entering the center core.
 @export var absorb_check_enabled: bool = true
-@export var shards_per_drifter: int = 1
+## Shards awarded each time one drifter is absorbed by the core.
+@export_range(1, 9999, 1) var shards_per_drifter: int = 1
+## If true, a new drifter is spawned after one is absorbed.
 @export var respawn_on_absorb: bool = true
 
 @export_group("Debug")
+## Shows cursor / target debug information in the HUD label.
 @export var debug_enabled: bool = true
 
 var _camera: Camera3D
@@ -77,15 +105,17 @@ func _ready() -> void:
 
 	if _center_core == null:
 		push_error("CircleMiniGameRoot: CenterCore not found at path: %s" % center_core_path)
+	
+	_trajectory_preview = get_node_or_null(trajectory_preview_path) as Node3D
 
-	if _cursor_preview != null:
-		_cursor_preview.visible = false
-
-	if _drifter_target_preview != null:
-		if _drifter_target_preview.has_method("hide_preview"):
-			_drifter_target_preview.hide_preview()
+	if _trajectory_preview != null:
+		if _trajectory_preview.has_method("hide_preview"):
+			_trajectory_preview.hide_preview()
 		else:
-			_drifter_target_preview.visible = false
+			_trajectory_preview.visible = false
+			
+	_hide_cursor_preview()
+	_hide_target_preview()
 
 	_update_shards_label()
 	_update_screen_bounds()
@@ -131,7 +161,7 @@ func _trigger_hop_at_position(world_pos: Vector3) -> void:
 			continue
 
 		if child.has_method("trigger_hop_away_from"):
-			child.trigger_hop_away_from(world_pos, click_hop_radius)
+			child.trigger_hop_away_from(world_pos, click_hop_radius, click_hop_power)
 
 
 func _update_cursor_world_position() -> void:
@@ -188,11 +218,13 @@ func _update_previews() -> void:
 	if not preview_enabled:
 		_hide_cursor_preview()
 		_hide_target_preview()
+		_hide_trajectory_preview()
 		return
 
 	if not _cursor_valid:
 		_hide_cursor_preview()
 		_hide_target_preview()
+		_hide_trajectory_preview()
 		return
 
 	if target_preview_enabled and _hovered_drifter != null:
@@ -206,16 +238,58 @@ func _update_previews() -> void:
 			else:
 				_drifter_target_preview.visible = true
 				_drifter_target_preview.global_position = target_pos
+
+		_update_trajectory_preview()
 	else:
 		_hide_target_preview()
+		_hide_trajectory_preview()
 
 		if _cursor_preview != null:
-			_cursor_preview.visible = true
-			_cursor_preview.global_position = _cursor_world_position
+			if _cursor_preview.has_method("show_at"):
+				_cursor_preview.show_at(_cursor_world_position)
+			else:
+				_cursor_preview.visible = true
+				_cursor_preview.global_position = _cursor_world_position
 
+func _update_trajectory_preview() -> void:
+	if _trajectory_preview == null or _hovered_drifter == null:
+		return
+
+	if not _hovered_drifter.has_method("get_predicted_hop"):
+		_hide_trajectory_preview()
+		return
+
+	var info: Dictionary = _hovered_drifter.get_predicted_hop(_cursor_world_position, click_hop_radius, click_hop_power)
+	if not info.get("valid", false):
+		_hide_trajectory_preview()
+		return
+
+	if _trajectory_preview.has_method("show_trajectory"):
+		_trajectory_preview.show_trajectory(
+			info["start"],
+			info["end"],
+			info["height"]
+		)
+	else:
+		_trajectory_preview.visible = true
+
+
+func _hide_trajectory_preview() -> void:
+	if _trajectory_preview == null:
+		return
+
+	if _trajectory_preview.has_method("hide_preview"):
+		_trajectory_preview.hide_preview()
+	else:
+		_trajectory_preview.visible = false
 
 func _hide_cursor_preview() -> void:
-	if _cursor_preview != null:
+	if _cursor_preview == null:
+		return
+
+	if _cursor_preview.has_method("hide_preview"):
+		_cursor_preview.hide_preview()
+	else:
 		_cursor_preview.visible = false
 
 
