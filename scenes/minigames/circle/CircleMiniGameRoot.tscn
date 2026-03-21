@@ -46,8 +46,6 @@ height = 0.02
 
 [node name="CircleMiniGameRoot" type="Node3D" unique_id=2066030446]
 script = ExtResource("1_kbydp")
-repulsion_enabled = true
-repulsion_radius = 2.2
 repulsion_strength = 0.35
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1885138562]
