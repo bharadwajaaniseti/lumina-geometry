@@ -30,6 +30,12 @@ var _debug_label: Label
 var _cursor_world_position: Vector3 = Vector3.ZERO
 var _cursor_valid: bool = false
 
+@export_group("Screen Bounds")
+@export var bounds_margin: float = 0.2
+var _screen_min_x: float = -10.0
+var _screen_max_x: float = 10.0
+var _screen_min_z: float = -10.0
+var _screen_max_z: float = 10.0
 
 func _ready() -> void:
 	_camera = get_node_or_null(camera_path) as Camera3D
@@ -50,6 +56,8 @@ func _process(delta: float) -> void:
 		return
 
 	_update_cursor_world_position()
+	_update_screen_bounds()
+	_push_bounds_to_drifters()
 	_update_cursor_preview()
 	_update_debug_text()
 
@@ -122,10 +130,71 @@ func _update_debug_text() -> void:
 		return
 
 	if _cursor_valid:
-		_debug_label.text = "Cursor: (%.2f, %.2f, %.2f)" % [
+		_debug_label.text = "Cursor: (%.2f, %.2f, %.2f)\nBounds X: %.2f to %.2f | Z: %.2f to %.2f" % [
 			_cursor_world_position.x,
 			_cursor_world_position.y,
-			_cursor_world_position.z
+			_cursor_world_position.z,
+			_screen_min_x,
+			_screen_max_x,
+			_screen_min_z,
+			_screen_max_z
 		]
 	else:
-		_debug_label.text = "Cursor: invalid"
+		_debug_label.text = "Cursor: invalid\nBounds X: %.2f to %.2f | Z: %.2f to %.2f" % [
+			_screen_min_x,
+			_screen_max_x,
+			_screen_min_z,
+			_screen_max_z
+		]
+
+func _update_screen_bounds() -> void:
+	if _camera == null:
+		return
+
+	var viewport_rect: Rect2 = get_viewport().get_visible_rect()
+
+	var top_left: Vector3 = _screen_to_ground(Vector2(viewport_rect.position.x, viewport_rect.position.y))
+	var top_right: Vector3 = _screen_to_ground(Vector2(viewport_rect.end.x, viewport_rect.position.y))
+	var bottom_left: Vector3 = _screen_to_ground(Vector2(viewport_rect.position.x, viewport_rect.end.y))
+	var bottom_right: Vector3 = _screen_to_ground(Vector2(viewport_rect.end.x, viewport_rect.end.y))
+
+	var xs := [top_left.x, top_right.x, bottom_left.x, bottom_right.x]
+	var zs := [top_left.z, top_right.z, bottom_left.z, bottom_right.z]
+
+	_screen_min_x = minf(minf(xs[0], xs[1]), minf(xs[2], xs[3])) + bounds_margin
+	_screen_max_x = maxf(maxf(xs[0], xs[1]), maxf(xs[2], xs[3])) - bounds_margin
+	_screen_min_z = minf(minf(zs[0], zs[1]), minf(zs[2], zs[3])) + bounds_margin
+	_screen_max_z = maxf(maxf(zs[0], zs[1]), maxf(zs[2], zs[3])) - bounds_margin
+
+
+func _push_bounds_to_drifters() -> void:
+	if _drifters_root == null:
+		return
+
+	for child in _drifters_root.get_children():
+		if child.has_method("set_screen_bounds"):
+			child.set_screen_bounds(_screen_min_x, _screen_max_x, _screen_min_z, _screen_max_z)
+
+
+func _screen_to_ground(screen_pos: Vector2) -> Vector3:
+	var ray_origin: Vector3 = _camera.project_ray_origin(screen_pos)
+	var ray_direction: Vector3 = _camera.project_ray_normal(screen_pos)
+
+	if abs(ray_direction.y) < 0.0001:
+		return Vector3.ZERO
+
+	var t: float = (ground_y - ray_origin.y) / ray_direction.y
+	if t < 0.0:
+		return Vector3.ZERO
+
+	var point: Vector3 = ray_origin + ray_direction * t
+	point.y = ground_y
+	return point
+
+func get_screen_spawn_bounds() -> Dictionary:
+	return {
+		"min_x": _screen_min_x,
+		"max_x": _screen_max_x,
+		"min_z": _screen_min_z,
+		"max_z": _screen_max_z
+	}

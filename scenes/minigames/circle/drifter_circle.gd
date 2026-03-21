@@ -12,14 +12,17 @@ class_name DrifterCircle
 @export var separation_iterations: int = 2
 @export var collision_mask_group: StringName = &"drifters"
 
-@export_group("Arena Bounds")
-@export var use_bounds: bool = true
-@export var bounds_center: Vector3 = Vector3.ZERO
-@export var bounds_radius: float = 8.5
+@export_group("Screen Bounds")
+@export var use_screen_bounds: bool = true
 @export var wall_bounce: float = 0.15
 @export var wall_friction: float = 0.9
 
 var velocity: Vector3 = Vector3.ZERO
+
+var bounds_min_x: float = -10.0
+var bounds_max_x: float = 10.0
+var bounds_min_z: float = -10.0
+var bounds_max_z: float = 10.0
 
 
 func _ready() -> void:
@@ -36,8 +39,8 @@ func _physics_process(delta: float) -> void:
 	for _i in range(separation_iterations):
 		_resolve_drifter_collisions()
 
-	if use_bounds:
-		_resolve_arena_bounds()
+	if use_screen_bounds:
+		_resolve_screen_bounds()
 
 	if velocity.length() < min_stop_speed:
 		velocity = Vector3.ZERO
@@ -68,6 +71,13 @@ func apply_repulsion(from_pos: Vector3, strength: float, radius: float) -> void:
 	var speed: float = velocity.length()
 	if speed > max_speed:
 		velocity = velocity.normalized() * max_speed
+
+
+func set_screen_bounds(min_x: float, max_x: float, min_z: float, max_z: float) -> void:
+	bounds_min_x = min_x
+	bounds_max_x = max_x
+	bounds_min_z = min_z
+	bounds_max_z = max_z
 
 
 func _apply_damping(delta: float) -> void:
@@ -140,35 +150,42 @@ func _resolve_velocity_against_other(other: DrifterCircle, normal: Vector2) -> v
 	other.velocity.z = other_vel_2d.y
 
 
-func _resolve_arena_bounds() -> void:
-	var center_2d: Vector2 = Vector2(bounds_center.x, bounds_center.z)
-	var pos_2d: Vector2 = Vector2(global_position.x, global_position.z)
+func _resolve_screen_bounds() -> void:
+	var min_x: float = bounds_min_x + collision_radius
+	var max_x: float = bounds_max_x - collision_radius
+	var min_z: float = bounds_min_z + collision_radius
+	var max_z: float = bounds_max_z - collision_radius
 
-	var to_pos: Vector2 = pos_2d - center_2d
-	var distance: float = to_pos.length()
+	# X bounds
+	if global_position.x < min_x:
+		global_position.x = min_x
+		_bounce_x(-1.0)
+	elif global_position.x > max_x:
+		global_position.x = max_x
+		_bounce_x(1.0)
 
-	var allowed_radius: float = bounds_radius - collision_radius
-	if distance <= allowed_radius:
-		return
+	# Z bounds
+	if global_position.z < min_z:
+		global_position.z = min_z
+		_bounce_z(-1.0)
+	elif global_position.z > max_z:
+		global_position.z = max_z
+		_bounce_z(1.0)
 
-	if distance <= 0.0001:
-		return
-
-	var normal: Vector2 = to_pos / distance
-	var corrected_pos: Vector2 = center_2d + normal * allowed_radius
-
-	global_position.x = corrected_pos.x
-	global_position.z = corrected_pos.y
 	global_position.y = ground_y
 
-	var vel_2d: Vector2 = Vector2(velocity.x, velocity.z)
-	var outward_speed: float = vel_2d.dot(normal)
 
-	if outward_speed > 0.0:
-		var normal_component: Vector2 = normal * outward_speed
-		var tangent_component: Vector2 = vel_2d - normal_component
+func _bounce_x(_side: float) -> void:
+	if velocity.x == 0.0:
+		return
 
-		var new_vel: Vector2 = (-normal_component * wall_bounce) + (tangent_component * wall_friction)
+	velocity.x = -velocity.x * wall_bounce
+	velocity.z *= wall_friction
 
-		velocity.x = new_vel.x
-		velocity.z = new_vel.y
+
+func _bounce_z(_side: float) -> void:
+	if velocity.z == 0.0:
+		return
+
+	velocity.z = -velocity.z * wall_bounce
+	velocity.x *= wall_friction

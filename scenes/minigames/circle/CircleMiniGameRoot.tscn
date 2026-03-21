@@ -82,8 +82,6 @@ mesh = SubResource("CylinderMesh_ebcmk")
 script = ExtResource("2_36r1d")
 drifter_scene = ExtResource("3_w2khq")
 spawn_count = 10
-spawn_radius_min = 8.0
-spawn_radius_max = 10.0
 
 [node name="Effects" type="Node3D" parent="." unique_id=359379980]
 
