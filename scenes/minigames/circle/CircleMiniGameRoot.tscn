@@ -5,6 +5,8 @@
 [ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="2_5vytg"]
 [ext_resource type="Script" uid="uid://bdtcsar3imonj" path="res://scenes/minigames/circle/CircleSpawner.gd" id="2_36r1d"]
 [ext_resource type="PackedScene" uid="uid://5vriwftcx5pr" path="res://scenes/minigames/circle/DrifterCircle.tscn" id="3_w2khq"]
+[ext_resource type="PackedScene" uid="uid://dnrj5bvfrakm6" path="res://assets/minigames/circle/selected.fbx" id="5_6d0v4"]
+[ext_resource type="Script" uid="uid://fviveyethfw8" path="res://scenes/minigames/circle/drifter_target_preview.gd" id="5_176uw"]
 
 [sub_resource type="Environment" id="Environment_qgjgl"]
 background_mode = 1
@@ -46,8 +48,6 @@ height = 0.02
 
 [node name="CircleMiniGameRoot" type="Node3D" unique_id=2066030446]
 script = ExtResource("1_kbydp")
-repulsion_radius = 2.0
-repulsion_strength = 0.35
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1885138562]
 transform = Transform3D(2.1862235, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 18, 20)
@@ -88,6 +88,12 @@ spawn_count = 10
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Effects/CursorFieldPreview" unique_id=1686993142]
 mesh = SubResource("CylinderMesh_kbydp")
+
+[node name="DrifterTargetPreview" type="Node3D" parent="Effects" unique_id=1529953289]
+script = ExtResource("5_176uw")
+
+[node name="selected" parent="Effects/DrifterTargetPreview" unique_id=820529528 instance=ExtResource("5_6d0v4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1448234744]
 

@@ -6,20 +6,26 @@ class_name CircleMiniGameRoot
 @export var drifters_path: NodePath = ^"Arena/Drifters"
 @export var center_core_path: NodePath = ^"Arena/CenterCore"
 @export var cursor_preview_path: NodePath = ^"Effects/CursorFieldPreview"
+@export var drifter_target_preview_path: NodePath = ^"Effects/DrifterTargetPreview"
 @export var debug_label_path: NodePath = ^"UI/HUDRoot/DebugLabel"
 @export var shards_label_path: NodePath = ^"UI/HUDRoot/ShardsLabel"
+
 
 @export_group("Ground Plane")
 @export var ground_y: float = 0.1
 
-@export_group("Cursor Field")
+@export_group("Click Hop")
 @export var cursor_enabled: bool = true
 @export var preview_enabled: bool = true
-@export var repulsion_enabled: bool = true
-@export var repulsion_radius: float = 2.2
-@export var repulsion_strength: float = 0.45
-@export var require_mouse_hold: bool = false
-@export var mouse_button: MouseButton = MOUSE_BUTTON_LEFT
+@export var click_hop_enabled: bool = true
+@export var click_hop_radius: float = 2.0
+
+@export_group("Target Preview")
+@export var target_preview_enabled: bool = true
+@export var target_pick_closest_only: bool = true
+@export var target_preview_y_offset: float = 0.03
+
+@export var preview_follow_speed: float = 12.0
 
 @export_group("Screen Bounds")
 @export var bounds_margin: float = 0.2
@@ -37,11 +43,13 @@ var _camera: Camera3D
 var _drifters_root: Node3D
 var _center_core: Node3D
 var _cursor_preview: Node3D
+var _drifter_target_preview: Node3D
 var _debug_label: Label
 var _shards_label: Label
 
 var _cursor_world_position: Vector3 = Vector3.ZERO
 var _cursor_valid: bool = false
+var _hovered_drifter: Node3D = null
 
 var _screen_min_x: float = -10.0
 var _screen_max_x: float = 10.0
@@ -56,6 +64,7 @@ func _ready() -> void:
 	_drifters_root = get_node_or_null(drifters_path) as Node3D
 	_center_core = get_node_or_null(center_core_path) as Node3D
 	_cursor_preview = get_node_or_null(cursor_preview_path) as Node3D
+	_drifter_target_preview = get_node_or_null(drifter_target_preview_path) as Node3D
 	_debug_label = get_node_or_null(debug_label_path) as Label
 	_shards_label = get_node_or_null(shards_label_path) as Label
 
@@ -69,28 +78,60 @@ func _ready() -> void:
 	if _center_core == null:
 		push_error("CircleMiniGameRoot: CenterCore not found at path: %s" % center_core_path)
 
-	if preview_enabled and _cursor_preview != null:
+	if _cursor_preview != null:
 		_cursor_preview.visible = false
+
+	if _drifter_target_preview != null:
+		if _drifter_target_preview.has_method("hide_preview"):
+			_drifter_target_preview.hide_preview()
+		else:
+			_drifter_target_preview.visible = false
 
 	_update_shards_label()
 	_update_screen_bounds()
 	_push_bounds_to_drifters()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if cursor_enabled:
 		_update_cursor_world_position()
 		_update_screen_bounds()
 		_push_bounds_to_drifters()
-		_update_cursor_preview()
-
-		if repulsion_enabled and _cursor_valid and _should_apply_repulsion():
-			_apply_repulsion_to_drifters()
+		_update_hovered_drifter()
+		_update_previews()
 
 	if absorb_check_enabled:
 		_check_core_absorption()
 
 	_update_debug_text()
+
+
+func _input(event: InputEvent) -> void:
+	if not click_hop_enabled:
+		return
+
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			_on_left_click()
+
+
+func _on_left_click() -> void:
+	if not _cursor_valid:
+		return
+
+	_trigger_hop_at_position(_cursor_world_position)
+
+
+func _trigger_hop_at_position(world_pos: Vector3) -> void:
+	if _drifters_root == null:
+		return
+
+	for child in _drifters_root.get_children():
+		if not (child is Node3D):
+			continue
+
+		if child.has_method("trigger_hop_away_from"):
+			child.trigger_hop_away_from(world_pos, click_hop_radius)
 
 
 func _update_cursor_world_position() -> void:
@@ -100,42 +141,92 @@ func _update_cursor_world_position() -> void:
 		return
 
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	_cursor_world_position = _screen_to_ground(mouse_pos)
+	var point: Vector3 = _screen_to_ground(mouse_pos)
 
-	if _cursor_world_position != Vector3.ZERO or _is_mouse_over_ground(mouse_pos):
-		_cursor_world_position.y = ground_y
-		_cursor_valid = true
-
-
-func _update_cursor_preview() -> void:
-	if _cursor_preview == null:
+	if point == Vector3.ZERO and not _is_mouse_over_ground(mouse_pos):
 		return
 
-	if not preview_enabled or not _cursor_valid:
-		_cursor_preview.visible = false
+	_cursor_world_position = point
+	_cursor_world_position.y = ground_y
+	_cursor_valid = true
+
+
+func _update_hovered_drifter() -> void:
+	_hovered_drifter = null
+
+	if not _cursor_valid or _drifters_root == null:
 		return
 
-	_cursor_preview.visible = true
-	_cursor_preview.global_position = _cursor_world_position
-
-
-func _apply_repulsion_to_drifters() -> void:
-	if _drifters_root == null:
-		return
+	var cursor_2d: Vector2 = Vector2(_cursor_world_position.x, _cursor_world_position.z)
+	var closest_distance: float = INF
 
 	for child in _drifters_root.get_children():
-		if not (child is Node3D):
+		var drifter := child as Node3D
+		if drifter == null:
 			continue
 
-		if child.has_method("trigger_hop_away_from"):
-			child.trigger_hop_away_from(_cursor_world_position, repulsion_radius)
+		var drifter_2d: Vector2 = Vector2(drifter.global_position.x, drifter.global_position.z)
+		var dist: float = cursor_2d.distance_to(drifter_2d)
+
+		var drifter_radius: float = 0.0
+		if "collision_radius" in drifter:
+			drifter_radius = drifter.collision_radius
+
+		var affect_distance: float = click_hop_radius + drifter_radius
+
+		if dist <= affect_distance:
+			if target_pick_closest_only:
+				if dist < closest_distance:
+					closest_distance = dist
+					_hovered_drifter = drifter
+			else:
+				_hovered_drifter = drifter
+				return
 
 
-func _should_apply_repulsion() -> bool:
-	if not require_mouse_hold:
-		return true
+func _update_previews() -> void:
+	if not preview_enabled:
+		_hide_cursor_preview()
+		_hide_target_preview()
+		return
 
-	return Input.is_mouse_button_pressed(mouse_button)
+	if not _cursor_valid:
+		_hide_cursor_preview()
+		_hide_target_preview()
+		return
+
+	if target_preview_enabled and _hovered_drifter != null:
+		_hide_cursor_preview()
+
+		if _drifter_target_preview != null:
+			var target_pos: Vector3 = _hovered_drifter.global_position + Vector3(0.0, target_preview_y_offset, 0.0)
+
+			if _drifter_target_preview.has_method("show_at"):
+				_drifter_target_preview.show_at(target_pos)
+			else:
+				_drifter_target_preview.visible = true
+				_drifter_target_preview.global_position = target_pos
+	else:
+		_hide_target_preview()
+
+		if _cursor_preview != null:
+			_cursor_preview.visible = true
+			_cursor_preview.global_position = _cursor_world_position
+
+
+func _hide_cursor_preview() -> void:
+	if _cursor_preview != null:
+		_cursor_preview.visible = false
+
+
+func _hide_target_preview() -> void:
+	if _drifter_target_preview == null:
+		return
+
+	if _drifter_target_preview.has_method("hide_preview"):
+		_drifter_target_preview.hide_preview()
+	else:
+		_drifter_target_preview.visible = false
 
 
 func _check_core_absorption() -> void:
@@ -165,6 +256,8 @@ func _check_core_absorption() -> void:
 
 	for drifter in to_absorb:
 		if is_instance_valid(drifter):
+			if drifter == _hovered_drifter:
+				_hovered_drifter = null
 			drifter.queue_free()
 			shards += shards_per_drifter
 
@@ -187,7 +280,7 @@ func _respawn_absorbed_count(count: int) -> void:
 		if d != null:
 			existing_positions.append(d.position)
 
-	for i in range(count):
+	for _i in range(count):
 		var pos_variant: Variant = _drifters_root._find_valid_spawn_position(existing_positions)
 		if pos_variant == null:
 			continue
@@ -226,8 +319,8 @@ func _update_screen_bounds() -> void:
 	var bottom_left: Vector3 = _screen_to_ground(Vector2(viewport_rect.position.x, viewport_rect.end.y))
 	var bottom_right: Vector3 = _screen_to_ground(Vector2(viewport_rect.end.x, viewport_rect.end.y))
 
-	var xs := [top_left.x, top_right.x, bottom_left.x, bottom_right.x]
-	var zs := [top_left.z, top_right.z, bottom_left.z, bottom_right.z]
+	var xs: Array[float] = [top_left.x, top_right.x, bottom_left.x, bottom_right.x]
+	var zs: Array[float] = [top_left.z, top_right.z, bottom_left.z, bottom_right.z]
 
 	_screen_min_x = minf(minf(xs[0], xs[1]), minf(xs[2], xs[3])) + bounds_margin
 	_screen_max_x = maxf(maxf(xs[0], xs[1]), maxf(xs[2], xs[3])) - bounds_margin
@@ -279,11 +372,20 @@ func _update_debug_text() -> void:
 	if not debug_enabled or _debug_label == null:
 		return
 
+	var target_text: String = "none"
+	if _hovered_drifter != null:
+		target_text = _hovered_drifter.name
+
 	if _cursor_valid:
-		_debug_label.text = "Cursor: (%.2f, %.2f, %.2f)" % [
+		_debug_label.text = "Cursor: (%.2f, %.2f, %.2f)\nTarget: %s\nShards: %d" % [
 			_cursor_world_position.x,
 			_cursor_world_position.y,
-			_cursor_world_position.z
+			_cursor_world_position.z,
+			target_text,
+			shards
 		]
 	else:
-		_debug_label.text = "Cursor: invalid"
+		_debug_label.text = "Cursor: invalid\nTarget: %s\nShards: %d" % [
+			target_text,
+			shards
+		]
