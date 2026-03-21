@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://co7jaoyu6r5a3"]
+
+[ext_resource type="Script" uid="uid://u01eiq5jp836" path="res://scenes/minigames/circle/camera.gd" id="1_ebcmk"]
+[ext_resource type="Script" uid="uid://culpqx44k1p4l" path="res://scenes/minigames/circle/CircleMiniGameRoot.gd" id="1_kbydp"]
+[ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="2_5vytg"]
+[ext_resource type="Script" uid="uid://bdtcsar3imonj" path="res://scenes/minigames/circle/CircleSpawner.gd" id="2_36r1d"]
+[ext_resource type="PackedScene" uid="uid://5vriwftcx5pr" path="res://scenes/minigames/circle/DrifterCircle.tscn" id="3_w2khq"]
+
+[sub_resource type="Environment" id="Environment_qgjgl"]
+background_mode = 1
+background_color = Color(0.8509804, 0.8509804, 0.8509804, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ebcmk"]
+albedo_color = Color(0.6255971, 0.6255971, 0.6255971, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5vytg"]
+material = SubResource("StandardMaterial3D_ebcmk")
+size = Vector2(50, 50)
+subdivide_width = 1
+subdivide_depth = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qgjgl"]
+albedo_color = Color(0.3529412, 0.047058824, 0.047058824, 1)
+roughness = 0.65
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ebcmk"]
+material = SubResource("StandardMaterial3D_qgjgl")
+top_radius = 0.9
+bottom_radius = 0.9
+height = 0.3
+radial_segments = 32
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kbydp"]
+albedo_color = Color(0, 0.56999755, 0.57441366, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kbydp"]
+material = SubResource("StandardMaterial3D_kbydp")
+top_radius = 1.2
+bottom_radius = 1.2
+height = 0.02
+
+[node name="CircleMiniGameRoot" type="Node3D" unique_id=2066030446]
+script = ExtResource("1_kbydp")
+repulsion_enabled = true
+repulsion_radius = 2.2
+repulsion_strength = 0.35
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1885138562]
+transform = Transform3D(2.1862235, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 18, 20)
+projection = 1
+current = true
+size = 27.0
+far = 1000.0
+script = ExtResource("1_ebcmk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=702703667]
+transform = Transform3D(0.8660254, -0.38302222, 0.32139382, 0, 0.64278764, 0.76604444, -0.5, -0.66341394, 0.5566704, 0, 10, 0)
+light_energy = 1.2
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_normal_bias = 1.0
+shadow_blur = 1.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2034717851]
+environment = SubResource("Environment_qgjgl")
+
+[node name="Arena" type="Node3D" parent="." unique_id=2086491827]
+
+[node name="Ground" type="MeshInstance3D" parent="Arena" unique_id=475749425]
+mesh = SubResource("PlaneMesh_5vytg")
+
+[node name="CenterCore" type="MeshInstance3D" parent="Arena" unique_id=980304184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_ebcmk")
+
+[node name="Drifters" type="Node3D" parent="Arena" unique_id=322205309]
+script = ExtResource("2_36r1d")
+drifter_scene = ExtResource("3_w2khq")
+spawn_count = 10
+spawn_radius_min = 8.0
+spawn_radius_max = 10.0
+
+[node name="Effects" type="Node3D" parent="." unique_id=359379980]
+
+[node name="CursorFieldPreview" type="Node3D" parent="Effects" unique_id=1086630162]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Effects/CursorFieldPreview" unique_id=1686993142]
+mesh = SubResource("CylinderMesh_kbydp")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1448234744]
+
+[node name="HUDRoot" type="Control" parent="UI" unique_id=1064086487]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DebugLabel" type="Label" parent="UI/HUDRoot" unique_id=712585597]
+layout_mode = 1
+offset_top = 15.0
+offset_right = 282.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_fonts/font = ExtResource("2_5vytg")
+theme_override_font_sizes/font_size = 30
+text = "Debug"
+
+[node name="ShardsLabel" type="Label" parent="UI/HUDRoot" unique_id=1307756640]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -282.0
+offset_top = 15.0
+offset_bottom = 45.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_fonts/font = ExtResource("2_5vytg")
+theme_override_font_sizes/font_size = 30
+text = "Shards: 1000"
+horizontal_alignment = 1

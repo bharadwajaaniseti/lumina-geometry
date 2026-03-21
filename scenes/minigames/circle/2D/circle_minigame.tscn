@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dhky3thi3uymi"]
+
+[ext_resource type="Script" uid="uid://hyl37qm48c8p" path="res://scripts/minigames/circle/circle_minigame.gd" id="1_5d3bc"]
+[ext_resource type="Texture2D" uid="uid://cj0bjxg46ayav" path="res://assets/sprites/bg.png" id="1_jv7v8"]
+[ext_resource type="PackedScene" uid="uid://3qomnctytbbg" path="res://scenes/minigames/circle/2D/center_core.tscn" id="2_pfjac"]
+[ext_resource type="PackedScene" uid="uid://cd5phu1ytaila" path="res://scenes/minigames/circle/2D/drifter_circle.tscn" id="2_ql0uo"]
+[ext_resource type="Texture2D" uid="uid://qeyrbeivacqb" path="res://assets/sprites/ui/Inventory Shapes/Circle.png" id="2_u8ov2"]
+[ext_resource type="Script" uid="uid://dlbwaygiiq3kg" path="res://scripts/minigames/circle/circle_spawner.gd" id="4_f3jys"]
+[ext_resource type="PackedScene" uid="uid://b5bio1lqrbsmm" path="res://scenes/minigames/circle/2D/cursor_field_preview.tscn" id="7_iokru"]
+[ext_resource type="PackedScene" uid="uid://bya8mja5i8dp7" path="res://scenes/minigames/circle/2D/circle_minigame_hud.tscn" id="8_iokru"]
+
+[node name="CircleMinigame1" type="Node2D" unique_id=1779703422]
+script = ExtResource("1_5d3bc")
+
+[node name="Arena" type="Node2D" parent="." unique_id=1961328596]
+
+[node name="Background" type="Sprite2D" parent="Arena" unique_id=2032058475]
+scale = Vector2(11.530001, 6.5200005)
+texture = ExtResource("1_jv7v8")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="OuterRing" type="Sprite2D" parent="Arena" unique_id=452157027]
+self_modulate = Color(1, 1, 1, 0.2)
+position = Vector2(555, 314)
+texture = ExtResource("2_u8ov2")
+
+[node name="CenterCore" parent="Arena" unique_id=1126079312 instance=ExtResource("2_pfjac")]
+position = Vector2(555, 314)
+
+[node name="DriftersContainer" type="Node2D" parent="Arena" unique_id=1995733474]
+position = Vector2(470, 178)
+
+[node name="EffectsContainer" type="Node2D" parent="Arena" unique_id=821172126]
+metadata/_edit_lock_ = true
+
+[node name="CursorFieldPreview" parent="Arena" unique_id=1451921726 instance=ExtResource("7_iokru")]
+
+[node name="CircleSpawner" type="Node" parent="." unique_id=728620938]
+script = ExtResource("4_f3jys")
+drifter_scene = ExtResource("2_ql0uo")
+spawn_interval = 0.2
+max_drifters = 25
+
+[node name="GameController" type="Node" parent="." unique_id=144113666]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1127595484]
+
+[node name="CircleMinigameHud" parent="CanvasLayer" unique_id=1993914182 instance=ExtResource("8_iokru")]

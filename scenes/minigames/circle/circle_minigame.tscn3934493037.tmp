@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dhky3thi3uymi"]
+
+[ext_resource type="Script" uid="uid://hyl37qm48c8p" path="res://scripts/minigames/circle/circle_minigame.gd" id="1_5d3bc"]
+[ext_resource type="Texture2D" uid="uid://cj0bjxg46ayav" path="res://assets/sprites/bg.png" id="1_jv7v8"]
+[ext_resource type="PackedScene" uid="uid://3qomnctytbbg" path="res://scenes/minigames/circle/center_core.tscn" id="2_pfjac"]
+[ext_resource type="PackedScene" uid="uid://cd5phu1ytaila" path="res://scenes/minigames/circle/drifter_circle.tscn" id="2_ql0uo"]
+[ext_resource type="Texture2D" uid="uid://qeyrbeivacqb" path="res://assets/sprites/ui/Inventory Shapes/Circle.png" id="2_u8ov2"]
+[ext_resource type="Script" uid="uid://dlbwaygiiq3kg" path="res://scripts/minigames/circle/circle_spawner.gd" id="4_f3jys"]
+[ext_resource type="FontFile" uid="uid://b52nimiwgwkwt" path="res://assets/fonts/ScribblesJE.ttf" id="5_5d3bc"]
+
+[node name="CircleMinigame" type="Node2D" unique_id=1779703422]
+script = ExtResource("1_5d3bc")
+drifter_scene = ExtResource("2_ql0uo")
+
+[node name="Arena" type="Node2D" parent="." unique_id=1961328596]
+
+[node name="Background" type="Sprite2D" parent="Arena" unique_id=2032058475]
+scale = Vector2(12, 6.769)
+texture = ExtResource("1_jv7v8")
+centered = false
+
+[node name="OuterRing" type="Sprite2D" parent="Arena" unique_id=452157027]
+texture = ExtResource("2_u8ov2")
+
+[node name="CenterCore" parent="Arena" unique_id=1126079312 instance=ExtResource("2_pfjac")]
+
+[node name="DriftersContainer" type="Node2D" parent="Arena" unique_id=1995733474]
+script = ExtResource("4_f3jys")
+
+[node name="EffectsContainer" type="Node2D" parent="Arena" unique_id=821172126]
+
+[node name="CursorFieldPreview" type="Node2D" parent="Arena" unique_id=1175413473]
+
+[node name="CircleSpawner" type="Node" parent="." unique_id=728620938]
+
+[node name="GameController" type="Node" parent="." unique_id=144113666]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1127595484]
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=820359181]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD" unique_id=650818227]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -127.0
+offset_bottom = 30.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.5176471, 0.16470589, 0.17254902, 1)
+theme_override_fonts/font = ExtResource("5_5d3bc")
+theme_override_font_sizes/font_size = 30
+text = "Shards: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
