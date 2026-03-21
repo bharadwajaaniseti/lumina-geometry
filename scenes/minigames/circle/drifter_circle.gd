@@ -1,76 +1,99 @@
 extends Node3D
 class_name DrifterCircle
 
-@export_group("Movement")
-@export var ground_y: float = 0.1
-@export var damping: float = 6.0
-@export var max_speed: float = 6.0
-@export var min_stop_speed: float = 0.03
+@export_group("Node References")
+@export var body_path: NodePath = ^"Body"
 
 @export_group("Collision")
 @export var collision_radius: float = 0.55
-@export var separation_iterations: int = 2
 @export var collision_mask_group: StringName = &"drifters"
+
+@export_group("Ground")
+@export var ground_y: float = 0.1
+
+@export_group("Hop")
+@export var hop_distance: float = 1.8
+@export var hop_duration: float = 0.22
+@export var hop_height: float = 0.45
+@export var hop_tilt_degrees: float = 12.0
+@export var hop_cooldown: float = 0.08
 
 @export_group("Screen Bounds")
 @export var use_screen_bounds: bool = true
-@export var wall_bounce: float = 0.15
-@export var wall_friction: float = 0.9
-
-var velocity: Vector3 = Vector3.ZERO
 
 var bounds_min_x: float = -10.0
 var bounds_max_x: float = 10.0
 var bounds_min_z: float = -10.0
 var bounds_max_z: float = 10.0
 
+var _body: Node3D
+var _is_hopping: bool = false
+var _hop_time: float = 0.0
+var _cooldown_left: float = 0.0
+
+var _hop_start: Vector3 = Vector3.ZERO
+var _hop_end: Vector3 = Vector3.ZERO
+var _hop_dir: Vector3 = Vector3.ZERO
+
 
 func _ready() -> void:
 	position.y = ground_y
 	add_to_group(collision_mask_group)
 
-
-func _physics_process(delta: float) -> void:
-	_apply_damping(delta)
-
-	position += velocity * delta
-	position.y = ground_y
-
-	for _i in range(separation_iterations):
-		_resolve_drifter_collisions()
-
-	if use_screen_bounds:
-		_resolve_screen_bounds()
-
-	if velocity.length() < min_stop_speed:
-		velocity = Vector3.ZERO
+	_body = get_node_or_null(body_path) as Node3D
+	if _body == null:
+		push_warning("DrifterCircle: Body node not found at path: %s" % body_path)
 
 
-func apply_repulsion(from_pos: Vector3, strength: float, radius: float) -> void:
-	var self_flat: Vector2 = Vector2(global_position.x, global_position.z)
-	var from_flat: Vector2 = Vector2(from_pos.x, from_pos.z)
+func _process(delta: float) -> void:
+	if _cooldown_left > 0.0:
+		_cooldown_left -= delta
 
-	var offset: Vector2 = self_flat - from_flat
-	var distance: float = offset.length()
+	if _is_hopping:
+		_update_hop(delta)
+	else:
+		_reset_body_visual()
 
-	if distance <= 0.0001:
-		var random_angle: float = randf() * TAU
-		offset = Vector2(cos(random_angle), sin(random_angle))
-		distance = 0.001
+
+func trigger_hop_away_from(from_pos: Vector3, radius: float) -> void:
+	if _is_hopping:
+		return
+
+	if _cooldown_left > 0.0:
+		return
+
+	var self_flat := Vector2(global_position.x, global_position.z)
+	var from_flat := Vector2(from_pos.x, from_pos.z)
+
+	var offset := self_flat - from_flat
+	var distance := offset.length()
 
 	if distance > radius:
 		return
 
-	var falloff: float = 1.0 - (distance / radius)
-	var push_dir: Vector2 = offset.normalized()
-	var push_force: Vector2 = push_dir * strength * falloff
+	var dir_2d: Vector2
+	if distance <= 0.0001:
+		var angle := randf() * TAU
+		dir_2d = Vector2(cos(angle), sin(angle))
+	else:
+		dir_2d = offset.normalized()
 
-	velocity.x += push_force.x
-	velocity.z += push_force.y
+	var target := global_position + Vector3(dir_2d.x, 0.0, dir_2d.y) * hop_distance
+	target.y = ground_y
 
-	var speed: float = velocity.length()
-	if speed > max_speed:
-		velocity = velocity.normalized() * max_speed
+	if use_screen_bounds:
+		target = _clamp_to_screen_bounds(target)
+
+	# Optional: avoid landing inside another drifter
+	target = _resolve_landing_overlap(target)
+
+	_hop_start = global_position
+	_hop_end = target
+	_hop_dir = (_hop_end - _hop_start).normalized()
+
+	_hop_time = 0.0
+	_is_hopping = true
+	_cooldown_left = hop_cooldown
 
 
 func set_screen_bounds(min_x: float, max_x: float, min_z: float, max_z: float) -> void:
@@ -80,12 +103,57 @@ func set_screen_bounds(min_x: float, max_x: float, min_z: float, max_z: float) -
 	bounds_max_z = max_z
 
 
-func _apply_damping(delta: float) -> void:
-	velocity = velocity.move_toward(Vector3.ZERO, damping * delta)
+func is_hopping() -> bool:
+	return _is_hopping
 
 
-func _resolve_drifter_collisions() -> void:
+func _update_hop(delta: float) -> void:
+	_hop_time += delta
+	var t := clampf(_hop_time / hop_duration, 0.0, 1.0)
+
+	var horizontal := _hop_start.lerp(_hop_end, t)
+	var arc := sin(t * PI) * hop_height
+
+	global_position = horizontal
+	global_position.y = ground_y
+
+	if _body != null:
+		_body.position.y = arc
+
+		var tilt_strength := sin(t * PI)
+		_body.rotation.x = deg_to_rad(-_hop_dir.z * hop_tilt_degrees * tilt_strength)
+		_body.rotation.z = deg_to_rad(_hop_dir.x * hop_tilt_degrees * tilt_strength)
+
+		var stretch := 1.0 + 0.06 * tilt_strength
+		var squash := 1.0 - 0.06 * tilt_strength
+		_body.scale = Vector3(squash, stretch, squash)
+
+	if t >= 1.0:
+		global_position = _hop_end
+		global_position.y = ground_y
+		_is_hopping = false
+		_reset_body_visual()
+
+
+func _reset_body_visual() -> void:
+	if _body == null:
+		return
+
+	_body.position.y = 0.0
+	_body.rotation = Vector3.ZERO
+	_body.scale = Vector3.ONE
+
+
+func _clamp_to_screen_bounds(target: Vector3) -> Vector3:
+	target.x = clampf(target.x, bounds_min_x + collision_radius, bounds_max_x - collision_radius)
+	target.z = clampf(target.z, bounds_min_z + collision_radius, bounds_max_z - collision_radius)
+	target.y = ground_y
+	return target
+
+
+func _resolve_landing_overlap(target: Vector3) -> Vector3:
 	var others: Array[Node] = get_tree().get_nodes_in_group(collision_mask_group)
+	var result := target
 
 	for node in others:
 		if node == self:
@@ -95,97 +163,21 @@ func _resolve_drifter_collisions() -> void:
 		if other == null:
 			continue
 
-		if get_instance_id() > other.get_instance_id():
-			continue
+		var my_2d := Vector2(result.x, result.z)
+		var other_2d := Vector2(other.global_position.x, other.global_position.z)
 
-		var self_pos_2d: Vector2 = Vector2(global_position.x, global_position.z)
-		var other_pos_2d: Vector2 = Vector2(other.global_position.x, other.global_position.z)
+		var min_dist := collision_radius + other.collision_radius
+		var dist := my_2d.distance_to(other_2d)
 
-		var delta_pos: Vector2 = other_pos_2d - self_pos_2d
-		var distance: float = delta_pos.length()
-		var min_distance: float = collision_radius + other.collision_radius
+		if dist < min_dist and dist > 0.0001:
+			var push_dir := (my_2d - other_2d).normalized()
+			var corrected := other_2d + push_dir * min_dist
+			result.x = corrected.x
+			result.z = corrected.y
+		elif dist <= 0.0001:
+			result.x += collision_radius * 0.5
 
-		if distance <= 0.0001:
-			var random_angle: float = randf() * TAU
-			delta_pos = Vector2(cos(random_angle), sin(random_angle))
-			distance = 0.001
+	if use_screen_bounds:
+		result = _clamp_to_screen_bounds(result)
 
-		if distance >= min_distance:
-			continue
-
-		var normal: Vector2 = delta_pos / distance
-		var overlap: float = min_distance - distance
-		var correction: Vector2 = normal * (overlap * 0.5)
-
-		global_position.x -= correction.x
-		global_position.z -= correction.y
-		other.global_position.x += correction.x
-		other.global_position.z += correction.y
-
-		global_position.y = ground_y
-		other.global_position.y = other.ground_y
-
-		_resolve_velocity_against_other(other, normal)
-
-
-func _resolve_velocity_against_other(other: DrifterCircle, normal: Vector2) -> void:
-	var self_vel_2d: Vector2 = Vector2(velocity.x, velocity.z)
-	var other_vel_2d: Vector2 = Vector2(other.velocity.x, other.velocity.z)
-
-	var relative_velocity: Vector2 = self_vel_2d - other_vel_2d
-	var separating_speed: float = relative_velocity.dot(normal)
-
-	if separating_speed >= 0.0:
-		return
-
-	var correction: Vector2 = normal * separating_speed * 0.5
-
-	self_vel_2d -= correction
-	other_vel_2d += correction
-
-	velocity.x = self_vel_2d.x
-	velocity.z = self_vel_2d.y
-
-	other.velocity.x = other_vel_2d.x
-	other.velocity.z = other_vel_2d.y
-
-
-func _resolve_screen_bounds() -> void:
-	var min_x: float = bounds_min_x + collision_radius
-	var max_x: float = bounds_max_x - collision_radius
-	var min_z: float = bounds_min_z + collision_radius
-	var max_z: float = bounds_max_z - collision_radius
-
-	# X bounds
-	if global_position.x < min_x:
-		global_position.x = min_x
-		_bounce_x(-1.0)
-	elif global_position.x > max_x:
-		global_position.x = max_x
-		_bounce_x(1.0)
-
-	# Z bounds
-	if global_position.z < min_z:
-		global_position.z = min_z
-		_bounce_z(-1.0)
-	elif global_position.z > max_z:
-		global_position.z = max_z
-		_bounce_z(1.0)
-
-	global_position.y = ground_y
-
-
-func _bounce_x(_side: float) -> void:
-	if velocity.x == 0.0:
-		return
-
-	velocity.x = -velocity.x * wall_bounce
-	velocity.z *= wall_friction
-
-
-func _bounce_z(_side: float) -> void:
-	if velocity.z == 0.0:
-		return
-
-	velocity.z = -velocity.z * wall_bounce
-	velocity.x *= wall_friction
+	return result

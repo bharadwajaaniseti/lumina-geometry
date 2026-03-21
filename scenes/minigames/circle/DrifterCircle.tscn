@@ -8,11 +8,12 @@ albedo_color = Color(0, 0, 0, 1)
 [sub_resource type="CylinderMesh" id="CylinderMesh_tvybv"]
 material = SubResource("StandardMaterial3D_yi173")
 top_radius = 0.55
+bottom_radius = 0.55
 height = 0.2
 
 [node name="DrifterCircle" type="Node3D" unique_id=1041334771]
 script = ExtResource("1_yi173")
-separation_iterations = 4
+hop_cooldown = 0.12
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=1962901265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)

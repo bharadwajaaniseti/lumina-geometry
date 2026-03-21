@@ -127,8 +127,8 @@ func _apply_repulsion_to_drifters() -> void:
 		if not (child is Node3D):
 			continue
 
-		if child.has_method("apply_repulsion"):
-			child.apply_repulsion(_cursor_world_position, repulsion_strength, repulsion_radius)
+		if child.has_method("trigger_hop_away_from"):
+			child.trigger_hop_away_from(_cursor_world_position, repulsion_radius)
 
 
 func _should_apply_repulsion() -> bool:
