@@ -1,0 +1,5 @@
+{
+  "name": "Skill Tree Planner",
+  "description": "A production-ready SaaS for game developers to visually design and export skill trees to Godot, Unity, and Unreal Engine.",
+  "requestFramePermissions": []
+}

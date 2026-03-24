@@ -1,0 +1,99 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: userId (from Firebase Auth)
+    // Fields:
+    //   - displayName: string (optional)
+    //   - email: string (required)
+    //   - photoURL: string (optional)
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: projects
+    // Document ID: projectId (auto-generated)
+    // Fields:
+    //   - userId: string (required)
+    //   - name: string (required, max 100 chars)
+    //   - description: string (optional, max 500 chars)
+    //   - treeData: map (required)
+    //   - isPublic: bool (required)
+    //   - shareSlug: string (optional)
+    //   - createdAt: timestamp (required)
+    //   - updatedAt: timestamp (required)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['displayName', 'email', 'photoURL', 'createdAt']) &&
+             hasRequiredFields(['email', 'createdAt']) &&
+             data.email is string && isValidEmail(data.email) &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidProject(data) {
+      return hasOnlyAllowedFields(['userId', 'name', 'description', 'treeData', 'isPublic', 'shareSlug', 'createdAt', 'updatedAt']) &&
+             hasRequiredFields(['userId', 'name', 'treeData', 'isPublic', 'createdAt', 'updatedAt']) &&
+             data.userId is string && data.userId == request.auth.uid &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             (!('description' in data) || (data.description is string && data.description.size() <= 500)) &&
+             data.treeData is map &&
+             data.isPublic is bool &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(request.resource.data);
+      allow update: if isOwner(userId) && isValidUser(request.resource.data);
+    }
+
+    match /projects/{projectId} {
+      allow read: if isDocOwner() || (resource.data.isPublic == true);
+      allow create: if isAuthenticated() && isValidProject(request.resource.data);
+      allow update: if isDocOwner() && isValidProject(request.resource.data);
+      allow delete: if isDocOwner();
+    }
+  }
+}
